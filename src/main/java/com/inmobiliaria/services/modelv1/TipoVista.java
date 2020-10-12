@@ -2,7 +2,7 @@
  * @author Walter Canchan
  * @email wcanchan@gmail.com
  */
-package com.inmobiliaria.services.model;
+package com.inmobiliaria.services.modelv1;
 
 import java.io.Serializable;
 import javax.persistence.*;
