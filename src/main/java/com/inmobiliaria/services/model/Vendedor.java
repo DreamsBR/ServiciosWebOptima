@@ -2,7 +2,6 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -15,30 +14,25 @@ public class Vendedor implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idvendedor;
+	@Column(name="id_vendedor")
+	private int idVendedor;
 
 	private byte enable;
 
+	@Column(name="id_jefatura")
+	private int idJefatura;
+
 	private String nombre;
-
-	//bi-directional many-to-one association to Jefatura
-	@ManyToOne
-	@JoinColumn(name="idjefatura")
-	private Jefatura jefatura;
-
-	//bi-directional many-to-one association to Venta
-	@OneToMany(mappedBy="vendedor")
-	private List<Venta> ventas;
 
 	public Vendedor() {
 	}
 
-	public int getIdvendedor() {
-		return this.idvendedor;
+	public int getIdVendedor() {
+		return this.idVendedor;
 	}
 
-	public void setIdvendedor(int idvendedor) {
-		this.idvendedor = idvendedor;
+	public void setIdVendedor(int idVendedor) {
+		this.idVendedor = idVendedor;
 	}
 
 	public byte getEnable() {
@@ -49,42 +43,20 @@ public class Vendedor implements Serializable {
 		this.enable = enable;
 	}
 
+	public int getIdJefatura() {
+		return this.idJefatura;
+	}
+
+	public void setIdJefatura(int idJefatura) {
+		this.idJefatura = idJefatura;
+	}
+
 	public String getNombre() {
 		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public Jefatura getJefatura() {
-		return this.jefatura;
-	}
-
-	public void setJefatura(Jefatura jefatura) {
-		this.jefatura = jefatura;
-	}
-
-	public List<Venta> getVentas() {
-		return this.ventas;
-	}
-
-	public void setVentas(List<Venta> ventas) {
-		this.ventas = ventas;
-	}
-
-	public Venta addVenta(Venta venta) {
-		getVentas().add(venta);
-		venta.setVendedor(this);
-
-		return venta;
-	}
-
-	public Venta removeVenta(Venta venta) {
-		getVentas().remove(venta);
-		venta.setVendedor(null);
-
-		return venta;
 	}
 
 }

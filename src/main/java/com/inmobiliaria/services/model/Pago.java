@@ -16,38 +16,36 @@ public class Pago implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idpago;
+	@Column(name="id_pago")
+	private int idPago;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 
+	@Column(name="id_tipo_pago")
+	private int idTipoPago;
+
+	@Column(name="id_venta")
+	private int idVenta;
+
 	private BigDecimal monto;
 
-	private int numerooperacion;
+	@Column(name="numero_operacion")
+	private int numeroOperacion;
 
 	private byte pagado;
 
 	private String porcentaje;
 
-	//bi-directional many-to-one association to Venta
-	@ManyToOne
-	@JoinColumn(name="idventa")
-	private Venta venta;
-
-	//bi-directional many-to-one association to Tipopago
-	@ManyToOne
-	@JoinColumn(name="idtipopago")
-	private Tipopago tipopago;
-
 	public Pago() {
 	}
 
-	public int getIdpago() {
-		return this.idpago;
+	public int getIdPago() {
+		return this.idPago;
 	}
 
-	public void setIdpago(int idpago) {
-		this.idpago = idpago;
+	public void setIdPago(int idPago) {
+		this.idPago = idPago;
 	}
 
 	public Date getFecha() {
@@ -58,6 +56,22 @@ public class Pago implements Serializable {
 		this.fecha = fecha;
 	}
 
+	public int getIdTipoPago() {
+		return this.idTipoPago;
+	}
+
+	public void setIdTipoPago(int idTipoPago) {
+		this.idTipoPago = idTipoPago;
+	}
+
+	public int getIdVenta() {
+		return this.idVenta;
+	}
+
+	public void setIdVenta(int idVenta) {
+		this.idVenta = idVenta;
+	}
+
 	public BigDecimal getMonto() {
 		return this.monto;
 	}
@@ -66,12 +80,12 @@ public class Pago implements Serializable {
 		this.monto = monto;
 	}
 
-	public int getNumerooperacion() {
-		return this.numerooperacion;
+	public int getNumeroOperacion() {
+		return this.numeroOperacion;
 	}
 
-	public void setNumerooperacion(int numerooperacion) {
-		this.numerooperacion = numerooperacion;
+	public void setNumeroOperacion(int numeroOperacion) {
+		this.numeroOperacion = numeroOperacion;
 	}
 
 	public byte getPagado() {
@@ -88,22 +102,6 @@ public class Pago implements Serializable {
 
 	public void setPorcentaje(String porcentaje) {
 		this.porcentaje = porcentaje;
-	}
-
-	public Venta getVenta() {
-		return this.venta;
-	}
-
-	public void setVenta(Venta venta) {
-		this.venta = venta;
-	}
-
-	public Tipopago getTipopago() {
-		return this.tipopago;
-	}
-
-	public void setTipopago(Tipopago tipopago) {
-		this.tipopago = tipopago;
 	}
 
 }

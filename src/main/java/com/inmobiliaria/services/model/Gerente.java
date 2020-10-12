@@ -2,7 +2,6 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -15,25 +14,23 @@ public class Gerente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idgerente;
+	@Column(name="id_gerente")
+	private int idGerente;
 
 	private byte enable;
 
-	private int idpersona;
-
-	//bi-directional many-to-one association to Gerencia
-	@OneToMany(mappedBy="gerente")
-	private List<Gerencia> gerencias;
+	@Column(name="id_persona")
+	private int idPersona;
 
 	public Gerente() {
 	}
 
-	public int getIdgerente() {
-		return this.idgerente;
+	public int getIdGerente() {
+		return this.idGerente;
 	}
 
-	public void setIdgerente(int idgerente) {
-		this.idgerente = idgerente;
+	public void setIdGerente(int idGerente) {
+		this.idGerente = idGerente;
 	}
 
 	public byte getEnable() {
@@ -44,34 +41,12 @@ public class Gerente implements Serializable {
 		this.enable = enable;
 	}
 
-	public int getIdpersona() {
-		return this.idpersona;
+	public int getIdPersona() {
+		return this.idPersona;
 	}
 
-	public void setIdpersona(int idpersona) {
-		this.idpersona = idpersona;
-	}
-
-	public List<Gerencia> getGerencias() {
-		return this.gerencias;
-	}
-
-	public void setGerencias(List<Gerencia> gerencias) {
-		this.gerencias = gerencias;
-	}
-
-	public Gerencia addGerencia(Gerencia gerencia) {
-		getGerencias().add(gerencia);
-		gerencia.setGerente(this);
-
-		return gerencia;
-	}
-
-	public Gerencia removeGerencia(Gerencia gerencia) {
-		getGerencias().remove(gerencia);
-		gerencia.setGerente(null);
-
-		return gerencia;
+	public void setIdPersona(int idPersona) {
+		this.idPersona = idPersona;
 	}
 
 }

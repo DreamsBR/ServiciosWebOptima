@@ -2,38 +2,36 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the jefeventa database table.
+ * The persistent class for the jefe_venta database table.
  * 
  */
 @Entity
-@NamedQuery(name="Jefeventa.findAll", query="SELECT j FROM Jefeventa j")
-public class Jefeventa implements Serializable {
+@Table(name="jefe_venta")
+@NamedQuery(name="JefeVenta.findAll", query="SELECT j FROM JefeVenta j")
+public class JefeVenta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idjefeventa;
+	@Column(name="id_jefe_venta")
+	private int idJefeVenta;
 
 	private byte enable;
 
-	private int idpersona;
+	@Column(name="id_persona")
+	private int idPersona;
 
-	//bi-directional many-to-one association to Jefatura
-	@OneToMany(mappedBy="jefeventa")
-	private List<Jefatura> jefaturas;
-
-	public Jefeventa() {
+	public JefeVenta() {
 	}
 
-	public int getIdjefeventa() {
-		return this.idjefeventa;
+	public int getIdJefeVenta() {
+		return this.idJefeVenta;
 	}
 
-	public void setIdjefeventa(int idjefeventa) {
-		this.idjefeventa = idjefeventa;
+	public void setIdJefeVenta(int idJefeVenta) {
+		this.idJefeVenta = idJefeVenta;
 	}
 
 	public byte getEnable() {
@@ -44,34 +42,12 @@ public class Jefeventa implements Serializable {
 		this.enable = enable;
 	}
 
-	public int getIdpersona() {
-		return this.idpersona;
+	public int getIdPersona() {
+		return this.idPersona;
 	}
 
-	public void setIdpersona(int idpersona) {
-		this.idpersona = idpersona;
-	}
-
-	public List<Jefatura> getJefaturas() {
-		return this.jefaturas;
-	}
-
-	public void setJefaturas(List<Jefatura> jefaturas) {
-		this.jefaturas = jefaturas;
-	}
-
-	public Jefatura addJefatura(Jefatura jefatura) {
-		getJefaturas().add(jefatura);
-		jefatura.setJefeventa(this);
-
-		return jefatura;
-	}
-
-	public Jefatura removeJefatura(Jefatura jefatura) {
-		getJefaturas().remove(jefatura);
-		jefatura.setJefeventa(null);
-
-		return jefatura;
+	public void setIdPersona(int idPersona) {
+		this.idPersona = idPersona;
 	}
 
 }

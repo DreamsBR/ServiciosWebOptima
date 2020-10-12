@@ -15,30 +15,26 @@ public class JefaturaProyecto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="idjefatura_proyecto")
-	private int idjefaturaProyecto;
+	@Column(name="id_jefatura_proyecto")
+	private int idJefaturaProyecto;
 
 	private byte enable;
 
-	//bi-directional many-to-one association to Jefatura
-	@ManyToOne
-	@JoinColumn(name="idjefatura")
-	private Jefatura jefatura;
+	@Column(name="id_jefatura")
+	private int idJefatura;
 
-	//bi-directional many-to-one association to Proyecto
-	@ManyToOne
-	@JoinColumn(name="idproyecto")
-	private Proyecto proyecto;
+	@Column(name="id_proyecto")
+	private int idProyecto;
 
 	public JefaturaProyecto() {
 	}
 
-	public int getIdjefaturaProyecto() {
-		return this.idjefaturaProyecto;
+	public int getIdJefaturaProyecto() {
+		return this.idJefaturaProyecto;
 	}
 
-	public void setIdjefaturaProyecto(int idjefaturaProyecto) {
-		this.idjefaturaProyecto = idjefaturaProyecto;
+	public void setIdJefaturaProyecto(int idJefaturaProyecto) {
+		this.idJefaturaProyecto = idJefaturaProyecto;
 	}
 
 	public byte getEnable() {
@@ -49,20 +45,20 @@ public class JefaturaProyecto implements Serializable {
 		this.enable = enable;
 	}
 
-	public Jefatura getJefatura() {
-		return this.jefatura;
+	public int getIdJefatura() {
+		return this.idJefatura;
 	}
 
-	public void setJefatura(Jefatura jefatura) {
-		this.jefatura = jefatura;
+	public void setIdJefatura(int idJefatura) {
+		this.idJefatura = idJefatura;
 	}
 
-	public Proyecto getProyecto() {
-		return this.proyecto;
+	public int getIdProyecto() {
+		return this.idProyecto;
 	}
 
-	public void setProyecto(Proyecto proyecto) {
-		this.proyecto = proyecto;
+	public void setIdProyecto(int idProyecto) {
+		this.idProyecto = idProyecto;
 	}
 
 }

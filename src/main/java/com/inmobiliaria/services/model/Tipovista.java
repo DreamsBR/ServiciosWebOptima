@@ -2,38 +2,35 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the tipovista database table.
+ * The persistent class for the tipo_vista database table.
  * 
  */
 @Entity
-@NamedQuery(name="Tipovista.findAll", query="SELECT t FROM Tipovista t")
-public class Tipovista implements Serializable {
+@Table(name="tipo_vista")
+@NamedQuery(name="TipoVista.findAll", query="SELECT t FROM TipoVista t")
+public class TipoVista implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idtipovista;
+	@Column(name="id_tipo_vista")
+	private int idTipoVista;
 
 	private byte enable;
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Inmueble
-	@OneToMany(mappedBy="tipovista")
-	private List<Inmueble> inmuebles;
-
-	public Tipovista() {
+	public TipoVista() {
 	}
 
-	public int getIdtipovista() {
-		return this.idtipovista;
+	public int getIdTipoVista() {
+		return this.idTipoVista;
 	}
 
-	public void setIdtipovista(int idtipovista) {
-		this.idtipovista = idtipovista;
+	public void setIdTipoVista(int idTipoVista) {
+		this.idTipoVista = idTipoVista;
 	}
 
 	public byte getEnable() {
@@ -50,28 +47,6 @@ public class Tipovista implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Inmueble> getInmuebles() {
-		return this.inmuebles;
-	}
-
-	public void setInmuebles(List<Inmueble> inmuebles) {
-		this.inmuebles = inmuebles;
-	}
-
-	public Inmueble addInmueble(Inmueble inmueble) {
-		getInmuebles().add(inmueble);
-		inmueble.setTipovista(this);
-
-		return inmueble;
-	}
-
-	public Inmueble removeInmueble(Inmueble inmueble) {
-		getInmuebles().remove(inmueble);
-		inmueble.setTipovista(null);
-
-		return inmueble;
 	}
 
 }

@@ -2,7 +2,6 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -15,25 +14,22 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idcategoria;
+	@Column(name="id_categoria")
+	private int idCategoria;
 
 	private byte enable;
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Venta
-	@OneToMany(mappedBy="categoria")
-	private List<Venta> ventas;
-
 	public Categoria() {
 	}
 
-	public int getIdcategoria() {
-		return this.idcategoria;
+	public int getIdCategoria() {
+		return this.idCategoria;
 	}
 
-	public void setIdcategoria(int idcategoria) {
-		this.idcategoria = idcategoria;
+	public void setIdCategoria(int idCategoria) {
+		this.idCategoria = idCategoria;
 	}
 
 	public byte getEnable() {
@@ -50,28 +46,6 @@ public class Categoria implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Venta> getVentas() {
-		return this.ventas;
-	}
-
-	public void setVentas(List<Venta> ventas) {
-		this.ventas = ventas;
-	}
-
-	public Venta addVenta(Venta venta) {
-		getVentas().add(venta);
-		venta.setCategoria(this);
-
-		return venta;
-	}
-
-	public Venta removeVenta(Venta venta) {
-		getVentas().remove(venta);
-		venta.setCategoria(null);
-
-		return venta;
 	}
 
 }

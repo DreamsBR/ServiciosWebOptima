@@ -2,38 +2,35 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the estadofinanciamiento database table.
+ * The persistent class for the estado_financiamiento database table.
  * 
  */
 @Entity
-@NamedQuery(name="Estadofinanciamiento.findAll", query="SELECT e FROM Estadofinanciamiento e")
-public class Estadofinanciamiento implements Serializable {
+@Table(name="estado_financiamiento")
+@NamedQuery(name="EstadoFinanciamiento.findAll", query="SELECT e FROM EstadoFinanciamiento e")
+public class EstadoFinanciamiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idestadofinanciamiento;
+	@Column(name="id_estado_financiamiento")
+	private int idEstadoFinanciamiento;
 
 	private byte enable;
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Financiamiento
-	@OneToMany(mappedBy="estadofinanciamiento")
-	private List<Financiamiento> financiamientos;
-
-	public Estadofinanciamiento() {
+	public EstadoFinanciamiento() {
 	}
 
-	public int getIdestadofinanciamiento() {
-		return this.idestadofinanciamiento;
+	public int getIdEstadoFinanciamiento() {
+		return this.idEstadoFinanciamiento;
 	}
 
-	public void setIdestadofinanciamiento(int idestadofinanciamiento) {
-		this.idestadofinanciamiento = idestadofinanciamiento;
+	public void setIdEstadoFinanciamiento(int idEstadoFinanciamiento) {
+		this.idEstadoFinanciamiento = idEstadoFinanciamiento;
 	}
 
 	public byte getEnable() {
@@ -50,28 +47,6 @@ public class Estadofinanciamiento implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Financiamiento> getFinanciamientos() {
-		return this.financiamientos;
-	}
-
-	public void setFinanciamientos(List<Financiamiento> financiamientos) {
-		this.financiamientos = financiamientos;
-	}
-
-	public Financiamiento addFinanciamiento(Financiamiento financiamiento) {
-		getFinanciamientos().add(financiamiento);
-		financiamiento.setEstadofinanciamiento(this);
-
-		return financiamiento;
-	}
-
-	public Financiamiento removeFinanciamiento(Financiamiento financiamiento) {
-		getFinanciamientos().remove(financiamiento);
-		financiamiento.setEstadofinanciamiento(null);
-
-		return financiamiento;
 	}
 
 }

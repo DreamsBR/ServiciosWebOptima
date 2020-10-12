@@ -2,38 +2,35 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the tipocredito database table.
+ * The persistent class for the tipo_credito database table.
  * 
  */
 @Entity
-@NamedQuery(name="Tipocredito.findAll", query="SELECT t FROM Tipocredito t")
-public class Tipocredito implements Serializable {
+@Table(name="tipo_credito")
+@NamedQuery(name="TipoCredito.findAll", query="SELECT t FROM TipoCredito t")
+public class TipoCredito implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idtipocredito;
+	@Column(name="id_tipo_credito")
+	private int idTipoCredito;
 
 	private byte enable;
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Financiamiento
-	@OneToMany(mappedBy="tipocredito")
-	private List<Financiamiento> financiamientos;
-
-	public Tipocredito() {
+	public TipoCredito() {
 	}
 
-	public int getIdtipocredito() {
-		return this.idtipocredito;
+	public int getIdTipoCredito() {
+		return this.idTipoCredito;
 	}
 
-	public void setIdtipocredito(int idtipocredito) {
-		this.idtipocredito = idtipocredito;
+	public void setIdTipoCredito(int idTipoCredito) {
+		this.idTipoCredito = idTipoCredito;
 	}
 
 	public byte getEnable() {
@@ -50,28 +47,6 @@ public class Tipocredito implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Financiamiento> getFinanciamientos() {
-		return this.financiamientos;
-	}
-
-	public void setFinanciamientos(List<Financiamiento> financiamientos) {
-		this.financiamientos = financiamientos;
-	}
-
-	public Financiamiento addFinanciamiento(Financiamiento financiamiento) {
-		getFinanciamientos().add(financiamiento);
-		financiamiento.setTipocredito(this);
-
-		return financiamiento;
-	}
-
-	public Financiamiento removeFinanciamiento(Financiamiento financiamiento) {
-		getFinanciamientos().remove(financiamiento);
-		financiamiento.setTipocredito(null);
-
-		return financiamiento;
 	}
 
 }

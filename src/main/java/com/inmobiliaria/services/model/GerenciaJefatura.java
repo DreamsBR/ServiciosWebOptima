@@ -15,30 +15,26 @@ public class GerenciaJefatura implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="idgerencia_jefatura")
-	private int idgerenciaJefatura;
+	@Column(name="`id_gerencia_jefatura`")
+	private int idGerenciaJefatura;
 
 	private byte enable;
 
-	//bi-directional many-to-one association to Gerencia
-	@ManyToOne
-	@JoinColumn(name="idgerencia")
-	private Gerencia gerencia;
+	@Column(name="id_gerencia")
+	private int idGerencia;
 
-	//bi-directional many-to-one association to Jefatura
-	@ManyToOne
-	@JoinColumn(name="idjefatura")
-	private Jefatura jefatura;
+	@Column(name="id_jefatura")
+	private int idJefatura;
 
 	public GerenciaJefatura() {
 	}
 
-	public int getIdgerenciaJefatura() {
-		return this.idgerenciaJefatura;
+	public int getIdGerenciaJefatura() {
+		return this.idGerenciaJefatura;
 	}
 
-	public void setIdgerenciaJefatura(int idgerenciaJefatura) {
-		this.idgerenciaJefatura = idgerenciaJefatura;
+	public void setIdGerenciaJefatura(int idGerenciaJefatura) {
+		this.idGerenciaJefatura = idGerenciaJefatura;
 	}
 
 	public byte getEnable() {
@@ -49,20 +45,20 @@ public class GerenciaJefatura implements Serializable {
 		this.enable = enable;
 	}
 
-	public Gerencia getGerencia() {
-		return this.gerencia;
+	public int getIdGerencia() {
+		return this.idGerencia;
 	}
 
-	public void setGerencia(Gerencia gerencia) {
-		this.gerencia = gerencia;
+	public void setIdGerencia(int idGerencia) {
+		this.idGerencia = idGerencia;
 	}
 
-	public Jefatura getJefatura() {
-		return this.jefatura;
+	public int getIdJefatura() {
+		return this.idJefatura;
 	}
 
-	public void setJefatura(Jefatura jefatura) {
-		this.jefatura = jefatura;
+	public void setIdJefatura(int idJefatura) {
+		this.idJefatura = idJefatura;
 	}
 
 }
