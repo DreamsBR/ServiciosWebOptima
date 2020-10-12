@@ -25,8 +25,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import com.inmobiliaria.services.modelv1.TipoDocumento;
 import com.inmobiliaria.services.services.TipoDocumentoService;
-import com.inmobiliaria.services.model.TipoDocumento;
 
 @RestController
 @RequestMapping(value = "/v1/tipodocumento")

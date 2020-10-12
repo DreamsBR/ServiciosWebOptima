@@ -12,8 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.repository.JefeVentaRepository; 
-import com.inmobiliaria.services.model.JefeVenta;
+import com.inmobiliaria.services.modelv1.JefeVenta;
+import com.inmobiliaria.services.repository.JefeVentaRepository;
 
 @Service
 @Transactional(readOnly=true)

@@ -25,8 +25,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import com.inmobiliaria.services.modelv1.TipoVista;
 import com.inmobiliaria.services.services.TipoVistaService;
-import com.inmobiliaria.services.model.TipoVista;
 
 @RestController
 @RequestMapping(value = "/v1/tipovista")
