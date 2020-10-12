@@ -2,7 +2,6 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
@@ -15,7 +14,8 @@ public class Proyecto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idproyecto;
+	@Column(name="id_proyecto")
+	private int idProyecto;
 
 	private String direccion;
 
@@ -23,23 +23,15 @@ public class Proyecto implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Inmueble
-	@OneToMany(mappedBy="proyecto")
-	private List<Inmueble> inmuebles;
-
-	//bi-directional many-to-one association to JefaturaProyecto
-	@OneToMany(mappedBy="proyecto")
-	private List<JefaturaProyecto> jefaturaProyectos;
-
 	public Proyecto() {
 	}
 
-	public int getIdproyecto() {
-		return this.idproyecto;
+	public int getIdProyecto() {
+		return this.idProyecto;
 	}
 
-	public void setIdproyecto(int idproyecto) {
-		this.idproyecto = idproyecto;
+	public void setIdProyecto(int idProyecto) {
+		this.idProyecto = idProyecto;
 	}
 
 	public String getDireccion() {
@@ -64,50 +56,6 @@ public class Proyecto implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Inmueble> getInmuebles() {
-		return this.inmuebles;
-	}
-
-	public void setInmuebles(List<Inmueble> inmuebles) {
-		this.inmuebles = inmuebles;
-	}
-
-	public Inmueble addInmueble(Inmueble inmueble) {
-		getInmuebles().add(inmueble);
-		inmueble.setProyecto(this);
-
-		return inmueble;
-	}
-
-	public Inmueble removeInmueble(Inmueble inmueble) {
-		getInmuebles().remove(inmueble);
-		inmueble.setProyecto(null);
-
-		return inmueble;
-	}
-
-	public List<JefaturaProyecto> getJefaturaProyectos() {
-		return this.jefaturaProyectos;
-	}
-
-	public void setJefaturaProyectos(List<JefaturaProyecto> jefaturaProyectos) {
-		this.jefaturaProyectos = jefaturaProyectos;
-	}
-
-	public JefaturaProyecto addJefaturaProyecto(JefaturaProyecto jefaturaProyecto) {
-		getJefaturaProyectos().add(jefaturaProyecto);
-		jefaturaProyecto.setProyecto(this);
-
-		return jefaturaProyecto;
-	}
-
-	public JefaturaProyecto removeJefaturaProyecto(JefaturaProyecto jefaturaProyecto) {
-		getJefaturaProyectos().remove(jefaturaProyecto);
-		jefaturaProyecto.setProyecto(null);
-
-		return jefaturaProyecto;
 	}
 
 }

@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -17,7 +16,8 @@ public class Financiamiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idfinanciamiento;
+	@Column(name="id_financiamiento")
+	private int idFinanciamiento;
 
 	private byte afp;
 
@@ -28,39 +28,31 @@ public class Financiamiento implements Serializable {
 	private BigDecimal bono;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechafinahorro;
+	@Column(name="fecha_fin_ahorro")
+	private Date fechaFinAhorro;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechainicioahorro;
+	@Column(name="fecha_inicio_ahorro")
+	private Date fechaInicioAhorro;
 
-	//bi-directional many-to-one association to Banco
-	@ManyToOne
-	@JoinColumn(name="idbanco")
-	private Banco banco;
+	@Column(name="id_banco")
+	private int idBanco;
 
-	//bi-directional many-to-one association to Estadofinanciamiento
-	@ManyToOne
-	@JoinColumn(name="idestadofinanciamiento")
-	private Estadofinanciamiento estadofinanciamiento;
+	@Column(name="id_estado_financiamiento")
+	private int idEstadoFinanciamiento;
 
-	//bi-directional many-to-one association to Tipocredito
-	@ManyToOne
-	@JoinColumn(name="idtipocredito")
-	private Tipocredito tipocredito;
-
-	//bi-directional many-to-one association to Venta
-	@OneToMany(mappedBy="financiamiento")
-	private List<Venta> ventas;
+	@Column(name="id_tipo_credito")
+	private int idTipoCredito;
 
 	public Financiamiento() {
 	}
 
-	public int getIdfinanciamiento() {
-		return this.idfinanciamiento;
+	public int getIdFinanciamiento() {
+		return this.idFinanciamiento;
 	}
 
-	public void setIdfinanciamiento(int idfinanciamiento) {
-		this.idfinanciamiento = idfinanciamiento;
+	public void setIdFinanciamiento(int idFinanciamiento) {
+		this.idFinanciamiento = idFinanciamiento;
 	}
 
 	public byte getAfp() {
@@ -95,66 +87,44 @@ public class Financiamiento implements Serializable {
 		this.bono = bono;
 	}
 
-	public Date getFechafinahorro() {
-		return this.fechafinahorro;
+	public Date getFechaFinAhorro() {
+		return this.fechaFinAhorro;
 	}
 
-	public void setFechafinahorro(Date fechafinahorro) {
-		this.fechafinahorro = fechafinahorro;
+	public void setFechaFinAhorro(Date fechaFinAhorro) {
+		this.fechaFinAhorro = fechaFinAhorro;
 	}
 
-	public Date getFechainicioahorro() {
-		return this.fechainicioahorro;
+	public Date getFechaInicioAhorro() {
+		return this.fechaInicioAhorro;
 	}
 
-	public void setFechainicioahorro(Date fechainicioahorro) {
-		this.fechainicioahorro = fechainicioahorro;
+	public void setFechaInicioAhorro(Date fechaInicioAhorro) {
+		this.fechaInicioAhorro = fechaInicioAhorro;
 	}
 
-	public Banco getBanco() {
-		return this.banco;
+	public int getIdBanco() {
+		return this.idBanco;
 	}
 
-	public void setBanco(Banco banco) {
-		this.banco = banco;
+	public void setIdBanco(int idBanco) {
+		this.idBanco = idBanco;
 	}
 
-	public Estadofinanciamiento getEstadofinanciamiento() {
-		return this.estadofinanciamiento;
+	public int getIdEstadoFinanciamiento() {
+		return this.idEstadoFinanciamiento;
 	}
 
-	public void setEstadofinanciamiento(Estadofinanciamiento estadofinanciamiento) {
-		this.estadofinanciamiento = estadofinanciamiento;
+	public void setIdEstadoFinanciamiento(int idEstadoFinanciamiento) {
+		this.idEstadoFinanciamiento = idEstadoFinanciamiento;
 	}
 
-	public Tipocredito getTipocredito() {
-		return this.tipocredito;
+	public int getIdTipoCredito() {
+		return this.idTipoCredito;
 	}
 
-	public void setTipocredito(Tipocredito tipocredito) {
-		this.tipocredito = tipocredito;
-	}
-
-	public List<Venta> getVentas() {
-		return this.ventas;
-	}
-
-	public void setVentas(List<Venta> ventas) {
-		this.ventas = ventas;
-	}
-
-	public Venta addVenta(Venta venta) {
-		getVentas().add(venta);
-		venta.setFinanciamiento(this);
-
-		return venta;
-	}
-
-	public Venta removeVenta(Venta venta) {
-		getVentas().remove(venta);
-		venta.setFinanciamiento(null);
-
-		return venta;
+	public void setIdTipoCredito(int idTipoCredito) {
+		this.idTipoCredito = idTipoCredito;
 	}
 
 }

@@ -3,7 +3,6 @@ package com.inmobiliaria.services.model;
 import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
-import java.util.List;
 
 
 /**
@@ -16,80 +15,99 @@ public class Inmueble implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idinmueble;
+	@Column(name="id_inmueble")
+	private int idInmueble;
 
-	private int arealibre;
+	@Column(name="area_libre")
+	private int areaLibre;
 
-	private int areatechada;
+	@Column(name="area_techada")
+	private int areaTechada;
 
-	private int areatotal;
+	@Column(name="area_total")
+	private int areaTotal;
 
-	private int cantidaddormitorio;
+	@Column(name="cantidad_dormitorio")
+	private int cantidadDormitorio;
+
+	@Column(name="id_proyecto")
+	private int idProyecto;
+
+	@Column(name="id_tipo_inmueble")
+	private int idTipoInmueble;
+
+	@Column(name="id_tipo_vista")
+	private int idTipoVista;
 
 	private String numero;
 
 	private BigDecimal precio;
 
-	//bi-directional many-to-one association to Proyecto
-	@ManyToOne
-	@JoinColumn(name="idproyecto")
-	private Proyecto proyecto;
-
-	//bi-directional many-to-one association to Tipoinmueble
-	@ManyToOne
-	@JoinColumn(name="idtipounidad")
-	private Tipoinmueble tipoinmueble;
-
-	//bi-directional many-to-one association to Tipovista
-	@ManyToOne
-	@JoinColumn(name="idtipovista")
-	private Tipovista tipovista;
-
-	//bi-directional many-to-one association to VentaInmueble
-	@OneToMany(mappedBy="inmueble")
-	private List<VentaInmueble> ventaInmuebles;
-
 	public Inmueble() {
 	}
 
-	public int getIdinmueble() {
-		return this.idinmueble;
+	public int getIdInmueble() {
+		return this.idInmueble;
 	}
 
-	public void setIdinmueble(int idinmueble) {
-		this.idinmueble = idinmueble;
+	public void setIdInmueble(int idInmueble) {
+		this.idInmueble = idInmueble;
 	}
 
-	public int getArealibre() {
-		return this.arealibre;
+	public int getAreaLibre() {
+		return this.areaLibre;
 	}
 
-	public void setArealibre(int arealibre) {
-		this.arealibre = arealibre;
+	public void setAreaLibre(int areaLibre) {
+		this.areaLibre = areaLibre;
 	}
 
-	public int getAreatechada() {
-		return this.areatechada;
+	public int getAreaTechada() {
+		return this.areaTechada;
 	}
 
-	public void setAreatechada(int areatechada) {
-		this.areatechada = areatechada;
+	public void setAreaTechada(int areaTechada) {
+		this.areaTechada = areaTechada;
 	}
 
-	public int getAreatotal() {
-		return this.areatotal;
+	public int getAreaTotal() {
+		return this.areaTotal;
 	}
 
-	public void setAreatotal(int areatotal) {
-		this.areatotal = areatotal;
+	public void setAreaTotal(int areaTotal) {
+		this.areaTotal = areaTotal;
 	}
 
-	public int getCantidaddormitorio() {
-		return this.cantidaddormitorio;
+	public int getCantidadDormitorio() {
+		return this.cantidadDormitorio;
 	}
 
-	public void setCantidaddormitorio(int cantidaddormitorio) {
-		this.cantidaddormitorio = cantidaddormitorio;
+	public void setCantidadDormitorio(int cantidadDormitorio) {
+		this.cantidadDormitorio = cantidadDormitorio;
+	}
+
+	public int getIdProyecto() {
+		return this.idProyecto;
+	}
+
+	public void setIdProyecto(int idProyecto) {
+		this.idProyecto = idProyecto;
+	}
+
+	public int getIdTipoInmueble() {
+		return this.idTipoInmueble;
+	}
+
+	public void setIdTipoInmueble(int idTipoInmueble) {
+		this.idTipoInmueble = idTipoInmueble;
+	}
+
+	public int getIdTipoVista() {
+		return this.idTipoVista;
+	}
+
+	public void setIdTipoVista(int idTipoVista) {
+		this.idTipoVista = idTipoVista;
 	}
 
 	public String getNumero() {
@@ -106,52 +124,6 @@ public class Inmueble implements Serializable {
 
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
-	}
-
-	public Proyecto getProyecto() {
-		return this.proyecto;
-	}
-
-	public void setProyecto(Proyecto proyecto) {
-		this.proyecto = proyecto;
-	}
-
-	public Tipoinmueble getTipoinmueble() {
-		return this.tipoinmueble;
-	}
-
-	public void setTipoinmueble(Tipoinmueble tipoinmueble) {
-		this.tipoinmueble = tipoinmueble;
-	}
-
-	public Tipovista getTipovista() {
-		return this.tipovista;
-	}
-
-	public void setTipovista(Tipovista tipovista) {
-		this.tipovista = tipovista;
-	}
-
-	public List<VentaInmueble> getVentaInmuebles() {
-		return this.ventaInmuebles;
-	}
-
-	public void setVentaInmuebles(List<VentaInmueble> ventaInmuebles) {
-		this.ventaInmuebles = ventaInmuebles;
-	}
-
-	public VentaInmueble addVentaInmueble(VentaInmueble ventaInmueble) {
-		getVentaInmuebles().add(ventaInmueble);
-		ventaInmueble.setInmueble(this);
-
-		return ventaInmueble;
-	}
-
-	public VentaInmueble removeVentaInmueble(VentaInmueble ventaInmueble) {
-		getVentaInmuebles().remove(ventaInmueble);
-		ventaInmueble.setInmueble(null);
-
-		return ventaInmueble;
 	}
 
 }

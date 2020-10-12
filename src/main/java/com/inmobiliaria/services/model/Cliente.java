@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -17,7 +16,8 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idcliente;
+	@Column(name="id_cliente")
+	private int idCliente;
 
 	private String asesor;
 
@@ -30,23 +30,37 @@ public class Cliente implements Serializable {
 	private String email;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechanacimiento;
+	@Column(name="fecha_nacimiento")
+	private Date fechaNacimiento;
+
+	@Column(name="id_estado_civil")
+	private int idEstadoCivil;
+
+	@Column(name="id_pais")
+	private int idPais;
+
+	@Column(name="id_tipo_documento")
+	private int idTipoDocumento;
 
 	private int idestadocivilconyuge;
 
 	private BigDecimal ingresos;
 
-	private String lugartrabajo;
+	@Column(name="lugar_trabajo")
+	private String lugarTrabajo;
 
 	private String nombre;
 
-	private String nrodocconyuge;
+	@Column(name="nro_doc_conyuge")
+	private String nroDocConyuge;
 
-	private String nrodocumento;
+	@Column(name="nro_documento")
+	private String nroDocumento;
 
 	private String ocupacion;
 
-	private String ocupacionconyuge;
+	@Column(name="ocupacion_conyuge")
+	private String ocupacionConyuge;
 
 	private String provincia;
 
@@ -54,40 +68,18 @@ public class Cliente implements Serializable {
 
 	private String telefono;
 
-	private int tipodocconyuge;
-
-	//bi-directional many-to-one association to Tipodocumento
-	@ManyToOne
-	@JoinColumn(name="idtipodocumento")
-	private Tipodocumento tipodocumento;
-
-	//bi-directional many-to-one association to Pai
-	@ManyToOne
-	@JoinColumn(name="idpais")
-	private Pai pai;
-
-	//bi-directional many-to-one association to Estadocivil
-	@ManyToOne
-	@JoinColumn(name="idestadocivil")
-	private Estadocivil estadocivil;
-
-	//bi-directional many-to-one association to Venta
-	@OneToMany(mappedBy="cliente1")
-	private List<Venta> ventas1;
-
-	//bi-directional many-to-one association to Venta
-	@OneToMany(mappedBy="cliente2")
-	private List<Venta> ventas2;
+	@Column(name="tipo_doc_conyuge")
+	private int tipoDocConyuge;
 
 	public Cliente() {
 	}
 
-	public int getIdcliente() {
-		return this.idcliente;
+	public int getIdCliente() {
+		return this.idCliente;
 	}
 
-	public void setIdcliente(int idcliente) {
-		this.idcliente = idcliente;
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
 	}
 
 	public String getAsesor() {
@@ -130,12 +122,36 @@ public class Cliente implements Serializable {
 		this.email = email;
 	}
 
-	public Date getFechanacimiento() {
-		return this.fechanacimiento;
+	public Date getFechaNacimiento() {
+		return this.fechaNacimiento;
 	}
 
-	public void setFechanacimiento(Date fechanacimiento) {
-		this.fechanacimiento = fechanacimiento;
+	public void setFechaNacimiento(Date fechaNacimiento) {
+		this.fechaNacimiento = fechaNacimiento;
+	}
+
+	public int getIdEstadoCivil() {
+		return this.idEstadoCivil;
+	}
+
+	public void setIdEstadoCivil(int idEstadoCivil) {
+		this.idEstadoCivil = idEstadoCivil;
+	}
+
+	public int getIdPais() {
+		return this.idPais;
+	}
+
+	public void setIdPais(int idPais) {
+		this.idPais = idPais;
+	}
+
+	public int getIdTipoDocumento() {
+		return this.idTipoDocumento;
+	}
+
+	public void setIdTipoDocumento(int idTipoDocumento) {
+		this.idTipoDocumento = idTipoDocumento;
 	}
 
 	public int getIdestadocivilconyuge() {
@@ -154,12 +170,12 @@ public class Cliente implements Serializable {
 		this.ingresos = ingresos;
 	}
 
-	public String getLugartrabajo() {
-		return this.lugartrabajo;
+	public String getLugarTrabajo() {
+		return this.lugarTrabajo;
 	}
 
-	public void setLugartrabajo(String lugartrabajo) {
-		this.lugartrabajo = lugartrabajo;
+	public void setLugarTrabajo(String lugarTrabajo) {
+		this.lugarTrabajo = lugarTrabajo;
 	}
 
 	public String getNombre() {
@@ -170,20 +186,20 @@ public class Cliente implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getNrodocconyuge() {
-		return this.nrodocconyuge;
+	public String getNroDocConyuge() {
+		return this.nroDocConyuge;
 	}
 
-	public void setNrodocconyuge(String nrodocconyuge) {
-		this.nrodocconyuge = nrodocconyuge;
+	public void setNroDocConyuge(String nroDocConyuge) {
+		this.nroDocConyuge = nroDocConyuge;
 	}
 
-	public String getNrodocumento() {
-		return this.nrodocumento;
+	public String getNroDocumento() {
+		return this.nroDocumento;
 	}
 
-	public void setNrodocumento(String nrodocumento) {
-		this.nrodocumento = nrodocumento;
+	public void setNroDocumento(String nroDocumento) {
+		this.nroDocumento = nroDocumento;
 	}
 
 	public String getOcupacion() {
@@ -194,12 +210,12 @@ public class Cliente implements Serializable {
 		this.ocupacion = ocupacion;
 	}
 
-	public String getOcupacionconyuge() {
-		return this.ocupacionconyuge;
+	public String getOcupacionConyuge() {
+		return this.ocupacionConyuge;
 	}
 
-	public void setOcupacionconyuge(String ocupacionconyuge) {
-		this.ocupacionconyuge = ocupacionconyuge;
+	public void setOcupacionConyuge(String ocupacionConyuge) {
+		this.ocupacionConyuge = ocupacionConyuge;
 	}
 
 	public String getProvincia() {
@@ -226,80 +242,12 @@ public class Cliente implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public int getTipodocconyuge() {
-		return this.tipodocconyuge;
+	public int getTipoDocConyuge() {
+		return this.tipoDocConyuge;
 	}
 
-	public void setTipodocconyuge(int tipodocconyuge) {
-		this.tipodocconyuge = tipodocconyuge;
-	}
-
-	public Tipodocumento getTipodocumento() {
-		return this.tipodocumento;
-	}
-
-	public void setTipodocumento(Tipodocumento tipodocumento) {
-		this.tipodocumento = tipodocumento;
-	}
-
-	public Pai getPai() {
-		return this.pai;
-	}
-
-	public void setPai(Pai pai) {
-		this.pai = pai;
-	}
-
-	public Estadocivil getEstadocivil() {
-		return this.estadocivil;
-	}
-
-	public void setEstadocivil(Estadocivil estadocivil) {
-		this.estadocivil = estadocivil;
-	}
-
-	public List<Venta> getVentas1() {
-		return this.ventas1;
-	}
-
-	public void setVentas1(List<Venta> ventas1) {
-		this.ventas1 = ventas1;
-	}
-
-	public Venta addVentas1(Venta ventas1) {
-		getVentas1().add(ventas1);
-		ventas1.setCliente1(this);
-
-		return ventas1;
-	}
-
-	public Venta removeVentas1(Venta ventas1) {
-		getVentas1().remove(ventas1);
-		ventas1.setCliente1(null);
-
-		return ventas1;
-	}
-
-	public List<Venta> getVentas2() {
-		return this.ventas2;
-	}
-
-	public void setVentas2(List<Venta> ventas2) {
-		this.ventas2 = ventas2;
-	}
-
-	public Venta addVentas2(Venta ventas2) {
-		getVentas2().add(ventas2);
-		ventas2.setCliente2(this);
-
-		return ventas2;
-	}
-
-	public Venta removeVentas2(Venta ventas2) {
-		getVentas2().remove(ventas2);
-		ventas2.setCliente2(null);
-
-		return ventas2;
+	public void setTipoDocConyuge(int tipoDocConyuge) {
+		this.tipoDocConyuge = tipoDocConyuge;
 	}
 
 }

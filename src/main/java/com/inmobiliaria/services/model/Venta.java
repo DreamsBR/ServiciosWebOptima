@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -17,90 +16,71 @@ public class Venta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idventa;
+	@Column(name="id_venta")
+	private int idVenta;
 
-	private BigDecimal ayudainicial;
+	@Column(name="ayuda_inicial")
+	private BigDecimal ayudaInicial;
 
 	private BigDecimal descuento;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechadesembolso;
+	@Column(name="fecha_desembolso")
+	private Date fechaDesembolso;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaminuta;
+	@Column(name="fecha_minuta")
+	private Date fechaMinuta;
 
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date fechaseparacion;
+	@Column(name="fecha_separacion")
+	private Date fechaSeparacion;
+
+	@Column(name="id_canal")
+	private int idCanal;
+
+	@Column(name="id_categoria")
+	private int idCategoria;
+
+	@Column(name="id_cliente")
+	private int idCliente;
+
+	@Column(name="id_copropietario")
+	private int idCopropietario;
+
+	@Column(name="id_estado_venta")
+	private int idEstadoVenta;
+
+	@Column(name="id_financiamiento")
+	private int idFinanciamiento;
+
+	@Column(name="id_motivo")
+	private int idMotivo;
+
+	@Column(name="id_vendedor")
+	private int idVendedor;
 
 	private BigDecimal importe;
 
 	private BigDecimal total;
 
-	//bi-directional many-to-one association to Pago
-	@OneToMany(mappedBy="venta")
-	private List<Pago> pagos;
-
-	//bi-directional many-to-one association to Canal
-	@ManyToOne
-	@JoinColumn(name="idcanal")
-	private Canal canal;
-
-	//bi-directional many-to-one association to Motivo
-	@ManyToOne
-	@JoinColumn(name="idmotivo")
-	private Motivo motivo;
-
-	//bi-directional many-to-one association to Vendedor
-	@ManyToOne
-	@JoinColumn(name="idvendedor")
-	private Vendedor vendedor;
-
-	//bi-directional many-to-one association to Estadoventa
-	@ManyToOne
-	@JoinColumn(name="idestadoventa")
-	private Estadoventa estadoventa;
-
-	//bi-directional many-to-one association to Categoria
-	@ManyToOne
-	@JoinColumn(name="idcategoria")
-	private Categoria categoria;
-
-	//bi-directional many-to-one association to Cliente
-	@ManyToOne
-	@JoinColumn(name="idcliente")
-	private Cliente cliente1;
-
-	//bi-directional many-to-one association to Cliente
-	@ManyToOne
-	@JoinColumn(name="idcopropietario")
-	private Cliente cliente2;
-
-	//bi-directional many-to-one association to Financiamiento
-	@ManyToOne
-	@JoinColumn(name="idfinanciamiento")
-	private Financiamiento financiamiento;
-
-	//bi-directional many-to-one association to VentaInmueble
-	@OneToMany(mappedBy="venta")
-	private List<VentaInmueble> ventaInmuebles;
-
 	public Venta() {
 	}
 
-	public int getIdventa() {
-		return this.idventa;
+	public int getIdVenta() {
+		return this.idVenta;
 	}
 
-	public void setIdventa(int idventa) {
-		this.idventa = idventa;
+	public void setIdVenta(int idVenta) {
+		this.idVenta = idVenta;
 	}
 
-	public BigDecimal getAyudainicial() {
-		return this.ayudainicial;
+	public BigDecimal getAyudaInicial() {
+		return this.ayudaInicial;
 	}
 
-	public void setAyudainicial(BigDecimal ayudainicial) {
-		this.ayudainicial = ayudainicial;
+	public void setAyudaInicial(BigDecimal ayudaInicial) {
+		this.ayudaInicial = ayudaInicial;
 	}
 
 	public BigDecimal getDescuento() {
@@ -111,28 +91,92 @@ public class Venta implements Serializable {
 		this.descuento = descuento;
 	}
 
-	public Date getFechadesembolso() {
-		return this.fechadesembolso;
+	public Date getFechaDesembolso() {
+		return this.fechaDesembolso;
 	}
 
-	public void setFechadesembolso(Date fechadesembolso) {
-		this.fechadesembolso = fechadesembolso;
+	public void setFechaDesembolso(Date fechaDesembolso) {
+		this.fechaDesembolso = fechaDesembolso;
 	}
 
-	public Date getFechaminuta() {
-		return this.fechaminuta;
+	public Date getFechaMinuta() {
+		return this.fechaMinuta;
 	}
 
-	public void setFechaminuta(Date fechaminuta) {
-		this.fechaminuta = fechaminuta;
+	public void setFechaMinuta(Date fechaMinuta) {
+		this.fechaMinuta = fechaMinuta;
 	}
 
-	public Date getFechaseparacion() {
-		return this.fechaseparacion;
+	public Date getFechaSeparacion() {
+		return this.fechaSeparacion;
 	}
 
-	public void setFechaseparacion(Date fechaseparacion) {
-		this.fechaseparacion = fechaseparacion;
+	public void setFechaSeparacion(Date fechaSeparacion) {
+		this.fechaSeparacion = fechaSeparacion;
+	}
+
+	public int getIdCanal() {
+		return this.idCanal;
+	}
+
+	public void setIdCanal(int idCanal) {
+		this.idCanal = idCanal;
+	}
+
+	public int getIdCategoria() {
+		return this.idCategoria;
+	}
+
+	public void setIdCategoria(int idCategoria) {
+		this.idCategoria = idCategoria;
+	}
+
+	public int getIdCliente() {
+		return this.idCliente;
+	}
+
+	public void setIdCliente(int idCliente) {
+		this.idCliente = idCliente;
+	}
+
+	public int getIdCopropietario() {
+		return this.idCopropietario;
+	}
+
+	public void setIdCopropietario(int idCopropietario) {
+		this.idCopropietario = idCopropietario;
+	}
+
+	public int getIdEstadoVenta() {
+		return this.idEstadoVenta;
+	}
+
+	public void setIdEstadoVenta(int idEstadoVenta) {
+		this.idEstadoVenta = idEstadoVenta;
+	}
+
+	public int getIdFinanciamiento() {
+		return this.idFinanciamiento;
+	}
+
+	public void setIdFinanciamiento(int idFinanciamiento) {
+		this.idFinanciamiento = idFinanciamiento;
+	}
+
+	public int getIdMotivo() {
+		return this.idMotivo;
+	}
+
+	public void setIdMotivo(int idMotivo) {
+		this.idMotivo = idMotivo;
+	}
+
+	public int getIdVendedor() {
+		return this.idVendedor;
+	}
+
+	public void setIdVendedor(int idVendedor) {
+		this.idVendedor = idVendedor;
 	}
 
 	public BigDecimal getImporte() {
@@ -149,114 +193,6 @@ public class Venta implements Serializable {
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
-	}
-
-	public List<Pago> getPagos() {
-		return this.pagos;
-	}
-
-	public void setPagos(List<Pago> pagos) {
-		this.pagos = pagos;
-	}
-
-	public Pago addPago(Pago pago) {
-		getPagos().add(pago);
-		pago.setVenta(this);
-
-		return pago;
-	}
-
-	public Pago removePago(Pago pago) {
-		getPagos().remove(pago);
-		pago.setVenta(null);
-
-		return pago;
-	}
-
-	public Canal getCanal() {
-		return this.canal;
-	}
-
-	public void setCanal(Canal canal) {
-		this.canal = canal;
-	}
-
-	public Motivo getMotivo() {
-		return this.motivo;
-	}
-
-	public void setMotivo(Motivo motivo) {
-		this.motivo = motivo;
-	}
-
-	public Vendedor getVendedor() {
-		return this.vendedor;
-	}
-
-	public void setVendedor(Vendedor vendedor) {
-		this.vendedor = vendedor;
-	}
-
-	public Estadoventa getEstadoventa() {
-		return this.estadoventa;
-	}
-
-	public void setEstadoventa(Estadoventa estadoventa) {
-		this.estadoventa = estadoventa;
-	}
-
-	public Categoria getCategoria() {
-		return this.categoria;
-	}
-
-	public void setCategoria(Categoria categoria) {
-		this.categoria = categoria;
-	}
-
-	public Cliente getCliente1() {
-		return this.cliente1;
-	}
-
-	public void setCliente1(Cliente cliente1) {
-		this.cliente1 = cliente1;
-	}
-
-	public Cliente getCliente2() {
-		return this.cliente2;
-	}
-
-	public void setCliente2(Cliente cliente2) {
-		this.cliente2 = cliente2;
-	}
-
-	public Financiamiento getFinanciamiento() {
-		return this.financiamiento;
-	}
-
-	public void setFinanciamiento(Financiamiento financiamiento) {
-		this.financiamiento = financiamiento;
-	}
-
-	public List<VentaInmueble> getVentaInmuebles() {
-		return this.ventaInmuebles;
-	}
-
-	public void setVentaInmuebles(List<VentaInmueble> ventaInmuebles) {
-		this.ventaInmuebles = ventaInmuebles;
-	}
-
-	public VentaInmueble addVentaInmueble(VentaInmueble ventaInmueble) {
-		getVentaInmuebles().add(ventaInmueble);
-		ventaInmueble.setVenta(this);
-
-		return ventaInmueble;
-	}
-
-	public VentaInmueble removeVentaInmueble(VentaInmueble ventaInmueble) {
-		getVentaInmuebles().remove(ventaInmueble);
-		ventaInmueble.setVenta(null);
-
-		return ventaInmueble;
 	}
 
 }

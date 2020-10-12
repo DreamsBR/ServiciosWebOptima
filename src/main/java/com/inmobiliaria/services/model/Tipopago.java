@@ -2,38 +2,35 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the tipopago database table.
+ * The persistent class for the tipo_pago database table.
  * 
  */
 @Entity
-@NamedQuery(name="Tipopago.findAll", query="SELECT t FROM Tipopago t")
-public class Tipopago implements Serializable {
+@Table(name="tipo_pago")
+@NamedQuery(name="TipoPago.findAll", query="SELECT t FROM TipoPago t")
+public class TipoPago implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idtipopago;
+	@Column(name="id_tipo_pago")
+	private int idTipoPago;
 
 	private byte enable;
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Pago
-	@OneToMany(mappedBy="tipopago")
-	private List<Pago> pagos;
-
-	public Tipopago() {
+	public TipoPago() {
 	}
 
-	public int getIdtipopago() {
-		return this.idtipopago;
+	public int getIdTipoPago() {
+		return this.idTipoPago;
 	}
 
-	public void setIdtipopago(int idtipopago) {
-		this.idtipopago = idtipopago;
+	public void setIdTipoPago(int idTipoPago) {
+		this.idTipoPago = idTipoPago;
 	}
 
 	public byte getEnable() {
@@ -50,28 +47,6 @@ public class Tipopago implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Pago> getPagos() {
-		return this.pagos;
-	}
-
-	public void setPagos(List<Pago> pagos) {
-		this.pagos = pagos;
-	}
-
-	public Pago addPago(Pago pago) {
-		getPagos().add(pago);
-		pago.setTipopago(this);
-
-		return pago;
-	}
-
-	public Pago removePago(Pago pago) {
-		getPagos().remove(pago);
-		pago.setTipopago(null);
-
-		return pago;
 	}
 
 }

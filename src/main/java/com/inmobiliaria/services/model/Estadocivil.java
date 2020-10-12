@@ -2,38 +2,35 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the estadocivil database table.
+ * The persistent class for the estado_civil database table.
  * 
  */
 @Entity
-@NamedQuery(name="Estadocivil.findAll", query="SELECT e FROM Estadocivil e")
-public class Estadocivil implements Serializable {
+@Table(name="estado_civil")
+@NamedQuery(name="EstadoCivil.findAll", query="SELECT e FROM EstadoCivil e")
+public class EstadoCivil implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idestadocivil;
+	@Column(name="id_estado_civil")
+	private int idEstadoCivil;
 
 	private byte enable;
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Cliente
-	@OneToMany(mappedBy="estadocivil")
-	private List<Cliente> clientes;
-
-	public Estadocivil() {
+	public EstadoCivil() {
 	}
 
-	public int getIdestadocivil() {
-		return this.idestadocivil;
+	public int getIdEstadoCivil() {
+		return this.idEstadoCivil;
 	}
 
-	public void setIdestadocivil(int idestadocivil) {
-		this.idestadocivil = idestadocivil;
+	public void setIdEstadoCivil(int idEstadoCivil) {
+		this.idEstadoCivil = idEstadoCivil;
 	}
 
 	public byte getEnable() {
@@ -50,28 +47,6 @@ public class Estadocivil implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Cliente> getClientes() {
-		return this.clientes;
-	}
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
-	public Cliente addCliente(Cliente cliente) {
-		getClientes().add(cliente);
-		cliente.setEstadocivil(this);
-
-		return cliente;
-	}
-
-	public Cliente removeCliente(Cliente cliente) {
-		getClientes().remove(cliente);
-		cliente.setEstadocivil(null);
-
-		return cliente;
 	}
 
 }

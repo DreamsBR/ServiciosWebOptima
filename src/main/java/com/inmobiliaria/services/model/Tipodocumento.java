@@ -2,38 +2,35 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
-import java.util.List;
 
 
 /**
- * The persistent class for the tipodocumento database table.
+ * The persistent class for the tipo_documento database table.
  * 
  */
 @Entity
-@NamedQuery(name="Tipodocumento.findAll", query="SELECT t FROM Tipodocumento t")
-public class Tipodocumento implements Serializable {
+@Table(name="tipo_documento")
+@NamedQuery(name="TipoDocumento.findAll", query="SELECT t FROM TipoDocumento t")
+public class TipoDocumento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idtipodocumento;
+	@Column(name="id_tipo_documento")
+	private int idTipoDocumento;
 
 	private byte enable;
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Cliente
-	@OneToMany(mappedBy="tipodocumento")
-	private List<Cliente> clientes;
-
-	public Tipodocumento() {
+	public TipoDocumento() {
 	}
 
-	public int getIdtipodocumento() {
-		return this.idtipodocumento;
+	public int getIdTipoDocumento() {
+		return this.idTipoDocumento;
 	}
 
-	public void setIdtipodocumento(int idtipodocumento) {
-		this.idtipodocumento = idtipodocumento;
+	public void setIdTipoDocumento(int idTipoDocumento) {
+		this.idTipoDocumento = idTipoDocumento;
 	}
 
 	public byte getEnable() {
@@ -50,28 +47,6 @@ public class Tipodocumento implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
-	}
-
-	public List<Cliente> getClientes() {
-		return this.clientes;
-	}
-
-	public void setClientes(List<Cliente> clientes) {
-		this.clientes = clientes;
-	}
-
-	public Cliente addCliente(Cliente cliente) {
-		getClientes().add(cliente);
-		cliente.setTipodocumento(this);
-
-		return cliente;
-	}
-
-	public Cliente removeCliente(Cliente cliente) {
-		getClientes().remove(cliente);
-		cliente.setTipodocumento(null);
-
-		return cliente;
 	}
 
 }

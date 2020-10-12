@@ -3,6 +3,7 @@ package com.inmobiliaria.services.model;
 import java.io.Serializable;
 import javax.persistence.*;
 
+
 /**
  * The persistent class for the banco database table.
  * 
@@ -13,7 +14,8 @@ public class Banco implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idbanco;
+	@Column(name="id_banco")
+	private int idBanco;
 
 	private byte enable;
 
@@ -22,12 +24,12 @@ public class Banco implements Serializable {
 	public Banco() {
 	}
 
-	public int getIdbanco() {
-		return this.idbanco;
+	public int getIdBanco() {
+		return this.idBanco;
 	}
 
-	public void setIdbanco(int idbanco) {
-		this.idbanco = idbanco;
+	public void setIdBanco(int idBanco) {
+		this.idBanco = idBanco;
 	}
 
 	public byte getEnable() {

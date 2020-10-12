@@ -16,13 +16,17 @@ public class VentaInmueble implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	private int idventainmueble;
+	@Column(name="id_venta_inmueble")
+	private int idVentaInmueble;
 
-	private String arealibre;
+	@Column(name="area_libre")
+	private String areaLibre;
 
-	private String areatechada;
+	@Column(name="area_techada")
+	private String areaTechada;
 
-	private String areatotal;
+	@Column(name="area_total")
+	private String areaTotal;
 
 	private BigDecimal ayudainicial;
 
@@ -30,55 +34,51 @@ public class VentaInmueble implements Serializable {
 
 	private int dormitorios;
 
+	@Column(name="id_inmueble")
+	private int idInmueble;
+
+	@Column(name="id_venta")
+	private int idVenta;
+
 	private BigDecimal importe;
 
 	private BigDecimal precio;
 
 	private String vista;
 
-	//bi-directional many-to-one association to Inmueble
-	@ManyToOne
-	@JoinColumn(name="idinmueble")
-	private Inmueble inmueble;
-
-	//bi-directional many-to-one association to Venta
-	@ManyToOne
-	@JoinColumn(name="idventa")
-	private Venta venta;
-
 	public VentaInmueble() {
 	}
 
-	public int getIdventainmueble() {
-		return this.idventainmueble;
+	public int getIdVentaInmueble() {
+		return this.idVentaInmueble;
 	}
 
-	public void setIdventainmueble(int idventainmueble) {
-		this.idventainmueble = idventainmueble;
+	public void setIdVentaInmueble(int idVentaInmueble) {
+		this.idVentaInmueble = idVentaInmueble;
 	}
 
-	public String getArealibre() {
-		return this.arealibre;
+	public String getAreaLibre() {
+		return this.areaLibre;
 	}
 
-	public void setArealibre(String arealibre) {
-		this.arealibre = arealibre;
+	public void setAreaLibre(String areaLibre) {
+		this.areaLibre = areaLibre;
 	}
 
-	public String getAreatechada() {
-		return this.areatechada;
+	public String getAreaTechada() {
+		return this.areaTechada;
 	}
 
-	public void setAreatechada(String areatechada) {
-		this.areatechada = areatechada;
+	public void setAreaTechada(String areaTechada) {
+		this.areaTechada = areaTechada;
 	}
 
-	public String getAreatotal() {
-		return this.areatotal;
+	public String getAreaTotal() {
+		return this.areaTotal;
 	}
 
-	public void setAreatotal(String areatotal) {
-		this.areatotal = areatotal;
+	public void setAreaTotal(String areaTotal) {
+		this.areaTotal = areaTotal;
 	}
 
 	public BigDecimal getAyudainicial() {
@@ -105,6 +105,22 @@ public class VentaInmueble implements Serializable {
 		this.dormitorios = dormitorios;
 	}
 
+	public int getIdInmueble() {
+		return this.idInmueble;
+	}
+
+	public void setIdInmueble(int idInmueble) {
+		this.idInmueble = idInmueble;
+	}
+
+	public int getIdVenta() {
+		return this.idVenta;
+	}
+
+	public void setIdVenta(int idVenta) {
+		this.idVenta = idVenta;
+	}
+
 	public BigDecimal getImporte() {
 		return this.importe;
 	}
@@ -127,22 +143,6 @@ public class VentaInmueble implements Serializable {
 
 	public void setVista(String vista) {
 		this.vista = vista;
-	}
-
-	public Inmueble getInmueble() {
-		return this.inmueble;
-	}
-
-	public void setInmueble(Inmueble inmueble) {
-		this.inmueble = inmueble;
-	}
-
-	public Venta getVenta() {
-		return this.venta;
-	}
-
-	public void setVenta(Venta venta) {
-		this.venta = venta;
 	}
 
 }
