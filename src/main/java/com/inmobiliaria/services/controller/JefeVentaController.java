@@ -25,8 +25,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+import com.inmobiliaria.services.modelv1.JefeVenta;
 import com.inmobiliaria.services.services.JefeVentaService;
-import com.inmobiliaria.services.model.JefeVenta;
 
 @RestController
 @RequestMapping(value = "/v1/jefeventa")
