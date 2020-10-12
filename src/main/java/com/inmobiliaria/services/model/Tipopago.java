@@ -1,3 +1,7 @@
+/**
+ * @author Walter Canchan
+ * @email wcanchan@gmail.com
+ */
 package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
