@@ -43,9 +43,6 @@ public class Inmueble implements Serializable {
 
 	private BigDecimal precio;
 
-	public Inmueble() {
-	}
-
 	public int getIdInmueble() {
 		return this.idInmueble;
 	}

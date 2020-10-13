@@ -26,9 +26,6 @@ public class JefaturaProyecto implements Serializable {
 	@Column(name="id_proyecto")
 	private int idProyecto;
 
-	public JefaturaProyecto() {
-	}
-
 	public int getIdJefaturaProyecto() {
 		return this.idJefaturaProyecto;
 	}

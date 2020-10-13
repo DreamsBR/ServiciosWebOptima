@@ -21,9 +21,6 @@ public class Banco implements Serializable {
 
 	private String nombre;
 
-	public Banco() {
-	}
-
 	public int getIdBanco() {
 		return this.idBanco;
 	}

@@ -23,9 +23,6 @@ public class Proyecto implements Serializable {
 
 	private String nombre;
 
-	public Proyecto() {
-	}
-
 	public int getIdProyecto() {
 		return this.idProyecto;
 	}

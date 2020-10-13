@@ -46,9 +46,6 @@ public class VentaInmueble implements Serializable {
 
 	private String vista;
 
-	public VentaInmueble() {
-	}
-
 	public int getIdVentaInmueble() {
 		return this.idVentaInmueble;
 	}

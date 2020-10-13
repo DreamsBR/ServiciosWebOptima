@@ -5,7 +5,9 @@
 package com.inmobiliaria.services.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.inmobiliaria.services.model.Financiamiento;
+import org.springframework.stereotype.Repository;
 
+import com.inmobiliaria.services.model.Financiamiento;
+@Repository
 public interface FinanciamientoRepository extends JpaRepository<Financiamiento, Integer> { 
 }

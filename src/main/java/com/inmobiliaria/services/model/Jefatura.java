@@ -24,9 +24,6 @@ public class Jefatura implements Serializable {
 
 	private String nombre;
 
-	public Jefatura() {
-	}
-
 	public int getIdJefatura() {
 		return this.idJefatura;
 	}

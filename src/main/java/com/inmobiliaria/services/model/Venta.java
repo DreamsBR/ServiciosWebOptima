@@ -64,9 +64,6 @@ public class Venta implements Serializable {
 
 	private BigDecimal total;
 
-	public Venta() {
-	}
-
 	public int getIdVenta() {
 		return this.idVenta;
 	}

@@ -26,9 +26,6 @@ public class TipoDocumento implements Serializable {
 
 	private String nombre;
 
-	public TipoDocumento() {
-	}
-
 	public int getIdTipoDocumento() {
 		return this.idTipoDocumento;
 	}

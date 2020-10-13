@@ -26,9 +26,6 @@ public class TipoCredito implements Serializable {
 
 	private String nombre;
 
-	public TipoCredito() {
-	}
-
 	public int getIdTipoCredito() {
 		return this.idTipoCredito;
 	}

@@ -24,9 +24,6 @@ public class Vendedor implements Serializable {
 
 	private String nombre;
 
-	public Vendedor() {
-	}
-
 	public int getIdVendedor() {
 		return this.idVendedor;
 	}

@@ -21,9 +21,6 @@ public class Canal implements Serializable {
 
 	private String nombre;
 
-	public Canal() {
-	}
-
 	public int getIdCanal() {
 		return this.idCanal;
 	}

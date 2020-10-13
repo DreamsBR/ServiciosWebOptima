@@ -71,9 +71,6 @@ public class Cliente implements Serializable {
 	@Column(name="tipo_doc_conyuge")
 	private int tipoDocConyuge;
 
-	public Cliente() {
-	}
-
 	public int getIdCliente() {
 		return this.idCliente;
 	}

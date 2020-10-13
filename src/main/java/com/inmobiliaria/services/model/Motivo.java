@@ -21,9 +21,6 @@ public class Motivo implements Serializable {
 
 	private String nombre;
 
-	public Motivo() {
-	}
-
 	public int getIdMotivo() {
 		return this.idMotivo;
 	}

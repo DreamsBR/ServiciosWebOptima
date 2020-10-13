@@ -26,9 +26,6 @@ public class EstadoVenta implements Serializable {
 
 	private String nombre;
 
-	public EstadoVenta() {
-	}
-
 	public int getIdEstadoVenta() {
 		return this.idEstadoVenta;
 	}

@@ -24,9 +24,6 @@ public class Gerencia implements Serializable {
 
 	private String nombre;
 
-	public Gerencia() {
-	}
-
 	public int getIdGerencia() {
 		return this.idGerencia;
 	}

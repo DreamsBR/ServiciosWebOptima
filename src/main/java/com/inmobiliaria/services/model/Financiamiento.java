@@ -44,9 +44,6 @@ public class Financiamiento implements Serializable {
 	@Column(name="id_tipo_credito")
 	private int idTipoCredito;
 
-	public Financiamiento() {
-	}
-
 	public int getIdFinanciamiento() {
 		return this.idFinanciamiento;
 	}

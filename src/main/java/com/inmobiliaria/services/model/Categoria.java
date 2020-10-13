@@ -21,9 +21,6 @@ public class Categoria implements Serializable {
 
 	private String nombre;
 
-	public Categoria() {
-	}
-
 	public int getIdCategoria() {
 		return this.idCategoria;
 	}

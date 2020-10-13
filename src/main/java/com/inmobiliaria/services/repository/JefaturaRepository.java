@@ -5,7 +5,9 @@
 package com.inmobiliaria.services.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.inmobiliaria.services.model.Jefatura;
+import org.springframework.stereotype.Repository;
 
+import com.inmobiliaria.services.model.Jefatura;
+@Repository
 public interface JefaturaRepository extends JpaRepository<Jefatura, Integer> { 
 }

@@ -26,9 +26,6 @@ public class EstadoCivil implements Serializable {
 
 	private String nombre;
 
-	public EstadoCivil() {
-	}
-
 	public int getIdEstadoCivil() {
 		return this.idEstadoCivil;
 	}

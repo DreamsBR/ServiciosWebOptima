@@ -27,9 +27,6 @@ public class JefeVenta implements Serializable {
 	@Column(name="id_persona")
 	private int idPersona;
 
-	public JefeVenta() {
-	}
-
 	public int getIdJefeVenta() {
 		return this.idJefeVenta;
 	}

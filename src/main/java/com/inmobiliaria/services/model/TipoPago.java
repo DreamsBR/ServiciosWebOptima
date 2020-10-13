@@ -26,9 +26,6 @@ public class TipoPago implements Serializable {
 
 	private String nombre;
 
-	public TipoPago() {
-	}
-
 	public int getIdTipoPago() {
 		return this.idTipoPago;
 	}
