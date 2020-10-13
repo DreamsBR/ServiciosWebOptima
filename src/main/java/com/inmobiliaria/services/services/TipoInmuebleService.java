@@ -12,7 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.modelv1.TipoInmueble;
+import com.inmobiliaria.services.model.TipoInmueble;
 import com.inmobiliaria.services.repository.TipoInmuebleRepository;
 
 @Service
