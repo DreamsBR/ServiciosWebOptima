@@ -14,12 +14,16 @@ public class Canal implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_canal")
 	private int idCanal;
 
-	private byte enabe;
+	private boolean enabe;
 
 	private String nombre;
+
+	public Canal() {
+	}
 
 	public int getIdCanal() {
 		return this.idCanal;
@@ -29,11 +33,11 @@ public class Canal implements Serializable {
 		this.idCanal = idCanal;
 	}
 
-	public byte getEnabe() {
+	public boolean getEnabe() {
 		return this.enabe;
 	}
 
-	public void setEnabe(byte enabe) {
+	public void setEnabe(boolean enabe) {
 		this.enabe = enabe;
 	}
 

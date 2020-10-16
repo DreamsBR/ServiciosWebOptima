@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.GerenciaService;
 import com.inmobiliaria.services.model.Gerencia;
+import com.inmobiliaria.services.model.response.GerenciaResponse;
 
 @RestController
 @RequestMapping(value = "/v1/gerencia")
@@ -43,16 +44,14 @@ public class GerenciaController {
 	public ResponseEntity<Gerencia> registrar(@RequestBody Gerencia reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
-
 	@GetMapping("/{id}")
-	@ApiOperation(value = "obtener registro", tags = { "Controlador Gerencia" })
+	@ApiOperation(value = "obtener informacion", tags = { "Controlador Gerencia" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Gerencia.class)
+		@ApiResponse(code = 200, message = "OK", response = GerenciaResponse.class)
 	})
-	public ResponseEntity<Gerencia> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Gerencia>(this.service.findById(id), HttpStatus.OK);
+	public ResponseEntity<GerenciaResponse> info(@PathVariable Integer id) {
+		return new ResponseEntity<>(this.service.findGerencia(id), HttpStatus.OK);
 	}
-
 	@PutMapping("/{id}")
 	@ApiOperation(value = "modificar registro", tags = { "Controlador Gerencia" })
 	@ApiResponses(value = {

@@ -1,10 +1,21 @@
 spring:
+  application:
+    name: services
+  main:
+    banner-mode: "off"
   datasource:
-    url: jdbc:mysql://localhost/inmobiliaria?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
-    username: root
-    password: kuntur
+    url: jdbc:mysql://mysql-inmo:3306/inmobiliaria?useSSL=false
+    username: testuser
+    password: testuser@123
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+server:
+  port: 8080
+  servlet:
+    context-path: /services    

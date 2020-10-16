@@ -15,16 +15,20 @@ public class JefaturaProyecto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_jefatura_proyecto")
 	private int idJefaturaProyecto;
 
-	private byte enable;
+	private boolean enable;
 
 	@Column(name="id_jefatura")
 	private int idJefatura;
 
 	@Column(name="id_proyecto")
 	private int idProyecto;
+
+	public JefaturaProyecto() {
+	}
 
 	public int getIdJefaturaProyecto() {
 		return this.idJefaturaProyecto;
@@ -34,11 +38,11 @@ public class JefaturaProyecto implements Serializable {
 		this.idJefaturaProyecto = idJefaturaProyecto;
 	}
 
-	public byte getEnable() {
+	public boolean getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(byte enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 

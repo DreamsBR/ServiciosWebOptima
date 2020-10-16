@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  mysql-inmo:
+    image: mysql:5.7
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin123 
+      - MYSQL_DATABASE=inmobiliaria 
+      - MYSQL_USER=testuser 
+      - MYSQL_PASSWORD=testuser@123
+    ports:
+      - 3306:3306
+    networks:
+      - inmo-red
+  inmobiliaia-service:
+    image: inmobiliaia-service
+    ports:
+      - 8081:8080
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    depends_on:
+      - mysql-inmo
+    networks:
+      - inmo-red
+networks:
+  inmo-red:
+    name: inmo-red

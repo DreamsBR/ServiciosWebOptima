@@ -15,16 +15,19 @@ public class GerenciaJefatura implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@Column(name="`id_gerencia_jefatura`")
+	@Column(name="id_gerencia_jefatura")
 	private int idGerenciaJefatura;
 
-	private byte enable;
+	private boolean enable;
 
 	@Column(name="id_gerencia")
 	private int idGerencia;
 
 	@Column(name="id_jefatura")
 	private int idJefatura;
+
+	public GerenciaJefatura() {
+	}
 
 	public int getIdGerenciaJefatura() {
 		return this.idGerenciaJefatura;
@@ -34,11 +37,11 @@ public class GerenciaJefatura implements Serializable {
 		this.idGerenciaJefatura = idGerenciaJefatura;
 	}
 
-	public byte getEnable() {
+	public boolean getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(byte enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 

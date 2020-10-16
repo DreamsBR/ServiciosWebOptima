@@ -16,6 +16,7 @@ public class Financiamiento implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_financiamiento")
 	private int idFinanciamiento;
 
@@ -26,6 +27,8 @@ public class Financiamiento implements Serializable {
 	private String asesor;
 
 	private BigDecimal bono;
+
+	private boolean enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_fin_ahorro")
@@ -43,6 +46,9 @@ public class Financiamiento implements Serializable {
 
 	@Column(name="id_tipo_credito")
 	private int idTipoCredito;
+
+	public Financiamiento() {
+	}
 
 	public int getIdFinanciamiento() {
 		return this.idFinanciamiento;
@@ -82,6 +88,14 @@ public class Financiamiento implements Serializable {
 
 	public void setBono(BigDecimal bono) {
 		this.bono = bono;
+	}
+
+	public boolean getEnable() {
+		return this.enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 
 	public Date getFechaFinAhorro() {

@@ -16,6 +16,7 @@ public class Venta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_venta")
 	private int idVenta;
 
@@ -23,6 +24,8 @@ public class Venta implements Serializable {
 	private BigDecimal ayudaInicial;
 
 	private BigDecimal descuento;
+
+	private boolean enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_desembolso")
@@ -64,6 +67,9 @@ public class Venta implements Serializable {
 
 	private BigDecimal total;
 
+	public Venta() {
+	}
+
 	public int getIdVenta() {
 		return this.idVenta;
 	}
@@ -86,6 +92,14 @@ public class Venta implements Serializable {
 
 	public void setDescuento(BigDecimal descuento) {
 		this.descuento = descuento;
+	}
+
+	public boolean getEnable() {
+		return this.enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 
 	public Date getFechaDesembolso() {

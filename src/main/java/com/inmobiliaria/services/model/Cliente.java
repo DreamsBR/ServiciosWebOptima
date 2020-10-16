@@ -16,6 +16,7 @@ public class Cliente implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_cliente")
 	private int idCliente;
 
@@ -70,6 +71,9 @@ public class Cliente implements Serializable {
 
 	@Column(name="tipo_doc_conyuge")
 	private int tipoDocConyuge;
+
+	public Cliente() {
+	}
 
 	public int getIdCliente() {
 		return this.idCliente;

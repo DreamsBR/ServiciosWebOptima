@@ -21,16 +21,17 @@ public class BancoService {
 	@Autowired
 	private BancoRepository reporsitory;
 	@Transactional
-	public Banco registrar(Banco reg) {
-		return reporsitory.save(reg);
+	public Banco registrar(Banco entity) {
+		return reporsitory.save(entity);
 	}
 	@Transactional
 	public void delete(Banco reg) {
 		reporsitory.delete(reg);
 	}
 	@Transactional
-	public Banco update(Banco reg) {
-		return reporsitory.save(reg);
+	public Banco update(Banco entity) {
+		Banco nuevo =  reporsitory.save(entity);
+		return nuevo;
 	}
 	public Banco findById(Integer id) {
 		return reporsitory.getOne(id);

@@ -1,7 +1,3 @@
-/**
- * @author Walter Canchan
- * @email wcanchan@gmail.com
- */
 package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
@@ -19,12 +15,16 @@ public class TipoInmueble implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_tipo_inmueble")
 	private int idTipoInmueble;
 
-	private byte enable;
+	private boolean enable;
 
 	private String nombre;
+
+	public TipoInmueble() {
+	}
 
 	public int getIdTipoInmueble() {
 		return this.idTipoInmueble;
@@ -34,11 +34,11 @@ public class TipoInmueble implements Serializable {
 		this.idTipoInmueble = idTipoInmueble;
 	}
 
-	public byte getEnable() {
+	public boolean getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(byte enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 

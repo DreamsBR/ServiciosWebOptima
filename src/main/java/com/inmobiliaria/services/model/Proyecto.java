@@ -14,14 +14,18 @@ public class Proyecto implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_proyecto")
 	private int idProyecto;
 
 	private String direccion;
 
-	private byte enable;
+	private boolean enable;
 
 	private String nombre;
+
+	public Proyecto() {
+	}
 
 	public int getIdProyecto() {
 		return this.idProyecto;
@@ -39,11 +43,11 @@ public class Proyecto implements Serializable {
 		this.direccion = direccion;
 	}
 
-	public byte getEnable() {
+	public boolean getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(byte enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 
