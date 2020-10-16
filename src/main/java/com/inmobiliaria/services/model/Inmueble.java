@@ -15,6 +15,7 @@ public class Inmueble implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_inmueble")
 	private int idInmueble;
 
@@ -29,6 +30,8 @@ public class Inmueble implements Serializable {
 
 	@Column(name="cantidad_dormitorio")
 	private int cantidadDormitorio;
+
+	private boolean enable;
 
 	@Column(name="id_proyecto")
 	private int idProyecto;
@@ -84,6 +87,14 @@ public class Inmueble implements Serializable {
 
 	public void setCantidadDormitorio(int cantidadDormitorio) {
 		this.cantidadDormitorio = cantidadDormitorio;
+	}
+
+	public boolean getEnable() {
+		return this.enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 
 	public int getIdProyecto() {

@@ -41,4 +41,7 @@ public class JefaturaService {
 	public Page<Jefatura> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
+	public List<Jefatura> findByIdGerencia(Integer idGerencia) {
+		return reporsitory.findByIdGerencia(idGerencia);
+	}
 }

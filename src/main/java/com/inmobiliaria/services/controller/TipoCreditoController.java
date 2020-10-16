@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import com.inmobiliaria.services.modelv1.TipoCredito;
+import com.inmobiliaria.services.model.TipoCredito;
 import com.inmobiliaria.services.services.TipoCreditoService;
 
 @RestController

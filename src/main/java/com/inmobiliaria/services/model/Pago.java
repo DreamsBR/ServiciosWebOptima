@@ -16,8 +16,11 @@ public class Pago implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_pago")
 	private int idPago;
+
+	private boolean enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
@@ -46,6 +49,14 @@ public class Pago implements Serializable {
 
 	public void setIdPago(int idPago) {
 		this.idPago = idPago;
+	}
+
+	public boolean getEnable() {
+		return this.enable;
+	}
+
+	public void setEnable(boolean enable) {
+		this.enable = enable;
 	}
 
 	public Date getFecha() {

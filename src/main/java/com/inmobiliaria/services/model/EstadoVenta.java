@@ -1,8 +1,4 @@
-/**
- * @author Walter Canchan
- * @email wcanchan@gmail.com
- */
-package com.inmobiliaria.services.modelv1;
+package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
@@ -19,10 +15,11 @@ public class EstadoVenta implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_estado_venta")
 	private int idEstadoVenta;
 
-	private byte enable;
+	private boolean enable;
 
 	private String nombre;
 
@@ -37,11 +34,11 @@ public class EstadoVenta implements Serializable {
 		this.idEstadoVenta = idEstadoVenta;
 	}
 
-	public byte getEnable() {
+	public boolean getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(byte enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 

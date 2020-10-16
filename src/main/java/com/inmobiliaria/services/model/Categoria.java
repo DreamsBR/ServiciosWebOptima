@@ -14,10 +14,11 @@ public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name="id_categoria")
 	private int idCategoria;
 
-	private byte enable;
+	private boolean enable;
 
 	private String nombre;
 
@@ -32,11 +33,11 @@ public class Categoria implements Serializable {
 		this.idCategoria = idCategoria;
 	}
 
-	public byte getEnable() {
+	public boolean getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(byte enable) {
+	public void setEnable(boolean enable) {
 		this.enable = enable;
 	}
 
