@@ -41,4 +41,7 @@ public class ClienteService {
 	public Page<Cliente> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
+	public List<Cliente> findByNroDocumento(String nroDocumento) {
+		return reporsitory.findByNroDocumento(nroDocumento);
+	}
 }

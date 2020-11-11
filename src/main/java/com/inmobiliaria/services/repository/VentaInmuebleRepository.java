@@ -10,4 +10,5 @@ import org.springframework.stereotype.Repository;
 import com.inmobiliaria.services.model.VentaInmueble;
 @Repository
 public interface VentaInmuebleRepository extends JpaRepository<VentaInmueble, Integer> { 
+
 }

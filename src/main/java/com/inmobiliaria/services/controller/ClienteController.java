@@ -102,4 +102,12 @@ public class ClienteController {
 		return this.service.findAll(paginacion);
 	}
 
+	@GetMapping("/nroDocumento/{nroDocumento}")
+	@ApiOperation(value = "Listar registros por nro documento", tags = { "Controlador Cliente" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
+	})
+	public List<Cliente> findByNroDocumento(String nroDocumento) {
+		return this.service.findByNroDocumento(nroDocumento);
+	}
 }

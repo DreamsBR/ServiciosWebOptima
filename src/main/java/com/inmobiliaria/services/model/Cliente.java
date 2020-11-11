@@ -50,7 +50,9 @@ public class Cliente implements Serializable {
 	@Column(name="lugar_trabajo")
 	private String lugarTrabajo;
 
-	private String nombre;
+	private String nombres;
+	
+	private String apellidos;
 
 	@Column(name="nro_doc_conyuge")
 	private String nroDocConyuge;
@@ -179,12 +181,20 @@ public class Cliente implements Serializable {
 		this.lugarTrabajo = lugarTrabajo;
 	}
 
-	public String getNombre() {
-		return this.nombre;
+	public String getNombres() {
+		return nombres;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
 
 	public String getNroDocConyuge() {

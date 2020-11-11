@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.ProyectoService;
 import com.inmobiliaria.services.model.Proyecto;
+import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 
 @RestController
 @RequestMapping(value = "/v1/proyecto")
@@ -43,7 +44,7 @@ public class ProyectoController {
 	public ResponseEntity<Proyecto> registrar(@RequestBody Proyecto reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
-
+	
 	@GetMapping("/{id}")
 	@ApiOperation(value = "obtener registro", tags = { "Controlador Proyecto" })
 	@ApiResponses(value = {
@@ -101,5 +102,21 @@ public class ProyectoController {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
 	}
-
+	
+	@GetMapping("/porGerencia/{idGerencia}")
+	@ApiOperation(value = "Listar por gerencia", tags = { "Controlador Proyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Proyecto.class)
+	})
+	public List<Proyecto> findByIdGerencia(@PathVariable Integer idGerencia) {
+		return this.service.findByIdGerencia(idGerencia);
+	}
+	@GetMapping("/ventas/{idProyecto}")
+	@ApiOperation(value = "Listar ventas", tags = { "Controlador Proyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoResponse.class)
+	})
+	public List<VentaInmuebleProyectoResponse> findVentasByIdProyecto(@PathVariable Integer idProyecto) {
+		return this.service.findVentasByIdProyecto(idProyecto);
+	}
 }
