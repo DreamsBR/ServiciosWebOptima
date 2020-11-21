@@ -33,7 +33,7 @@ public class JefaturaService {
 		return reporsitory.save(reg);
 	}
 	public Jefatura findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Jefatura> findAll() {
 		return reporsitory.findAll();

@@ -18,7 +18,7 @@ public class Categoria implements Serializable {
 	@Column(name="id_categoria")
 	private int idCategoria;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
 
@@ -33,11 +33,11 @@ public class Categoria implements Serializable {
 		this.idCategoria = idCategoria;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

@@ -107,7 +107,7 @@ public class ClienteController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
 	})
-	public List<Cliente> findByNroDocumento(String nroDocumento) {
+	public List<Cliente> findByNroDocumento(@PathVariable String nroDocumento) {
 		return this.service.findByNroDocumento(nroDocumento);
 	}
 }

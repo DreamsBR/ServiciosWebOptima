@@ -33,7 +33,7 @@ public class TipoVistaService {
 		return reporsitory.save(reg);
 	}
 	public TipoVista findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoVista> findAll() {
 		return reporsitory.findAll();

@@ -33,7 +33,7 @@ public class JefaturaProyectoService {
 		return reporsitory.save(reg);
 	}
 	public JefaturaProyecto findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<JefaturaProyecto> findAll() {
 		return reporsitory.findAll();

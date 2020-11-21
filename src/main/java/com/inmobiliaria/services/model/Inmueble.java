@@ -31,13 +31,24 @@ public class Inmueble implements Serializable {
 	@Column(name="cantidad_dormitorio")
 	private int cantidadDormitorio;
 
-	private boolean enable;
+	private byte enable;
 
 	@Column(name="id_proyecto")
 	private int idProyecto;
 
 	@Column(name="id_tipo_inmueble")
 	private int idTipoInmueble;
+
+	@Column(name="id_tipo_inmueble_categoria")
+	private int idTipoInmuebleCategoria;
+	
+	public int getIdTipoInmuebleCategoria() {
+		return idTipoInmuebleCategoria;
+	}
+
+	public void setIdTipoInmuebleCategoria(int idTipoInmuebleCategoria) {
+		this.idTipoInmuebleCategoria = idTipoInmuebleCategoria;
+	}
 
 	@Column(name="id_tipo_vista")
 	private int idTipoVista;
@@ -89,11 +100,11 @@ public class Inmueble implements Serializable {
 		this.cantidadDormitorio = cantidadDormitorio;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

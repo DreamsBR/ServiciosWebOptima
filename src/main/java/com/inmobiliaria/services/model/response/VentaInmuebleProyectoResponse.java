@@ -1,24 +1,52 @@
 package com.inmobiliaria.services.model.response;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 public class VentaInmuebleProyectoResponse {
 	private Integer idCliente;
 	private String nombres;
 	private String apellidos;
-	private Integer tipoDocumento;
+	private String tipoDocumento;
 	private String nroDocumento;
 	private Integer idVenta;
 	private BigDecimal importe;
 	private String estado;
-	private Integer idInmueble;
-	private String tipoInmueble;
-	private String numero;
-	public String getNumero() {
-		return numero;
+	private String fechaSeparacion;
+	private String fechaMinuta;
+	private String fechaDesembolso;
+	private String fechaEpp;
+	private String fechaCaida;
+	
+	public String getFechaSeparacion() {
+		return fechaSeparacion;
 	}
-	public void setNumero(String numero) {
-		this.numero = numero;
+	public void setFechaSeparacion(String fechaSeparacion) {
+		this.fechaSeparacion = fechaSeparacion;
+	}
+	public String getFechaMinuta() {
+		return fechaMinuta;
+	}
+	public void setFechaMinuta(String fechaMinuta) {
+		this.fechaMinuta = fechaMinuta;
+	}
+	public String getFechaDesembolso() {
+		return fechaDesembolso;
+	}
+	public void setFechaDesembolso(String fechaDesembolso) {
+		this.fechaDesembolso = fechaDesembolso;
+	}
+	public String getFechaEpp() {
+		return fechaEpp;
+	}
+	public void setFechaEpp(String fechaEpp) {
+		this.fechaEpp = fechaEpp;
+	}
+	public String getFechaCaida() {
+		return fechaCaida;
+	}
+	public void setFechaCaida(String fechaCaida) {
+		this.fechaCaida = fechaCaida;
 	}
 	public Integer getIdCliente() {
 		return idCliente;
@@ -38,10 +66,10 @@ public class VentaInmuebleProyectoResponse {
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-	public Integer getTipoDocumento() {
+	public String getTipoDocumento() {
 		return tipoDocumento;
 	}
-	public void setTipoDocumento(Integer tipoDocumento) {
+	public void setTipoDocumento(String tipoDocumento) {
 		this.tipoDocumento = tipoDocumento;
 	}
 	public String getNroDocumento() {
@@ -67,18 +95,6 @@ public class VentaInmuebleProyectoResponse {
 	}
 	public void setEstado(String estado) {
 		this.estado = estado;
-	}
-	public Integer getIdInmueble() {
-		return idInmueble;
-	}
-	public void setIdInmueble(Integer idInmueble) {
-		this.idInmueble = idInmueble;
-	}
-	public String getTipoInmueble() {
-		return tipoInmueble;
-	}
-	public void setTipoInmueble(String tipoInmueble) {
-		this.tipoInmueble = tipoInmueble;
 	}
 	
 }

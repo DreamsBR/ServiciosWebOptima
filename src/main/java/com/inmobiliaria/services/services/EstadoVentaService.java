@@ -33,7 +33,7 @@ public class EstadoVentaService {
 		return reporsitory.save(reg);
 	}
 	public EstadoVenta findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<EstadoVenta> findAll() {
 		return reporsitory.findAll();

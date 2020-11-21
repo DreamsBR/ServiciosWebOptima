@@ -19,7 +19,7 @@ public class JefaturaProyecto implements Serializable {
 	@Column(name="id_jefatura_proyecto")
 	private int idJefaturaProyecto;
 
-	private boolean enable;
+	private byte enable;
 
 	@Column(name="id_jefatura")
 	private int idJefatura;
@@ -38,11 +38,11 @@ public class JefaturaProyecto implements Serializable {
 		this.idJefaturaProyecto = idJefaturaProyecto;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

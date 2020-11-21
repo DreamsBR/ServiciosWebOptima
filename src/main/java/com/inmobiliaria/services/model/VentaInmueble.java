@@ -35,7 +35,7 @@ public class VentaInmueble implements Serializable {
 
 	private int dormitorios;
 
-	private boolean enable;
+	private byte enable;
 
 	@Column(name="id_inmueble")
 	private int idInmueble;
@@ -108,11 +108,11 @@ public class VentaInmueble implements Serializable {
 		this.dormitorios = dormitorios;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

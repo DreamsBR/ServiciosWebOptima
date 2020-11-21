@@ -33,12 +33,21 @@ public class InmuebleService {
 		return reporsitory.save(reg);
 	}
 	public Inmueble findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Inmueble> findAll() {
 		return reporsitory.findAll();
 	}
 	public Page<Inmueble> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
+	}
+	public Inmueble searchByNumero(Integer idProyecto, Integer idTipoInmueble, String numero) {
+		return reporsitory.findByIdProyectoAndIdTipoInmuebleAndNumero(idProyecto, idTipoInmueble, numero);
+	}
+	public List<Inmueble> searchByCategoria(Integer idProyecto, Integer idTipoInmueble, Integer idTipoInmuebleCategoria) {
+		return reporsitory.findByIdProyectoAndIdTipoInmuebleAndIdTipoInmuebleCategoria(idProyecto, idTipoInmueble, idTipoInmuebleCategoria);
+	}
+	public List<Inmueble> searchByProyecto(Integer idProyecto) {
+		return reporsitory.findByIdProyecto(idProyecto);
 	}
 }

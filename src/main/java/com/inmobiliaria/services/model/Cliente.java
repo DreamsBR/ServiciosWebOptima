@@ -20,6 +20,8 @@ public class Cliente implements Serializable {
 	@Column(name="id_cliente")
 	private int idCliente;
 
+	private String apellidos;
+
 	private String asesor;
 
 	private String conyuge;
@@ -37,13 +39,14 @@ public class Cliente implements Serializable {
 	@Column(name="id_estado_civil")
 	private int idEstadoCivil;
 
+	@Column(name="id_estado_civil_conyuge")
+	private int idEstadoCivilConyuge;
+
 	@Column(name="id_pais")
 	private int idPais;
 
 	@Column(name="id_tipo_documento")
 	private int idTipoDocumento;
-
-	private int idestadocivilconyuge;
 
 	private BigDecimal ingresos;
 
@@ -51,8 +54,6 @@ public class Cliente implements Serializable {
 	private String lugarTrabajo;
 
 	private String nombres;
-	
-	private String apellidos;
 
 	@Column(name="nro_doc_conyuge")
 	private String nroDocConyuge;
@@ -83,6 +84,14 @@ public class Cliente implements Serializable {
 
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
+	}
+
+	public String getApellidos() {
+		return this.apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
 	}
 
 	public String getAsesor() {
@@ -141,6 +150,14 @@ public class Cliente implements Serializable {
 		this.idEstadoCivil = idEstadoCivil;
 	}
 
+	public int getIdEstadoCivilConyuge() {
+		return this.idEstadoCivilConyuge;
+	}
+
+	public void setIdEstadoCivilConyuge(int idEstadoCivilConyuge) {
+		this.idEstadoCivilConyuge = idEstadoCivilConyuge;
+	}
+
 	public int getIdPais() {
 		return this.idPais;
 	}
@@ -155,14 +172,6 @@ public class Cliente implements Serializable {
 
 	public void setIdTipoDocumento(int idTipoDocumento) {
 		this.idTipoDocumento = idTipoDocumento;
-	}
-
-	public int getIdestadocivilconyuge() {
-		return this.idestadocivilconyuge;
-	}
-
-	public void setIdestadocivilconyuge(int idestadocivilconyuge) {
-		this.idestadocivilconyuge = idestadocivilconyuge;
 	}
 
 	public BigDecimal getIngresos() {
@@ -182,19 +191,11 @@ public class Cliente implements Serializable {
 	}
 
 	public String getNombres() {
-		return nombres;
+		return this.nombres;
 	}
 
 	public void setNombres(String nombres) {
 		this.nombres = nombres;
-	}
-
-	public String getApellidos() {
-		return apellidos;
-	}
-
-	public void setApellidos(String apellidos) {
-		this.apellidos = apellidos;
 	}
 
 	public String getNroDocConyuge() {

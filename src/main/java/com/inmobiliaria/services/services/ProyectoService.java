@@ -14,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.inmobiliaria.services.repository.ProyectoRepository; 
 import com.inmobiliaria.services.model.Proyecto;
-import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 
 @Service
 @Transactional(readOnly=true)
@@ -34,7 +33,7 @@ public class ProyectoService {
 		return reporsitory.save(reg);
 	}
 	public Proyecto findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Proyecto> findAll() {
 		return reporsitory.findAll();
@@ -44,8 +43,5 @@ public class ProyectoService {
 	}
 	public List<Proyecto> findByIdGerencia(Integer idGerencia) {
 		return reporsitory.findByIdGerencia(idGerencia);
-	}
-	public List<VentaInmuebleProyectoResponse> findVentasByIdProyecto(Integer idProyecto) {
-		return reporsitory.findVentasByIdProyecto(idProyecto);
 	}
 }

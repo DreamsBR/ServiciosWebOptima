@@ -25,7 +25,7 @@ public class Venta implements Serializable {
 
 	private BigDecimal descuento;
 
-	private boolean enable;
+	private byte enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_desembolso")
@@ -39,6 +39,14 @@ public class Venta implements Serializable {
 	@Column(name="fecha_separacion")
 	private Date fechaSeparacion;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_epp")
+	private Date fechaEpp;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_caida")
+	private Date fechaCaida;
+	
 	@Column(name="id_canal")
 	private int idCanal;
 
@@ -47,9 +55,6 @@ public class Venta implements Serializable {
 
 	@Column(name="id_cliente")
 	private int idCliente;
-
-	@Column(name="id_copropietario")
-	private int idCopropietario;
 
 	@Column(name="id_estado_venta")
 	private int idEstadoVenta;
@@ -63,6 +68,9 @@ public class Venta implements Serializable {
 	@Column(name="id_vendedor")
 	private int idVendedor;
 
+	@Column(name="id_proyecto")
+	private int idProyecto;
+	
 	private BigDecimal importe;
 
 	private BigDecimal total;
@@ -70,8 +78,32 @@ public class Venta implements Serializable {
 	public Venta() {
 	}
 
+	public int getIdProyecto() {
+		return idProyecto;
+	}
+
+	public void setIdProyecto(int idProyecto) {
+		this.idProyecto = idProyecto;
+	}
+
 	public int getIdVenta() {
 		return this.idVenta;
+	}
+
+	public Date getFechaEpp() {
+		return fechaEpp;
+	}
+
+	public void setFechaEpp(Date fechaEpp) {
+		this.fechaEpp = fechaEpp;
+	}
+
+	public Date getFechaCaida() {
+		return fechaCaida;
+	}
+
+	public void setFechaCaida(Date fechaCaida) {
+		this.fechaCaida = fechaCaida;
 	}
 
 	public void setIdVenta(int idVenta) {
@@ -94,11 +126,11 @@ public class Venta implements Serializable {
 		this.descuento = descuento;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
@@ -148,14 +180,6 @@ public class Venta implements Serializable {
 
 	public void setIdCliente(int idCliente) {
 		this.idCliente = idCliente;
-	}
-
-	public int getIdCopropietario() {
-		return this.idCopropietario;
-	}
-
-	public void setIdCopropietario(int idCopropietario) {
-		this.idCopropietario = idCopropietario;
 	}
 
 	public int getIdEstadoVenta() {

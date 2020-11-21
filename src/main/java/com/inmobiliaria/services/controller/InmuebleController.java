@@ -101,5 +101,30 @@ public class InmuebleController {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
 	}
+	@GetMapping("/listarporproyecto/{idProyecto}")
+	@ApiOperation(value = "Listar registros por proyecto", tags = { "Controlador Inmueble" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
+	})
+	public List<Inmueble> searchByProyecto(@PathVariable Integer idProyecto) {
+		return this.service.searchByProyecto(idProyecto);
+	}
+	@GetMapping("/listarporcategoria/{idProyecto}/{idTipoInmueble}/{idTipoInmuebleCategoria}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Inmueble" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
+	})
+	public List<Inmueble> searchByCategoria(@PathVariable Integer idProyecto, @PathVariable Integer idTipoInmueble, @PathVariable Integer idTipoInmuebleCategoria) {
+		return this.service.searchByCategoria(idProyecto, idTipoInmueble, idTipoInmuebleCategoria);
+	}
+	
+	@GetMapping("/searchByNumero/{idProyecto}/{idTipoInmueble}/{numero}")
+	@ApiOperation(value = "buscar registro", tags = { "Controlador Inmueble" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
+	})
+	public ResponseEntity<Inmueble> searchByNumero(@PathVariable Integer idProyecto, @PathVariable Integer idTipoInmueble, @PathVariable String numero) {
+		return new ResponseEntity<Inmueble>(this.service.searchByNumero(idProyecto, idTipoInmueble, numero), HttpStatus.OK);
+	}
 
 }

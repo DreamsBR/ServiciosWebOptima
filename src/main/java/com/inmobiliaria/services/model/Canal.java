@@ -18,7 +18,7 @@ public class Canal implements Serializable {
 	@Column(name="id_canal")
 	private int idCanal;
 
-	private boolean enabe;
+	private byte enabe;
 
 	private String nombre;
 
@@ -33,11 +33,11 @@ public class Canal implements Serializable {
 		this.idCanal = idCanal;
 	}
 
-	public boolean getEnabe() {
+	public byte getEnabe() {
 		return this.enabe;
 	}
 
-	public void setEnabe(boolean enabe) {
+	public void setEnabe(byte enabe) {
 		this.enabe = enabe;
 	}
 

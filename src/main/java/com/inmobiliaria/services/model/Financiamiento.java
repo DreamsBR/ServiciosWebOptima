@@ -20,7 +20,7 @@ public class Financiamiento implements Serializable {
 	@Column(name="id_financiamiento")
 	private int idFinanciamiento;
 
-	private byte afp;
+	private BigDecimal afp;
 
 	private BigDecimal ahorro;
 
@@ -28,7 +28,7 @@ public class Financiamiento implements Serializable {
 
 	private BigDecimal bono;
 
-	private boolean enable;
+	private byte enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_fin_ahorro")
@@ -47,7 +47,39 @@ public class Financiamiento implements Serializable {
 	@Column(name="id_tipo_credito")
 	private int idTipoCredito;
 
+	@Column(name="nomto_cuota_inicial")
+	private BigDecimal nomtoCuotaInicial;
+
+	private BigDecimal financiamiento;
+	
+	@Column(name="porc_cuota_inicial")
+	private String porcCuotaInicial;
+	
 	public Financiamiento() {
+	}
+
+	public BigDecimal getNomtoCuotaInicial() {
+		return nomtoCuotaInicial;
+	}
+
+	public void setNomtoCuotaInicial(BigDecimal nomtoCuotaInicial) {
+		this.nomtoCuotaInicial = nomtoCuotaInicial;
+	}
+
+	public BigDecimal getFinanciamiento() {
+		return financiamiento;
+	}
+
+	public void setFinanciamiento(BigDecimal financiamiento) {
+		this.financiamiento = financiamiento;
+	}
+
+	public String getPorcCuotaInicial() {
+		return porcCuotaInicial;
+	}
+
+	public void setPorcCuotaInicial(String porcCuotaInicial) {
+		this.porcCuotaInicial = porcCuotaInicial;
 	}
 
 	public int getIdFinanciamiento() {
@@ -58,11 +90,11 @@ public class Financiamiento implements Serializable {
 		this.idFinanciamiento = idFinanciamiento;
 	}
 
-	public byte getAfp() {
+	public BigDecimal getAfp() {
 		return this.afp;
 	}
 
-	public void setAfp(byte afp) {
+	public void setAfp(BigDecimal afp) {
 		this.afp = afp;
 	}
 
@@ -90,11 +122,11 @@ public class Financiamiento implements Serializable {
 		this.bono = bono;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

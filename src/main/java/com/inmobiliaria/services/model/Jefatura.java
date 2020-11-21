@@ -2,6 +2,7 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -18,7 +19,11 @@ public class Jefatura implements Serializable {
 	@Column(name="id_jefatura")
 	private int idJefatura;
 
-	private boolean enable;
+	private byte enable;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_ingreso")
+	private Date fechaIngreso;
 
 	@Column(name="id_gerencia")
 	private int idGerencia;
@@ -39,12 +44,20 @@ public class Jefatura implements Serializable {
 		this.idJefatura = idJefatura;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
+	}
+
+	public Date getFechaIngreso() {
+		return this.fechaIngreso;
+	}
+
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 
 	public int getIdGerencia() {

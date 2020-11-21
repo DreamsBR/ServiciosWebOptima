@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.VentaService;
 import com.inmobiliaria.services.model.Venta;
+import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 
 @RestController
 @RequestMapping(value = "/v1/venta")
@@ -101,5 +102,21 @@ public class VentaController {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
 	}
-
+	
+	@GetMapping("/byproyecto/{idProyecto}")
+	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoResponse.class)
+	})
+	public List<VentaInmuebleProyectoResponse> findVentasByIdProyecto(@PathVariable Integer idProyecto) {
+		return this.service.findByProyecto(idProyecto);
+	}
+	@GetMapping("/byproyectoandestado/{idProyecto}/{idEstadoVenta}")
+	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoResponse.class)
+	})
+	public List<VentaInmuebleProyectoResponse> findByProyectoAndEstadoVenta(@PathVariable Integer idProyecto, @PathVariable Integer idEstadoVenta) {
+		return this.service.findByProyectoAndEstadoVenta(idProyecto, idEstadoVenta);
+	}
 }

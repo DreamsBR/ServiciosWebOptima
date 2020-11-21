@@ -27,7 +27,6 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.ProyectoService;
 import com.inmobiliaria.services.model.Proyecto;
-import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 
 @RestController
 @RequestMapping(value = "/v1/proyecto")
@@ -110,13 +109,5 @@ public class ProyectoController {
 	})
 	public List<Proyecto> findByIdGerencia(@PathVariable Integer idGerencia) {
 		return this.service.findByIdGerencia(idGerencia);
-	}
-	@GetMapping("/ventas/{idProyecto}")
-	@ApiOperation(value = "Listar ventas", tags = { "Controlador Proyecto" })
-	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoResponse.class)
-	})
-	public List<VentaInmuebleProyectoResponse> findVentasByIdProyecto(@PathVariable Integer idProyecto) {
-		return this.service.findVentasByIdProyecto(idProyecto);
 	}
 }

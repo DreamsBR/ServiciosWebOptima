@@ -33,7 +33,7 @@ public class FinanciamientoService {
 		return reporsitory.save(reg);
 	}
 	public Financiamiento findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Financiamiento> findAll() {
 		return reporsitory.findAll();

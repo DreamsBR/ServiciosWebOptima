@@ -1,7 +1,3 @@
-/**
- * @author Walter Canchan
- * @email wcanchan@gmail.com
- */
 package com.inmobiliaria.services.services;
 
 import java.util.List;
@@ -12,33 +8,32 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.repository.GerenteRepository; 
-import com.inmobiliaria.services.model.Gerente;
-
+import com.inmobiliaria.services.model.PeriodoColaborador;
+import com.inmobiliaria.services.repository.PeriodoColaboradorRepository;
 @Service
 @Transactional(readOnly=true)
-public class GerenteService {
+public class PeriodoColaboradorService {
 	@Autowired
-	private GerenteRepository reporsitory;
+	private PeriodoColaboradorRepository reporsitory;
 	@Transactional
-	public Gerente registrar(Gerente reg) {
+	public PeriodoColaborador registrar(PeriodoColaborador reg) {
 		return reporsitory.save(reg);
 	}
 	@Transactional
-	public void delete(Gerente reg) {
+	public void delete(PeriodoColaborador reg) {
 		reporsitory.delete(reg);
 	}
 	@Transactional
-	public Gerente update(Gerente reg) {
+	public PeriodoColaborador update(PeriodoColaborador reg) {
 		return reporsitory.save(reg);
 	}
-	public Gerente findById(Integer id) {
-		return reporsitory.getOne(id);
+	public PeriodoColaborador findById(Integer id) {
+		return reporsitory.findById(id).get();
 	}
-	public List<Gerente> findAll() {
+	public List<PeriodoColaborador> findAll() {
 		return reporsitory.findAll();
 	}
-	public Page<Gerente> findAll(Pageable pageable) {
+	public Page<PeriodoColaborador> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
 }

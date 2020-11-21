@@ -33,12 +33,15 @@ public class PagoService {
 		return reporsitory.save(reg);
 	}
 	public Pago findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Pago> findAll() {
 		return reporsitory.findAll();
 	}
 	public Page<Pago> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
+	}
+	public List<Pago> findByIdVenta(Integer idVenta) {
+		return reporsitory.findByIdVenta(idVenta);
 	}
 }

@@ -33,7 +33,7 @@ public class TipoInmuebleService {
 		return reporsitory.save(reg);
 	}
 	public TipoInmueble findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoInmueble> findAll() {
 		return reporsitory.findAll();

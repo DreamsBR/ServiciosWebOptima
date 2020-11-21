@@ -25,56 +25,56 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
-import com.inmobiliaria.services.model.JefeVenta;
-import com.inmobiliaria.services.services.JefeVentaService;
+import com.inmobiliaria.services.services.ColaboradorService;
+import com.inmobiliaria.services.model.Colaborador;
 
 @RestController
-@RequestMapping(value = "/v1/jefeventa")
-@Api(value = "JefeVenta", produces = "application/json", tags = { "Controlador JefeVenta" })
-public class JefeVentaController {
+@RequestMapping(value = "/v1/colaborador")
+@Api(value = "colaborador", produces = "application/json", tags = { "Controlador Colaborador" })
+public class ColaboradorController {
 	@Autowired
-	private JefeVentaService service;
+	private ColaboradorService service;
 
 	@PostMapping
-	@ApiOperation(value = "servicio para registrar", tags = { "Controlador JefeVenta" })
+	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Colaborador" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = JefeVenta.class)
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public ResponseEntity<JefeVenta> registrar(@RequestBody JefeVenta reg) {
+	public ResponseEntity<Colaborador> registrar(@RequestBody Colaborador reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "obtener registro", tags = { "Controlador JefeVenta" })
+	@ApiOperation(value = "obtener registro", tags = { "Controlador Colaborador" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = JefeVenta.class)
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public ResponseEntity<JefeVenta> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<JefeVenta>(this.service.findById(id), HttpStatus.OK);
+	public ResponseEntity<Colaborador> obtener(@PathVariable Integer id) {
+		return new ResponseEntity<Colaborador>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
-	@ApiOperation(value = "modificar registro", tags = { "Controlador JefeVenta" })
+	@ApiOperation(value = "modificar registro", tags = { "Controlador Colaborador" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = JefeVenta.class)
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public ResponseEntity<JefeVenta> modificar(@RequestBody JefeVenta reg, @PathVariable Integer id) {
-		JefeVenta entity = this.service.findById(id);
+	public ResponseEntity<Colaborador> modificar(@RequestBody Colaborador reg, @PathVariable Integer id) {
+		Colaborador entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
-			reg.setIdJefeVenta(id);
+			reg.setIdColaborador(id);
 			return new ResponseEntity<>(this.service.update(reg), HttpStatus.OK);
 		}
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "eliminar registro", tags = { "Controlador JefeVenta" })
+	@ApiOperation(value = "eliminar registro", tags = { "Controlador Colaborador" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = JefeVenta.class)
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public ResponseEntity<JefeVenta> eliminar(@PathVariable Integer id) {
-		JefeVenta entity = this.service.findById(id);
+	public ResponseEntity<Colaborador> eliminar(@PathVariable Integer id) {
+		Colaborador entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
@@ -84,20 +84,20 @@ public class JefeVentaController {
 	}
 
 	@GetMapping("/")
-	@ApiOperation(value = "Listar registros", tags = { "Controlador JefeVenta" })
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Colaborador" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = JefeVenta.class)
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public List<JefeVenta> findAll() {
+	public List<Colaborador> findAll() {
 		return this.service.findAll();
 	}
 
 	@GetMapping("/page/{page}")
-	@ApiOperation(value = "Paginar registros", tags = { "Controlador JefeVenta" })
+	@ApiOperation(value = "Paginar registros", tags = { "Controlador Colaborador" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = JefeVenta.class)
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public Page<JefeVenta> findAll(@PathVariable Integer page) {
+	public Page<Colaborador> findAll(@PathVariable Integer page) {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
 	}

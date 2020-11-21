@@ -12,33 +12,33 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.model.JefeVenta;
-import com.inmobiliaria.services.repository.JefeVentaRepository;
+import com.inmobiliaria.services.repository.ColaboradorRepository;
+import com.inmobiliaria.services.model.Colaborador;
 
 @Service
 @Transactional(readOnly=true)
-public class JefeVentaService {
+public class ColaboradorService {
 	@Autowired
-	private JefeVentaRepository reporsitory;
+	private ColaboradorRepository reporsitory;
 	@Transactional
-	public JefeVenta registrar(JefeVenta reg) {
+	public Colaborador registrar(Colaborador reg) {
 		return reporsitory.save(reg);
 	}
 	@Transactional
-	public void delete(JefeVenta reg) {
+	public void delete(Colaborador reg) {
 		reporsitory.delete(reg);
 	}
 	@Transactional
-	public JefeVenta update(JefeVenta reg) {
+	public Colaborador update(Colaborador reg) {
 		return reporsitory.save(reg);
 	}
-	public JefeVenta findById(Integer id) {
-		return reporsitory.getOne(id);
+	public Colaborador findById(Integer id) {
+		return reporsitory.findById(id).get();
 	}
-	public List<JefeVenta> findAll() {
+	public List<Colaborador> findAll() {
 		return reporsitory.findAll();
 	}
-	public Page<JefeVenta> findAll(Pageable pageable) {
+	public Page<Colaborador> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
 }

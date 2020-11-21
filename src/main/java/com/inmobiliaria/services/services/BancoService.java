@@ -34,7 +34,7 @@ public class BancoService {
 		return nuevo;
 	}
 	public Banco findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Banco> findAll() {
 		return reporsitory.findAll();

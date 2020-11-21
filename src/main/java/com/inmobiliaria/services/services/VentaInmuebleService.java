@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.inmobiliaria.services.repository.VentaInmuebleRepository; 
 import com.inmobiliaria.services.model.VentaInmueble;
+import com.inmobiliaria.services.model.response.VentaInmuebleProyectoDetalleResponse;
 
 @Service
 @Transactional(readOnly=true)
@@ -33,12 +34,16 @@ public class VentaInmuebleService {
 		return reporsitory.save(reg);
 	}
 	public VentaInmueble findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<VentaInmueble> findAll() {
 		return reporsitory.findAll();
 	}
 	public Page<VentaInmueble> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
+	}
+	public List<VentaInmuebleProyectoDetalleResponse> findByVenta(Integer idVenta) {
+		// TODO Auto-generated method stub
+		return reporsitory.findByIdVenta(idVenta);
 	}
 }

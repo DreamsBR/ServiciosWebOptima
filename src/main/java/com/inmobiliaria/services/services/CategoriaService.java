@@ -33,7 +33,7 @@ public class CategoriaService {
 		return reporsitory.save(reg);
 	}
 	public Categoria findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Categoria> findAll() {
 		return reporsitory.findAll();

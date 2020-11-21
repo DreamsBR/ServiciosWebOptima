@@ -33,7 +33,7 @@ public class MotivoService {
 		return reporsitory.save(reg);
 	}
 	public Motivo findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Motivo> findAll() {
 		return reporsitory.findAll();

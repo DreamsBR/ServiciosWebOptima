@@ -33,7 +33,7 @@ public class VendedorService {
 		return reporsitory.save(reg);
 	}
 	public Vendedor findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Vendedor> findAll() {
 		return reporsitory.findAll();
