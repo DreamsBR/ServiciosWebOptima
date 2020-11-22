@@ -52,6 +52,9 @@ public class VentaService {
 	public Page<Venta> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
+	public Page<Venta> findByIdProyecto(Integer idProyecto, Pageable pageable) {
+		return reporsitory.findByIdProyecto(idProyecto, pageable);
+	}
 	public List<VentaInmuebleProyectoResponse> findByProyecto(Integer idProyecto) {
 		List<VentaInmuebleProyectoResponse> response = new ArrayList<>();
 		String nativeQuery = "SELECT "

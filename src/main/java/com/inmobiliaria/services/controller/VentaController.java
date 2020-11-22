@@ -103,13 +103,14 @@ public class VentaController {
 		return this.service.findAll(paginacion);
 	}
 	
-	@GetMapping("/byproyecto/{idProyecto}")
+	@GetMapping("/byproyecto/{idProyecto}/{page}")
 	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoResponse.class)
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public List<VentaInmuebleProyectoResponse> findVentasByIdProyecto(@PathVariable Integer idProyecto) {
-		return this.service.findByProyecto(idProyecto);
+	public Page<Venta> findByIdProyecto(@PathVariable Integer idProyecto, @PathVariable Integer page ) {
+		Pageable paginacion = PageRequest.of(page, 5);
+		return this.service.findByIdProyecto(idProyecto, paginacion);
 	}
 	@GetMapping("/byproyectoandestado/{idProyecto}/{idEstadoVenta}")
 	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })

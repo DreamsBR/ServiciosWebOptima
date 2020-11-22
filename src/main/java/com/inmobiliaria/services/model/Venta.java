@@ -47,26 +47,40 @@ public class Venta implements Serializable {
 	@Column(name="fecha_caida")
 	private Date fechaCaida;
 	
-	@Column(name="id_canal")
-	private int idCanal;
+	//bi-directional many-to-one association to Canal
+	@ManyToOne
+	@JoinColumn(name="id_canal")
+	private Canal canal;
 
-	@Column(name="id_categoria")
-	private int idCategoria;
+	//bi-directional many-to-one association to Categoria
+	@ManyToOne
+	@JoinColumn(name="id_categoria")
+	private Categoria categoria;
 
-	@Column(name="id_cliente")
-	private int idCliente;
+	//bi-directional many-to-one association to Cliente
+	@ManyToOne
+	@JoinColumn(name="id_cliente")
+	private Cliente cliente;
 
-	@Column(name="id_estado_venta")
-	private int idEstadoVenta;
+	//bi-directional many-to-one association to EstadoVenta
+	@ManyToOne
+	@JoinColumn(name="id_estado_venta")
+	private EstadoVenta estadoVenta;
 
-	@Column(name="id_financiamiento")
-	private int idFinanciamiento;
+	//bi-directional many-to-one association to Financiamiento
+	@ManyToOne
+	@JoinColumn(name="id_financiamiento")
+	private Financiamiento financiamiento;
 
-	@Column(name="id_motivo")
-	private int idMotivo;
+	//bi-directional many-to-one association to Motivo
+	@ManyToOne
+	@JoinColumn(name="id_motivo")
+	private Motivo motivo;
 
-	@Column(name="id_vendedor")
-	private int idVendedor;
+	//bi-directional many-to-one association to Vendedor
+	@ManyToOne
+	@JoinColumn(name="id_vendedor")
+	private Vendedor vendedor;
 
 	@Column(name="id_proyecto")
 	private int idProyecto;
@@ -158,62 +172,6 @@ public class Venta implements Serializable {
 		this.fechaSeparacion = fechaSeparacion;
 	}
 
-	public int getIdCanal() {
-		return this.idCanal;
-	}
-
-	public void setIdCanal(int idCanal) {
-		this.idCanal = idCanal;
-	}
-
-	public int getIdCategoria() {
-		return this.idCategoria;
-	}
-
-	public void setIdCategoria(int idCategoria) {
-		this.idCategoria = idCategoria;
-	}
-
-	public int getIdCliente() {
-		return this.idCliente;
-	}
-
-	public void setIdCliente(int idCliente) {
-		this.idCliente = idCliente;
-	}
-
-	public int getIdEstadoVenta() {
-		return this.idEstadoVenta;
-	}
-
-	public void setIdEstadoVenta(int idEstadoVenta) {
-		this.idEstadoVenta = idEstadoVenta;
-	}
-
-	public int getIdFinanciamiento() {
-		return this.idFinanciamiento;
-	}
-
-	public void setIdFinanciamiento(int idFinanciamiento) {
-		this.idFinanciamiento = idFinanciamiento;
-	}
-
-	public int getIdMotivo() {
-		return this.idMotivo;
-	}
-
-	public void setIdMotivo(int idMotivo) {
-		this.idMotivo = idMotivo;
-	}
-
-	public int getIdVendedor() {
-		return this.idVendedor;
-	}
-
-	public void setIdVendedor(int idVendedor) {
-		this.idVendedor = idVendedor;
-	}
-
 	public BigDecimal getImporte() {
 		return this.importe;
 	}
@@ -228,6 +186,62 @@ public class Venta implements Serializable {
 
 	public void setTotal(BigDecimal total) {
 		this.total = total;
+	}
+
+	public Canal getCanal() {
+		return canal;
+	}
+
+	public void setCanal(Canal canal) {
+		this.canal = canal;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+
+	public EstadoVenta getEstadoVenta() {
+		return estadoVenta;
+	}
+
+	public void setEstadoVenta(EstadoVenta estadoVenta) {
+		this.estadoVenta = estadoVenta;
+	}
+
+	public Financiamiento getFinanciamiento() {
+		return financiamiento;
+	}
+
+	public void setFinanciamiento(Financiamiento financiamiento) {
+		this.financiamiento = financiamiento;
+	}
+
+	public Motivo getMotivo() {
+		return motivo;
+	}
+
+	public void setMotivo(Motivo motivo) {
+		this.motivo = motivo;
+	}
+
+	public Vendedor getVendedor() {
+		return vendedor;
+	}
+
+	public void setVendedor(Vendedor vendedor) {
+		this.vendedor = vendedor;
 	}
 
 }

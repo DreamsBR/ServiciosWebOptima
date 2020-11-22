@@ -65,5 +65,8 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 			  		+ " WHERE v.id_proyecto = ?1 and ev.id_estado_venta = ?2 AND v.enable = 1", 
 			  nativeQuery = true)
 	List<VentaInmuebleProyectoResponse> findByProyectoAndEstado(Integer idProyecto, Integer idEstadoVenta);
+
+
+	Page<Venta> findByIdProyecto(Integer idProyecto, Pageable pageable);
 	
 }
