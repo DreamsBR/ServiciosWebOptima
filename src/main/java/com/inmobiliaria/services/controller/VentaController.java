@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.VentaService;
 import com.inmobiliaria.services.model.Venta;
+import com.inmobiliaria.services.model.request.VentaRequest;
 import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 
 @RestController
@@ -41,7 +42,7 @@ public class VentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public ResponseEntity<Venta> registrar(@RequestBody Venta reg) {
+	public ResponseEntity<Venta> registrar(@RequestBody VentaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -59,7 +60,7 @@ public class VentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public ResponseEntity<Venta> modificar(@RequestBody Venta reg, @PathVariable Integer id) {
+	public ResponseEntity<Venta> modificar(@RequestBody VentaRequest reg, @PathVariable Integer id) {
 		Venta entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
