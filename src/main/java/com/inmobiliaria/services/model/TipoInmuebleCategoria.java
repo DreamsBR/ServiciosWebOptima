@@ -26,9 +26,6 @@ public class TipoInmuebleCategoria implements Serializable {
 
 	private String nombre;
 
-	public TipoInmuebleCategoria() {
-	}
-
 	public int getIdTipoInmuebleCategoria() {
 		return this.idTipoInmuebleCategoria;
 	}

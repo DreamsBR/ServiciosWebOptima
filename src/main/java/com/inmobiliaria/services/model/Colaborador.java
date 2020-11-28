@@ -33,9 +33,6 @@ public class Colaborador implements Serializable {
 	@JoinColumn(name="id_tipo_documento")
 	private TipoDocumento tipoDocumento;
 
-	public Colaborador() {
-	}
-
 	public int getIdColaborador() {
 		return this.idColaborador;
 	}

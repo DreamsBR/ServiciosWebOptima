@@ -50,7 +50,7 @@ public class MotivoController {
 		@ApiResponse(code = 200, message = "OK", response = Motivo.class)
 	})
 	public ResponseEntity<Motivo> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Motivo>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

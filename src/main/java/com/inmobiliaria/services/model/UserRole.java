@@ -27,9 +27,6 @@ public class UserRole implements Serializable {
 	@Column(name="id_user")
 	private int idUser;
 
-	public UserRole() {
-	}
-
 	public int getIdUserRole() {
 		return this.idUserRole;
 	}

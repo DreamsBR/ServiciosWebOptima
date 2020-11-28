@@ -36,9 +36,6 @@ public class Gerencia implements Serializable {
 	
 	private String nombre;
 
-	public Gerencia() {
-	}
-
 	public Date getFechaTermino() {
 		return fechaTermino;
 	}

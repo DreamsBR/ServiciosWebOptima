@@ -23,9 +23,6 @@ public class TipoVista implements Serializable {
 
 	private String nombre;
 
-	public TipoVista() {
-	}
-
 	public int getIdTipoVista() {
 		return this.idTipoVista;
 	}

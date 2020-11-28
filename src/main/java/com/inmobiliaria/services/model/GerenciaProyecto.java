@@ -29,9 +29,6 @@ public class GerenciaProyecto implements Serializable {
 	@Column(name="id_proyecto")
 	private int idProyecto;
 
-	public GerenciaProyecto() {
-	}
-
 	public int getIdGerenciaProyecto() {
 		return this.idGerenciaProyecto;
 	}

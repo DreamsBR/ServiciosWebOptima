@@ -47,7 +47,7 @@ public class PeriodoController {
 		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
 	})
 	public ResponseEntity<Periodo> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Periodo>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

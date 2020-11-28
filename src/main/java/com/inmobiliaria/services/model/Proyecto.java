@@ -26,9 +26,6 @@ public class Proyecto implements Serializable {
 
 	private String codigo;
 	
-	public Proyecto() {
-	}
-
 	public String getCodigo() {
 		return codigo;
 	}

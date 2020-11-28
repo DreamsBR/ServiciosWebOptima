@@ -6,6 +6,7 @@ package com.inmobiliaria.services.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.http.HttpStatus;
@@ -31,7 +32,6 @@ import io.swagger.annotations.ApiResponses;
 import com.inmobiliaria.services.services.VentaService;
 import com.inmobiliaria.services.model.Venta;
 import com.inmobiliaria.services.model.request.VentaRequest;
-import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 
 @RestController
 @RequestMapping(value = "/v1/venta")
@@ -55,7 +55,7 @@ public class VentaController {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public ResponseEntity<Venta> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Venta>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -119,7 +119,7 @@ public class VentaController {
 	@GetMapping("/byproyectoandestado/{idProyecto}/{idEstadoVenta}")
 	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoResponse.class)
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public List<Venta> findByProyectoAndEstadoVenta(@PathVariable Integer idProyecto, @PathVariable Integer idEstadoVenta) {
 		return this.service.findByProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta);
@@ -127,7 +127,7 @@ public class VentaController {
 	@GetMapping("/byproyectoandestadorange/{idProyecto}/{idEstadoVenta}/{fechaini}/{fechafin}")
 	@ApiOperation(value = "Listar ventas por proyecto, estado y rango de fechas", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoResponse.class)
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public List<Venta> findByProyectoAndIdEstadoVenta(@PathVariable Integer idProyecto, @PathVariable Integer idEstadoVenta, @PathVariable String fechaini, @PathVariable String fechafin) {
 		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd");
@@ -138,9 +138,8 @@ public class VentaController {
 			fin = ddmmyy.parse(fechafin);
 			return this.service.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta, ini, fin);
 		} catch (ParseException e) {
-
+			return new ArrayList<Venta>();
 		}
-		return null;
 	}
 	@GetMapping("/bycliente/{idCiente}/{page}")
 	@ApiOperation(value = "Listar ventas por cliente", tags = { "Controlador Venta" })

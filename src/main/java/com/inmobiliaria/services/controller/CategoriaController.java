@@ -50,7 +50,7 @@ public class CategoriaController {
 		@ApiResponse(code = 200, message = "OK", response = Categoria.class)
 	})
 	public ResponseEntity<Categoria> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Categoria>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

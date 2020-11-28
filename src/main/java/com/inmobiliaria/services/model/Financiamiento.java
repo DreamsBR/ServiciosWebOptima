@@ -38,40 +38,33 @@ public class Financiamiento implements Serializable {
 	@Column(name="fecha_inicio_ahorro")
 	private Date fechaInicioAhorro;
 
-	@Column(name="id_banco")
-	private Integer idBanco;
+	@ManyToOne
+	@JoinColumn(name="id_banco")
+	private Banco banco;
 
-	@Column(name="id_estado_financiamiento")
-	private int idEstadoFinanciamiento;
+	@ManyToOne
+	@JoinColumn(name="id_estado_financiamiento")
+	private EstadoFinanciamiento estadoFinanciamiento;
 
-	@Column(name="id_tipo_credito")
-	private Integer idTipoCredito;
+	@ManyToOne
+	@JoinColumn(name="id_tipo_credito")
+	private TipoCredito tipoCredito;
 
-	@Column(name="nomto_cuota_inicial")
-	private BigDecimal nomtoCuotaInicial;
+	@Column(name="monto_cuota_inicial")
+	private BigDecimal montoCuotaInicial;
 
-	private BigDecimal financiamiento;
+	@Column(name="monto_financiado")
+	private BigDecimal montoFinanciado;
 	
 	@Column(name="porc_cuota_inicial")
 	private String porcCuotaInicial;
 	
-	public Financiamiento() {
+	public BigDecimal getMontoCuotaInicial() {
+		return montoCuotaInicial;
 	}
 
-	public BigDecimal getNomtoCuotaInicial() {
-		return nomtoCuotaInicial;
-	}
-
-	public void setNomtoCuotaInicial(BigDecimal nomtoCuotaInicial) {
-		this.nomtoCuotaInicial = nomtoCuotaInicial;
-	}
-
-	public BigDecimal getFinanciamiento() {
-		return financiamiento;
-	}
-
-	public void setFinanciamiento(BigDecimal financiamiento) {
-		this.financiamiento = financiamiento;
+	public void setMontoCuotaInicial(BigDecimal montoCuotaInicial) {
+		this.montoCuotaInicial = montoCuotaInicial;
 	}
 
 	public String getPorcCuotaInicial() {
@@ -146,28 +139,38 @@ public class Financiamiento implements Serializable {
 		this.fechaInicioAhorro = fechaInicioAhorro;
 	}
 
-	public int getIdBanco() {
-		return this.idBanco;
+	public Banco getBanco() {
+		return banco;
 	}
 
-	public void setIdBanco(int idBanco) {
-		this.idBanco = idBanco;
+	public void setBanco(Banco banco) {
+		this.banco = banco;
 	}
 
-	public int getIdEstadoFinanciamiento() {
-		return this.idEstadoFinanciamiento;
+	public EstadoFinanciamiento getEstadoFinanciamiento() {
+		return estadoFinanciamiento;
 	}
 
-	public void setIdEstadoFinanciamiento(int idEstadoFinanciamiento) {
-		this.idEstadoFinanciamiento = idEstadoFinanciamiento;
+	public void setEstadoFinanciamiento(EstadoFinanciamiento estadoFinanciamiento) {
+		this.estadoFinanciamiento = estadoFinanciamiento;
 	}
 
-	public int getIdTipoCredito() {
-		return this.idTipoCredito;
+	public TipoCredito getTipoCredito() {
+		return tipoCredito;
 	}
 
-	public void setIdTipoCredito(int idTipoCredito) {
-		this.idTipoCredito = idTipoCredito;
+	public void setTipoCredito(TipoCredito tipoCredito) {
+		this.tipoCredito = tipoCredito;
 	}
+
+	public BigDecimal getMontoFinanciado() {
+		return montoFinanciado;
+	}
+
+	public void setMontoFinanciado(BigDecimal montoFinanciado) {
+		this.montoFinanciado = montoFinanciado;
+	}
+
+
 
 }

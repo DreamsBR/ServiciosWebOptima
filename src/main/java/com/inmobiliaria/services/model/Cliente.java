@@ -81,9 +81,6 @@ public class Cliente implements Serializable {
 	@JoinColumn(name="tipo_doc_conyuge")
 	private TipoDocumento tipoDocumentoConyuge;
 	
-	public Cliente() {
-	}
-
 	public int getIdCliente() {
 		return this.idCliente;
 	}

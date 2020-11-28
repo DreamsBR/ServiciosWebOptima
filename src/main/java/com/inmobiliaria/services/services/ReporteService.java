@@ -29,7 +29,7 @@ public class ReporteService {
 	@Autowired
 	private GerenciaProyectoRepository gerenciaProyectoRepository;
 	public List<ConsolidadoVentaResponse> consolidadoVenta(Integer idGerencia, Integer idPeriodo) {
-		List<ConsolidadoVentaResponse> listResponse = new ArrayList<ConsolidadoVentaResponse>();
+		List<ConsolidadoVentaResponse> listResponse = new ArrayList<>();
 		List<PeriodoProyecto> list = periodoProyectoRepository.findByIdPeriodo(idPeriodo);
 		List<GerenciaProyecto> listGerenciaProyecto = gerenciaProyectoRepository.findByIdGerencia(idGerencia);
 		List<PeriodoProyecto> listPeriodoProyecto = filtarporGerencia(listGerenciaProyecto, list);
@@ -44,7 +44,7 @@ public class ReporteService {
 			List<Venta> listVentas = ventaRepository.findByIdProyecto(periodoProyecto.getProyecto().getIdProyecto());
 			List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
 			double suma = listVentasResult.stream()
-		      .mapToDouble(o -> o.getFinanciamiento().getFinanciamiento().doubleValue())
+		      .mapToDouble(o -> o.getPagos().stream().mapToDouble(p -> p.getMonto().doubleValue()).sum())
 		      .sum();
 			res.setAvance(suma);
 			
@@ -71,7 +71,7 @@ public class ReporteService {
 		return listResponse;
 	}
 	private List<PeriodoProyecto> filtarporGerencia(List<GerenciaProyecto> listGerenciaProyecto, List<PeriodoProyecto> listPeriodoProyecto){
-		List<PeriodoProyecto> list = new ArrayList<PeriodoProyecto>();
+		List<PeriodoProyecto> list = new ArrayList<>();
 		for (PeriodoProyecto periodoProyecto : listPeriodoProyecto) {
 			List<GerenciaProyecto> listfind = listGerenciaProyecto.stream().filter(x -> x.getIdProyecto() == periodoProyecto.getProyecto().getIdProyecto()).collect(Collectors.toList());
 			if( listfind.size() > 0 ) {

@@ -22,9 +22,6 @@ public class Role implements Serializable {
 
 	private String name;
 
-	public Role() {
-	}
-
 	public int getIdRole() {
 		return this.idRole;
 	}

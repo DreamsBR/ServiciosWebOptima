@@ -50,7 +50,7 @@ public class TipoVistaController {
 		@ApiResponse(code = 200, message = "OK", response = TipoVista.class)
 	})
 	public ResponseEntity<TipoVista> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<TipoVista>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

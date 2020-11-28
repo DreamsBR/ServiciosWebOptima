@@ -16,7 +16,6 @@ import com.inmobiliaria.services.repository.InmuebleRepository;
 import com.inmobiliaria.services.repository.VentaInmuebleRepository; 
 import com.inmobiliaria.services.model.VentaInmueble;
 import com.inmobiliaria.services.model.request.VentaInmuebleRequest;
-import com.inmobiliaria.services.model.response.VentaInmuebleProyectoDetalleResponse;
 
 @Service
 @Transactional(readOnly=true)

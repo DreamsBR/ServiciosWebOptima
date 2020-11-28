@@ -50,7 +50,7 @@ public class EstadoFinanciamientoController {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
 	public ResponseEntity<EstadoFinanciamiento> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<EstadoFinanciamiento>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

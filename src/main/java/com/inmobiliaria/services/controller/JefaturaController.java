@@ -51,7 +51,7 @@ public class JefaturaController {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
 	public ResponseEntity<Jefatura> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Jefatura>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
