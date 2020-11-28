@@ -46,7 +46,7 @@ public class GerenciaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaProyecto.class)
 	})
 	public ResponseEntity<GerenciaProyecto> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<GerenciaProyecto>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

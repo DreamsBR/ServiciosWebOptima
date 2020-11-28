@@ -85,13 +85,12 @@ public class InmuebleService {
 		return reporsitory.findByIdProyectoAndIdTipoInmuebleAndIdTipoInmuebleCategoria(idProyecto, idTipoInmueble, idTipoInmuebleCategoria);
 	}
 	public List<Inmueble> searchDisponibles(Integer idProyecto, Integer idTipoInmueble, Integer idTipoInmuebleCategoria) {
-		List<VentaInmueble> ventas = new ArrayList<VentaInmueble>();
-		List<Inmueble> listNew = new ArrayList<Inmueble>();
+		List<Inmueble> listNew = new ArrayList<>();
 		boolean permitir;
 		List<Inmueble> list = reporsitory.findByIdProyectoAndIdTipoInmuebleAndIdTipoInmuebleCategoria(idProyecto, idTipoInmueble, idTipoInmuebleCategoria);
 		for (Inmueble inmueble : list) {
 			
-			ventas = ventaInmuebleRepository.findByIdInmueble(inmueble.getIdInmueble());
+			List<VentaInmueble> ventas = ventaInmuebleRepository.findByIdInmueble(inmueble.getIdInmueble());
 
 			if (ventas.size() == 0 ) {
 				listNew.add(inmueble);

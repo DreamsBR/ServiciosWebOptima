@@ -31,9 +31,6 @@ public class Periodo implements Serializable {
 
 	private String nombre;
 
-	public Periodo() {
-	}
-
 	public int getIdPeriodo() {
 		return this.idPeriodo;
 	}

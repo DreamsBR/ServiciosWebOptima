@@ -27,9 +27,6 @@ public class User implements Serializable {
 
 	private String username;
 
-	public User() {
-	}
-
 	public int getIdUser() {
 		return this.idUser;
 	}

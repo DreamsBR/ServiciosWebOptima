@@ -51,7 +51,7 @@ public class ColaboradorController {
 		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
 	public ResponseEntity<Colaborador> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Colaborador>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

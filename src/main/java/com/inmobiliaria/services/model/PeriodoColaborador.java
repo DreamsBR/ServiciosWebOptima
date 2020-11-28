@@ -32,9 +32,6 @@ public class PeriodoColaborador implements Serializable {
 
 	private BigDecimal meta;
 
-	public PeriodoColaborador() {
-	}
-
 	public int getIdPeriodoColaborador() {
 		return this.idPeriodoColaborador;
 	}

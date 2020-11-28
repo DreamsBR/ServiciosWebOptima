@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.FinanciamientoService;
 import com.inmobiliaria.services.model.Financiamiento;
+import com.inmobiliaria.services.model.request.FinanciamientoRequest;
 
 @RestController
 @RequestMapping(value = "/v1/financiamiento")
@@ -40,7 +41,7 @@ public class FinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
-	public ResponseEntity<Financiamiento> registrar(@RequestBody Financiamiento reg) {
+	public ResponseEntity<Financiamiento> registrar(@RequestBody FinanciamientoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -50,7 +51,7 @@ public class FinanciamientoController {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
 	public ResponseEntity<Financiamiento> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Financiamiento>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,7 +59,7 @@ public class FinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
-	public ResponseEntity<Financiamiento> modificar(@RequestBody Financiamiento reg, @PathVariable Integer id) {
+	public ResponseEntity<Financiamiento> modificar(@RequestBody FinanciamientoRequest reg, @PathVariable Integer id) {
 		Financiamiento entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

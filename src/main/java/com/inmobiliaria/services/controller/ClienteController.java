@@ -51,7 +51,7 @@ public class ClienteController {
 		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
 	})
 	public ResponseEntity<Cliente> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Cliente>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")

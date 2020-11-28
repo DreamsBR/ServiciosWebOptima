@@ -37,9 +37,6 @@ public class Pago implements Serializable {
 
 	private String porcentaje;
 
-	public Pago() {
-	}
-
 	public int getIdPago() {
 		return this.idPago;
 	}

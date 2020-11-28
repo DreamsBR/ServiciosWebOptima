@@ -29,7 +29,6 @@ import com.inmobiliaria.services.repository.VendedorRepository;
 import com.inmobiliaria.services.repository.VentaRepository; 
 import com.inmobiliaria.services.model.Venta;
 import com.inmobiliaria.services.model.request.VentaRequest;
-import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 
 @Service
 @Transactional(readOnly=true)
@@ -110,59 +109,7 @@ public class VentaService {
 	public List<Venta> findByProyectoAndIdEstadoVenta(Integer idProyecto, Integer idEstadoVenta){
 		return reporsitory.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta);
 	}
-	public List<VentaInmuebleProyectoResponse> findByProyectoAndEstadoVenta(Integer idProyecto, Integer idEstadoVenta) {
-		
-		List<VentaInmuebleProyectoResponse> response = new ArrayList<>();
-		String nativeQuery = "SELECT "
-		  		+ "	c.id_cliente		idCliente, " 
-		  		+ "	c.nombres, "
-		  		+ "	c.apellidos, "
-		  		+ "	td.nombre		tipoDocumento,"
-		  		+ "	c.nro_documento		nroDocumento,"
-		  		+ "	v.id_venta		idVenta, "
-		  		+ "	v.importe, "
-		  		+ " v.fecha_separacion	fechaSeparacion, "
-		  		+ " v.fecha_minuta		fechaMinuta, "
-		  		+ " v.fecha_desembolso	fechaDesembolso, "
-		  		+ " v.fecha_epp			fechaEpp, "
-		  		+ " v.fecha_caida		fechaCaida, "
-		  		+ "	ev.nombre		estado "
-	  		+ " FROM venta v "
-	  		+ " INNER JOIN cliente c ON c.id_cliente = v.id_cliente "
-	  		+ "	INNER JOIN estado_venta ev ON ev.id_estado_venta = v.id_estado_venta "
-	  		+ "	INNER JOIN tipo_documento td ON td.id_tipo_documento = c.id_tipo_documento "
-	  		+ " WHERE v.id_proyecto = ? and ev.id_estado_venta = ? AND v.enable = 1";
-		
-	    Query query = em.createNativeQuery(nativeQuery);
-	    query.setParameter(1, idProyecto);
-	    query.setParameter(2, idEstadoVenta);
-		
-	    List<Object[]> list= query.getResultList();
-	    for (Object[] objects : list) {
-	    	response.add(mapperVentaInmuebleProyectoResponse(objects));
-		}
 
-	    return response;
-
-	}
-	
-	private VentaInmuebleProyectoResponse mapperVentaInmuebleProyectoResponse(Object[] object) {
-		VentaInmuebleProyectoResponse response = new VentaInmuebleProyectoResponse();
-		response.setIdCliente(Integer.parseInt(object[0].toString()));
-		response.setNombres(object[1].toString());
-		response.setApellidos(object[2].toString());
-		response.setTipoDocumento(object[3].toString());
-		response.setNroDocumento(object[4].toString());
-		response.setIdVenta(Integer.parseInt(object[5].toString()));
-		response.setImporte(new BigDecimal(Double.parseDouble(object[6].toString())));
-		response.setFechaSeparacion(object[7].toString());
-		response.setFechaMinuta(object[8].toString());
-		response.setFechaDesembolso(object[9].toString());
-		response.setFechaEpp(object[10].toString());
-		response.setFechaCaida(object[11].toString());
-		response.setEstado(object[12].toString());
-		return response;
-	}
 	private Venta mapperVenta(VentaRequest request) {
 		Venta venta = new Venta();
 		venta.setAyudaInicial(request.getAyudaInicial());

@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 
 /**
@@ -101,9 +102,17 @@ public class Venta implements Serializable {
 
 	private BigDecimal total;
 
-	public Venta() {
+	@OneToMany(mappedBy="venta")
+	private List<Pago> pagos;
+	
+	public List<Pago> getPagos() {
+		return this.pagos;
 	}
 
+	public void setPagos(List<Pago> pagos) {
+		this.pagos = pagos;
+	}
+	
 	public int getIdProyecto() {
 		return idProyecto;
 	}

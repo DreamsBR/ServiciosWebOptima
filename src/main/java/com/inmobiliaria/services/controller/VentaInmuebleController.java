@@ -28,7 +28,6 @@ import io.swagger.annotations.ApiResponses;
 import com.inmobiliaria.services.services.VentaInmuebleService;
 import com.inmobiliaria.services.model.VentaInmueble;
 import com.inmobiliaria.services.model.request.VentaInmuebleRequest;
-import com.inmobiliaria.services.model.response.VentaInmuebleProyectoDetalleResponse;
 
 @RestController
 @RequestMapping(value = "/v1/ventainmueble")
@@ -40,7 +39,7 @@ public class VentaInmuebleController {
 	@PostMapping
 	@ApiOperation(value = "servicio para registrar", tags = { "Controlador VentaInmueble" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleRequest.class)
+		@ApiResponse(code = 200, message = "OK", response = VentaInmueble.class)
 	})
 	public ResponseEntity<VentaInmueble> registrar(@RequestBody VentaInmuebleRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
@@ -52,13 +51,13 @@ public class VentaInmuebleController {
 		@ApiResponse(code = 200, message = "OK", response = VentaInmueble.class)
 	})
 	public ResponseEntity<VentaInmueble> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<VentaInmueble>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
 	@ApiOperation(value = "modificar registro", tags = { "Controlador VentaInmueble" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleRequest.class)
+		@ApiResponse(code = 200, message = "OK", response = VentaInmueble.class)
 	})
 	public ResponseEntity<VentaInmueble> modificar(@RequestBody VentaInmuebleRequest reg, @PathVariable Integer id) {
 		VentaInmueble entity = this.service.findById(id);
@@ -107,18 +106,10 @@ public class VentaInmuebleController {
 	@GetMapping("/venta/{idVenta}")
 	@ApiOperation(value = "Listar registros", tags = { "Controlador VentaInmueble" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoDetalleResponse.class)
+		@ApiResponse(code = 200, message = "OK", response = VentaInmueble.class)
 	})
 	public List<VentaInmueble> findByVenta(@PathVariable Integer idVenta) {
 		return this.service.findByVenta(idVenta);
 	}
-	/*@GetMapping("/ventaAndEstado/{idVenta}/{idfinanciamiento}")
-	@ApiOperation(value = "Listar registros", tags = { "Controlador VentaInmueble" })
-	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = VentaInmuebleProyectoDetalleResponse.class)
-	})
-	public List<VentaInmueble> ventaAndEstado(@PathVariable Integer idVenta) {
-		return this.service.findByVenta(idVenta);
-	}*/
 
 }

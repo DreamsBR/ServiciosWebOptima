@@ -33,9 +33,6 @@ public class PeriodoProyecto implements Serializable {
 
 	private BigDecimal meta;
 
-	public PeriodoProyecto() {
-	}
-
 	public int getIdPeriodoProyecto() {
 		return this.idPeriodoProyecto;
 	}

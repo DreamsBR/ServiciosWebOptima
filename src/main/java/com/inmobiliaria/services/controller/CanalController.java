@@ -50,7 +50,7 @@ public class CanalController {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
 	public ResponseEntity<Canal> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Canal>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
