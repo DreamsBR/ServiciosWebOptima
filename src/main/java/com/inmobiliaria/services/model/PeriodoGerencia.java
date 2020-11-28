@@ -1,6 +1,8 @@
 package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.*;
 
 
@@ -24,10 +26,12 @@ public class PeriodoGerencia implements Serializable {
 	@Column(name="id_gerencia")
 	private int idGerencia;
 
-	@Column(name="id_periodo")
-	private int idPeriodo;
+	//bi-directional many-to-one association 
+	@ManyToOne
+	@JoinColumn(name="id_periodo")
+	private Periodo periodo;
 
-	private double meta;
+	private BigDecimal meta;
 
 	public PeriodoGerencia() {
 	}
@@ -56,20 +60,20 @@ public class PeriodoGerencia implements Serializable {
 		this.idGerencia = idGerencia;
 	}
 
-	public int getIdPeriodo() {
-		return this.idPeriodo;
-	}
-
-	public void setIdPeriodo(int idPeriodo) {
-		this.idPeriodo = idPeriodo;
-	}
-
-	public double getMeta() {
+	public BigDecimal getMeta() {
 		return this.meta;
 	}
 
-	public void setMeta(double meta) {
+	public void setMeta(BigDecimal meta) {
 		this.meta = meta;
+	}
+
+	public Periodo getPeriodo() {
+		return periodo;
+	}
+
+	public void setPeriodo(Periodo periodo) {
+		this.periodo = periodo;
 	}
 
 }

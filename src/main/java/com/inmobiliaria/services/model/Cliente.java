@@ -36,17 +36,22 @@ public class Cliente implements Serializable {
 	@Column(name="fecha_nacimiento")
 	private Date fechaNacimiento;
 
-	@Column(name="id_estado_civil")
-	private int idEstadoCivil;
+	@ManyToOne
+	@JoinColumn(name="id_estado_civil")
+	private EstadoCivil estadoCivil;
+	
+	@ManyToOne
+	@JoinColumn(name="id_estado_civil_conyuge")
+	private EstadoCivil estadoCivilConyuge;
+	
+	@ManyToOne
+	@JoinColumn(name="id_pais")
+	private Pais pais;
 
-	@Column(name="id_estado_civil_conyuge")
-	private int idEstadoCivilConyuge;
-
-	@Column(name="id_pais")
-	private int idPais;
-
-	@Column(name="id_tipo_documento")
-	private int idTipoDocumento;
+	@ManyToOne
+	@JoinColumn(name="id_tipo_documento")
+	private TipoDocumento tipoDocumento;
+	
 
 	private BigDecimal ingresos;
 
@@ -72,9 +77,10 @@ public class Cliente implements Serializable {
 
 	private String telefono;
 
-	@Column(name="tipo_doc_conyuge")
-	private int tipoDocConyuge;
-
+	@ManyToOne
+	@JoinColumn(name="tipo_doc_conyuge")
+	private TipoDocumento tipoDocumentoConyuge;
+	
 	public Cliente() {
 	}
 
@@ -140,38 +146,6 @@ public class Cliente implements Serializable {
 
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public int getIdEstadoCivil() {
-		return this.idEstadoCivil;
-	}
-
-	public void setIdEstadoCivil(int idEstadoCivil) {
-		this.idEstadoCivil = idEstadoCivil;
-	}
-
-	public int getIdEstadoCivilConyuge() {
-		return this.idEstadoCivilConyuge;
-	}
-
-	public void setIdEstadoCivilConyuge(int idEstadoCivilConyuge) {
-		this.idEstadoCivilConyuge = idEstadoCivilConyuge;
-	}
-
-	public int getIdPais() {
-		return this.idPais;
-	}
-
-	public void setIdPais(int idPais) {
-		this.idPais = idPais;
-	}
-
-	public int getIdTipoDocumento() {
-		return this.idTipoDocumento;
-	}
-
-	public void setIdTipoDocumento(int idTipoDocumento) {
-		this.idTipoDocumento = idTipoDocumento;
 	}
 
 	public BigDecimal getIngresos() {
@@ -254,12 +228,44 @@ public class Cliente implements Serializable {
 		this.telefono = telefono;
 	}
 
-	public int getTipoDocConyuge() {
-		return this.tipoDocConyuge;
+	public EstadoCivil getEstadoCivil() {
+		return estadoCivil;
 	}
 
-	public void setTipoDocConyuge(int tipoDocConyuge) {
-		this.tipoDocConyuge = tipoDocConyuge;
+	public void setEstadoCivil(EstadoCivil estadoCivil) {
+		this.estadoCivil = estadoCivil;
+	}
+
+	public EstadoCivil getEstadoCivilConyuge() {
+		return estadoCivilConyuge;
+	}
+
+	public void setEstadoCivilConyuge(EstadoCivil estadoCivilConyuge) {
+		this.estadoCivilConyuge = estadoCivilConyuge;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
+
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
+	}
+
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
+	}
+
+	public TipoDocumento getTipoDocumentoConyuge() {
+		return tipoDocumentoConyuge;
+	}
+
+	public void setTipoDocumentoConyuge(TipoDocumento tipoDocumentoConyuge) {
+		this.tipoDocumentoConyuge = tipoDocumentoConyuge;
 	}
 
 }

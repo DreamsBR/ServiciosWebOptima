@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inmobiliaria.services.model.PeriodoProyecto;
+import com.inmobiliaria.services.model.request.PeriodoProyectoRequest;
 import com.inmobiliaria.services.services.PeriodoProyectoService;
 
 import io.swagger.annotations.Api;
@@ -36,7 +37,7 @@ public class PeriodoProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
-	public ResponseEntity<PeriodoProyecto> registrar(@RequestBody PeriodoProyecto reg) {
+	public ResponseEntity<PeriodoProyecto> registrar(@RequestBody PeriodoProyectoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -54,7 +55,7 @@ public class PeriodoProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
-	public ResponseEntity<PeriodoProyecto> modificar(@RequestBody PeriodoProyecto reg, @PathVariable Integer id) {
+	public ResponseEntity<PeriodoProyecto> modificar(@RequestBody PeriodoProyectoRequest reg, @PathVariable Integer id) {
 		PeriodoProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

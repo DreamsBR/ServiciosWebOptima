@@ -28,6 +28,18 @@ public class Venta implements Serializable {
 	private byte enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_registro")
+	private Date fechaRegistro;
+	
+	public Date getFechaRegistro() {
+		return fechaRegistro;
+	}
+
+	public void setFechaRegistro(Date fechaRegistro) {
+		this.fechaRegistro = fechaRegistro;
+	}
+
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_desembolso")
 	private Date fechaDesembolso;
 

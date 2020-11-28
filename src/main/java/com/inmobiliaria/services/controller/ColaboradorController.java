@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.ColaboradorService;
 import com.inmobiliaria.services.model.Colaborador;
+import com.inmobiliaria.services.model.request.ColaboradorRequest;
 
 @RestController
 @RequestMapping(value = "/v1/colaborador")
@@ -40,7 +41,7 @@ public class ColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public ResponseEntity<Colaborador> registrar(@RequestBody Colaborador reg) {
+	public ResponseEntity<Colaborador> registrar(@RequestBody ColaboradorRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -58,7 +59,7 @@ public class ColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
-	public ResponseEntity<Colaborador> modificar(@RequestBody Colaborador reg, @PathVariable Integer id) {
+	public ResponseEntity<Colaborador> modificar(@RequestBody ColaboradorRequest reg, @PathVariable Integer id) {
 		Colaborador entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -100,6 +101,15 @@ public class ColaboradorController {
 	public Page<Colaborador> findAll(@PathVariable Integer page) {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
+	}
+	
+	@GetMapping("/findByNumeroDocumento/{numeroDocumento}")
+	@ApiOperation(value = "obtener registro", tags = { "Controlador Colaborador" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
+	})
+	public List<Colaborador> obtener(@PathVariable String numeroDocumento) {
+		return this.service.findByNumeroDocumento(numeroDocumento);
 	}
 
 }

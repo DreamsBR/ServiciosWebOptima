@@ -25,12 +25,26 @@ public class Gerencia implements Serializable {
 	@Column(name="fecha_ingreso")
 	private Date fechaIngreso;
 
-	@Column(name="id_gerente")
-	private int idGerente;
-
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_termino")
+	private Date fechaTermino;
+	
+	//bi-directional many-to-one association to Colaborador
+	@ManyToOne
+	@JoinColumn(name="id_gerente")
+	private Colaborador colaborador;
+	
 	private String nombre;
 
 	public Gerencia() {
+	}
+
+	public Date getFechaTermino() {
+		return fechaTermino;
+	}
+
+	public void setFechaTermino(Date fechaTermino) {
+		this.fechaTermino = fechaTermino;
 	}
 
 	public int getIdGerencia() {
@@ -57,20 +71,20 @@ public class Gerencia implements Serializable {
 		this.fechaIngreso = fechaIngreso;
 	}
 
-	public int getIdGerente() {
-		return this.idGerente;
-	}
-
-	public void setIdGerente(int idGerente) {
-		this.idGerente = idGerente;
-	}
-
 	public String getNombre() {
 		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Colaborador getColaborador() {
+		return colaborador;
+	}
+
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 
 }

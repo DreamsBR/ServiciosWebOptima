@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.ProyectoService;
 import com.inmobiliaria.services.model.Proyecto;
+import com.inmobiliaria.services.model.response.ProyectoResponse;
 
 @RestController
 @RequestMapping(value = "/v1/proyecto")
@@ -47,10 +48,10 @@ public class ProyectoController {
 	@GetMapping("/{id}")
 	@ApiOperation(value = "obtener registro", tags = { "Controlador Proyecto" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Proyecto.class)
+		@ApiResponse(code = 200, message = "OK", response = ProyectoResponse.class)
 	})
-	public ResponseEntity<Proyecto> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Proyecto>(this.service.findById(id), HttpStatus.OK);
+	public ResponseEntity<ProyectoResponse> obtener(@PathVariable Integer id) {
+		return new ResponseEntity<ProyectoResponse>(this.service.findInfoProyecto(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -110,4 +111,6 @@ public class ProyectoController {
 	public List<Proyecto> findByIdGerencia(@PathVariable Integer idGerencia) {
 		return this.service.findByIdGerencia(idGerencia);
 	}
+	
+	
 }

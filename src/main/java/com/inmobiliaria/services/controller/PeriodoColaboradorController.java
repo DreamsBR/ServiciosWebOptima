@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inmobiliaria.services.model.PeriodoColaborador;
+import com.inmobiliaria.services.model.request.PeriodoColaboradorRequest;
 import com.inmobiliaria.services.services.PeriodoColaboradorService;
 
 import io.swagger.annotations.Api;
@@ -36,7 +37,7 @@ public class PeriodoColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoColaborador.class)
 	})
-	public ResponseEntity<PeriodoColaborador> registrar(@RequestBody PeriodoColaborador reg) {
+	public ResponseEntity<PeriodoColaborador> registrar(@RequestBody PeriodoColaboradorRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -54,7 +55,7 @@ public class PeriodoColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoColaborador.class)
 	})
-	public ResponseEntity<PeriodoColaborador> modificar(@RequestBody PeriodoColaborador reg, @PathVariable Integer id) {
+	public ResponseEntity<PeriodoColaborador> modificar(@RequestBody PeriodoColaboradorRequest reg, @PathVariable Integer id) {
 		PeriodoColaborador entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -96,5 +97,14 @@ public class PeriodoColaboradorController {
 	public Page<PeriodoColaborador> findAll(@PathVariable Integer page) {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
+	}
+	
+	@GetMapping("/listarperido/{idColaborador}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo Colaborador" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = PeriodoColaborador.class)
+	})
+	public List<PeriodoColaborador> listarperido(@PathVariable Integer idColaborador) {
+		return this.service.findByIdColaborador(idColaborador);
 	}
 }

@@ -31,7 +31,7 @@ public class Pago implements Serializable {
 	private BigDecimal monto;
 	
 	@Column(name="numero_operacion")
-	private int numeroOperacion;
+	private String numeroOperacion;
 
 	private byte pagado;
 
@@ -80,11 +80,11 @@ public class Pago implements Serializable {
 		this.monto = monto;
 	}
 
-	public int getNumeroOperacion() {
+	public String getNumeroOperacion() {
 		return this.numeroOperacion;
 	}
 
-	public void setNumeroOperacion(int numeroOperacion) {
+	public void setNumeroOperacion(String numeroOperacion) {
 		this.numeroOperacion = numeroOperacion;
 	}
 

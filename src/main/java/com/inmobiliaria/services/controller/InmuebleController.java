@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.InmuebleService;
 import com.inmobiliaria.services.model.Inmueble;
+import com.inmobiliaria.services.model.request.InmuebleRequest;
 
 @RestController
 @RequestMapping(value = "/v1/inmueble")
@@ -38,9 +39,9 @@ public class InmuebleController {
 	@PostMapping
 	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Inmueble" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
+		@ApiResponse(code = 200, message = "OK", response = InmuebleRequest.class)
 	})
-	public ResponseEntity<Inmueble> registrar(@RequestBody Inmueble reg) {
+	public ResponseEntity<Inmueble> registrar(@RequestBody InmuebleRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -58,7 +59,7 @@ public class InmuebleController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
-	public ResponseEntity<Inmueble> modificar(@RequestBody Inmueble reg, @PathVariable Integer id) {
+	public ResponseEntity<Inmueble> modificar(@RequestBody InmuebleRequest reg, @PathVariable Integer id) {
 		Inmueble entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -127,4 +128,12 @@ public class InmuebleController {
 		return new ResponseEntity<Inmueble>(this.service.searchByNumero(idProyecto, idTipoInmueble, numero), HttpStatus.OK);
 	}
 
+	@GetMapping("/disponibles/{idProyecto}/{idTipoInmueble}/{idTipoInmuebleCategoria}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Inmueble" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
+	})
+	public List<Inmueble> searchdisponibles(@PathVariable Integer idProyecto, @PathVariable Integer idTipoInmueble, @PathVariable Integer idTipoInmuebleCategoria) {
+		return this.service.searchDisponibles(idProyecto, idTipoInmueble, idTipoInmuebleCategoria);
+	}
 }

@@ -29,8 +29,9 @@ public class Colaborador implements Serializable {
 
 	private String sexo;
 
-	@Column(name="id_tipo_documento")
-	private int idTipoDocumento;
+	@ManyToOne
+	@JoinColumn(name="id_tipo_documento")
+	private TipoDocumento tipoDocumento;
 
 	public Colaborador() {
 	}
@@ -83,12 +84,12 @@ public class Colaborador implements Serializable {
 		this.sexo = sexo;
 	}
 
-	public int getIdTipoDocumento() {
-		return this.idTipoDocumento;
+	public TipoDocumento getTipoDocumento() {
+		return tipoDocumento;
 	}
 
-	public void setIdTipoDocumento(int idTipoDocumento) {
-		this.idTipoDocumento = idTipoDocumento;
+	public void setTipoDocumento(TipoDocumento tipoDocumento) {
+		this.tipoDocumento = tipoDocumento;
 	}
 
 }

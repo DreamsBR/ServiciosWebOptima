@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inmobiliaria.services.model.PeriodoGerencia;
+import com.inmobiliaria.services.model.request.PeriodoGerenciaRequest;
 import com.inmobiliaria.services.services.PeriodoGerenciaService;
 
 import io.swagger.annotations.Api;
@@ -34,9 +35,9 @@ public class PeriodoGerenciaController {
 	@PostMapping
 	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Periodo Gerencia" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = PeriodoGerencia.class)
+		@ApiResponse(code = 200, message = "OK", response = PeriodoGerenciaRequest.class)
 	})
-	public ResponseEntity<PeriodoGerencia> registrar(@RequestBody PeriodoGerencia reg) {
+	public ResponseEntity<PeriodoGerencia> registrar(@RequestBody PeriodoGerenciaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -52,9 +53,9 @@ public class PeriodoGerenciaController {
 	@PutMapping("/{id}")
 	@ApiOperation(value = "modificar registro", tags = { "Controlador Periodo Gerencia" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = PeriodoGerencia.class)
+		@ApiResponse(code = 200, message = "OK", response = PeriodoGerenciaRequest.class)
 	})
-	public ResponseEntity<PeriodoGerencia> modificar(@RequestBody PeriodoGerencia reg, @PathVariable Integer id) {
+	public ResponseEntity<PeriodoGerencia> modificar(@RequestBody PeriodoGerenciaRequest reg, @PathVariable Integer id) {
 		PeriodoGerencia entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -96,5 +97,14 @@ public class PeriodoGerenciaController {
 	public Page<PeriodoGerencia> findAll(@PathVariable Integer page) {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
+	}
+	
+	@GetMapping("/listarperiodos/{idGerencia}")
+	@ApiOperation(value = "Listar periodos", tags = { "Controlador Gerencia" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = PeriodoGerencia.class)
+	})
+	public List<PeriodoGerencia> findByIdGerencia(@PathVariable Integer idGerencia) {
+		return this.service.findByIdGerencia(idGerencia);
 	}
 }

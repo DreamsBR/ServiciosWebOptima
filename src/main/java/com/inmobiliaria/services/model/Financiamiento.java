@@ -39,13 +39,13 @@ public class Financiamiento implements Serializable {
 	private Date fechaInicioAhorro;
 
 	@Column(name="id_banco")
-	private int idBanco;
+	private Integer idBanco;
 
 	@Column(name="id_estado_financiamiento")
 	private int idEstadoFinanciamiento;
 
 	@Column(name="id_tipo_credito")
-	private int idTipoCredito;
+	private Integer idTipoCredito;
 
 	@Column(name="nomto_cuota_inicial")
 	private BigDecimal nomtoCuotaInicial;

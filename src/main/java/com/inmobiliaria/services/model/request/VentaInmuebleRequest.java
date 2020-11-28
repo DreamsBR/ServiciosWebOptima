@@ -1,32 +1,14 @@
-package com.inmobiliaria.services.model;
+package com.inmobiliaria.services.model.request;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 
-
-/**
- * The persistent class for the venta_inmueble database table.
- * 
- */
-@Entity
-@Table(name="venta_inmueble")
-@NamedQuery(name="VentaInmueble.findAll", query="SELECT v FROM VentaInmueble v")
-public class VentaInmueble implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_venta_inmueble")
+public class VentaInmuebleRequest {
 	private int idVentaInmueble;
 
-	@Column(name="area_libre")
 	private String areaLibre;
 
-	@Column(name="area_techada")
 	private String areaTechada;
 
-	@Column(name="area_total")
 	private String areaTotal;
 
 	private BigDecimal ayudainicial;
@@ -36,26 +18,9 @@ public class VentaInmueble implements Serializable {
 	private int dormitorios;
 
 	private byte enable;
+
+	private int idInmueble;
 	
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
-	//bi-directional many-to-one association to Inmueble
-	@ManyToOne
-	@JoinColumn(name="id_inmueble")
-	private Inmueble inmueble;
-	
-
-	public Inmueble getInmueble() {
-		return inmueble;
-	}
-
-	public void setInmueble(Inmueble inmueble) {
-		this.inmueble = inmueble;
-	}
-
-	@Column(name="id_venta")
 	private int idVenta;
 
 	private BigDecimal importe;
@@ -64,11 +29,8 @@ public class VentaInmueble implements Serializable {
 
 	private String vista;
 
-	public VentaInmueble() {
-	}
-
 	public int getIdVentaInmueble() {
-		return this.idVentaInmueble;
+		return idVentaInmueble;
 	}
 
 	public void setIdVentaInmueble(int idVentaInmueble) {
@@ -76,7 +38,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public String getAreaLibre() {
-		return this.areaLibre;
+		return areaLibre;
 	}
 
 	public void setAreaLibre(String areaLibre) {
@@ -84,7 +46,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public String getAreaTechada() {
-		return this.areaTechada;
+		return areaTechada;
 	}
 
 	public void setAreaTechada(String areaTechada) {
@@ -92,7 +54,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public String getAreaTotal() {
-		return this.areaTotal;
+		return areaTotal;
 	}
 
 	public void setAreaTotal(String areaTotal) {
@@ -100,7 +62,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public BigDecimal getAyudainicial() {
-		return this.ayudainicial;
+		return ayudainicial;
 	}
 
 	public void setAyudainicial(BigDecimal ayudainicial) {
@@ -108,7 +70,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public BigDecimal getDescuento() {
-		return this.descuento;
+		return descuento;
 	}
 
 	public void setDescuento(BigDecimal descuento) {
@@ -116,7 +78,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public int getDormitorios() {
-		return this.dormitorios;
+		return dormitorios;
 	}
 
 	public void setDormitorios(int dormitorios) {
@@ -124,15 +86,23 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public byte getEnable() {
-		return this.enable;
+		return enable;
 	}
 
 	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
+	public int getIdInmueble() {
+		return idInmueble;
+	}
+
+	public void setIdInmueble(int idInmueble) {
+		this.idInmueble = idInmueble;
+	}
+
 	public int getIdVenta() {
-		return this.idVenta;
+		return idVenta;
 	}
 
 	public void setIdVenta(int idVenta) {
@@ -140,7 +110,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public BigDecimal getImporte() {
-		return this.importe;
+		return importe;
 	}
 
 	public void setImporte(BigDecimal importe) {
@@ -148,7 +118,7 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public BigDecimal getPrecio() {
-		return this.precio;
+		return precio;
 	}
 
 	public void setPrecio(BigDecimal precio) {
@@ -156,11 +126,10 @@ public class VentaInmueble implements Serializable {
 	}
 
 	public String getVista() {
-		return this.vista;
+		return vista;
 	}
 
 	public void setVista(String vista) {
 		this.vista = vista;
 	}
-
 }

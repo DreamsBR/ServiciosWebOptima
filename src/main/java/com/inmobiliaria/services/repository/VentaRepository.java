@@ -13,11 +13,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import com.inmobiliaria.services.model.Cliente;
 import com.inmobiliaria.services.model.Venta;
 import com.inmobiliaria.services.model.response.VentaInmuebleProyectoResponse;
 @Repository
 public interface VentaRepository extends JpaRepository<Venta, Integer> {
-
 
 	@Query(
 			  value = "SELECT "
@@ -41,8 +41,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 			  		+ " WHERE v.id_proyecto = ?1 AND v.enable = 1", 
 			  nativeQuery = true)
 	Page<VentaInmuebleProyectoResponse> findByProyecto(Integer idProyecto, Pageable pageable);
-	
-	
+
 	@Query(
 			  value = "SELECT "
 				  		+ "	c.id_cliente		idCliente, " 
@@ -65,8 +64,14 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 			  		+ " WHERE v.id_proyecto = ?1 and ev.id_estado_venta = ?2 AND v.enable = 1", 
 			  nativeQuery = true)
 	List<VentaInmuebleProyectoResponse> findByProyectoAndEstado(Integer idProyecto, Integer idEstadoVenta);
-
-
-	Page<Venta> findByIdProyecto(Integer idProyecto, Pageable pageable);
 	
+	Page<Venta> findByIdProyecto(Integer idProyecto, Pageable pageable);
+	List<Venta> findByIdProyecto(Integer idProyecto);
+	
+	@Query("select v from Venta v INNER JOIN v.estadoVenta e where v.idProyecto = ?1 and e.idEstadoVenta = ?2")
+	List<Venta> findByIdProyectoAndIdEstadoVenta(Integer idProyecto, Integer idEstadoVenta);
+	
+	@Query("select v from Venta v INNER JOIN v.cliente e where e.idCliente = ?1")
+	Page<Venta> findByCliente(Integer idCliente, Pageable pageable);
+
 }

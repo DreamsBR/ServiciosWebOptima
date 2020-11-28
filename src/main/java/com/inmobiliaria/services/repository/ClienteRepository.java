@@ -13,4 +13,6 @@ import com.inmobiliaria.services.model.Cliente;
 @Repository
 public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	List<Cliente> findByNroDocumento(String nroDocumento);
+
+	List<Cliente> findByNombresAndApellidos(String nombres, String apellidos);
 }

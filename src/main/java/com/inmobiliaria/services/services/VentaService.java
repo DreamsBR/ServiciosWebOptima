@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
@@ -56,6 +57,7 @@ public class VentaService {
 	@Transactional
 	public Venta registrar(VentaRequest reg) {
 		Venta venta = mapperVenta(reg);
+		venta.setFechaRegistro(new Date());
 		return reporsitory.save(venta);
 	}
 	@Transactional
@@ -80,6 +82,34 @@ public class VentaService {
 		return reporsitory.findByIdProyecto(idProyecto, pageable);
 	}
 
+	public List<Venta> findByIdProyectoAndIdEstadoVenta(Integer idProyecto, Integer idEstadoVenta, Date fechaIni, Date fechaFin) {
+		List<Venta> lst = reporsitory.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta);
+		List<Venta> filterlst;
+		switch (idEstadoVenta) {
+		case 1:
+			filterlst = lst.stream().filter(str -> str.getFechaSeparacion().getTime() >= fechaIni.getTime() && str.getFechaSeparacion().getTime() <= fechaFin.getTime()).collect(Collectors.toList());
+			break;
+		case 12:
+			filterlst = lst.stream().filter(str -> str.getFechaDesembolso().getTime() >= fechaIni.getTime() && str.getFechaDesembolso().getTime() <= fechaFin.getTime()).collect(Collectors.toList());
+			break;
+		case 13:
+			filterlst = lst.stream().filter(str -> str.getFechaEpp().getTime() >= fechaIni.getTime() && str.getFechaEpp().getTime() <= fechaFin.getTime()).collect(Collectors.toList());
+			break;
+		case 14:
+			filterlst = lst.stream().filter(str -> str.getFechaCaida().getTime() >= fechaIni.getTime() && str.getFechaCaida().getTime() <= fechaFin.getTime()).collect(Collectors.toList());
+			break;
+		case 5:
+			filterlst = lst.stream().filter(str -> str.getFechaMinuta().getTime() >= fechaIni.getTime() && str.getFechaMinuta().getTime() <= fechaFin.getTime()).collect(Collectors.toList());
+			break;
+		default:
+			filterlst = lst;
+			break;
+		}
+		return filterlst;
+	}
+	public List<Venta> findByProyectoAndIdEstadoVenta(Integer idProyecto, Integer idEstadoVenta){
+		return reporsitory.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta);
+	}
 	public List<VentaInmuebleProyectoResponse> findByProyectoAndEstadoVenta(Integer idProyecto, Integer idEstadoVenta) {
 		
 		List<VentaInmuebleProyectoResponse> response = new ArrayList<>();
@@ -124,7 +154,7 @@ public class VentaService {
 		response.setTipoDocumento(object[3].toString());
 		response.setNroDocumento(object[4].toString());
 		response.setIdVenta(Integer.parseInt(object[5].toString()));
-		response.setImporte(new BigDecimal(Integer.parseInt(object[6].toString())));
+		response.setImporte(new BigDecimal(Double.parseDouble(object[6].toString())));
 		response.setFechaSeparacion(object[7].toString());
 		response.setFechaMinuta(object[8].toString());
 		response.setFechaDesembolso(object[9].toString());
@@ -154,6 +184,10 @@ public class VentaService {
 		venta.setMotivo(motivoRepository.findById(request.getIdMotivo()).get());
 		venta.setTotal(request.getTotal());
 		venta.setVendedor(vendedorRepository.findById(request.getIdVendedor()).get());
+		venta.setFechaRegistro(request.getFechaRegistro());
 		return venta;
+	}
+	public Page<Venta> findByIdCliente(Integer idCiente, Pageable paginacion) {
+		return reporsitory.findByCliente(idCiente, paginacion);
 	}
 }

@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.JefaturaService;
 import com.inmobiliaria.services.model.Jefatura;
+import com.inmobiliaria.services.model.request.JefaturaRequest;
 
 @RestController
 @RequestMapping(value = "/v1/jefatura")
@@ -40,7 +41,7 @@ public class JefaturaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
-	public ResponseEntity<Jefatura> registrar(@RequestBody Jefatura reg) {
+	public ResponseEntity<Jefatura> registrar(@RequestBody JefaturaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -58,7 +59,7 @@ public class JefaturaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
-	public ResponseEntity<Jefatura> modificar(@RequestBody Jefatura reg, @PathVariable Integer id) {
+	public ResponseEntity<Jefatura> modificar(@RequestBody JefaturaRequest reg, @PathVariable Integer id) {
 		Jefatura entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

@@ -32,6 +32,11 @@ public interface VentaInmuebleRepository extends JpaRepository<VentaInmueble, In
 			  		+ "	LEFT JOIN tipo_inmueble_categoria tic ON ti.id_tipo_inmueble_categoria = tic.id_tipo_inmueble_categoria"
 			  		+ "WHERE v.id_venta = ?1", 
 			  nativeQuery = true)
-	List<VentaInmuebleProyectoDetalleResponse> findByIdVenta(Integer idVenta); 
+	List<VentaInmuebleProyectoDetalleResponse> findByVenta(Integer idVenta); 
+	
+	List<VentaInmueble> findByIdVenta(Integer idVenta);
+
+	@Query("select v from VentaInmueble v INNER JOIN v.inmueble e where e.idInmueble = ?1")
+	List<VentaInmueble> findByIdInmueble(Integer idInmueble);
 
 }

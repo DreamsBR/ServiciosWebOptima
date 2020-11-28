@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.GerenciaService;
 import com.inmobiliaria.services.model.Gerencia;
+import com.inmobiliaria.services.model.request.GerenciaRequest;
 import com.inmobiliaria.services.model.response.GerenciaResponse;
 
 @RestController
@@ -39,9 +40,9 @@ public class GerenciaController {
 	@PostMapping
 	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Gerencia" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Gerencia.class)
+		@ApiResponse(code = 200, message = "OK", response = GerenciaRequest.class)
 	})
-	public ResponseEntity<Gerencia> registrar(@RequestBody Gerencia reg) {
+	public ResponseEntity<Gerencia> registrar(@RequestBody GerenciaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 	@GetMapping("/{id}")
@@ -55,9 +56,9 @@ public class GerenciaController {
 	@PutMapping("/{id}")
 	@ApiOperation(value = "modificar registro", tags = { "Controlador Gerencia" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Gerencia.class)
+		@ApiResponse(code = 200, message = "OK", response = GerenciaRequest.class)
 	})
-	public ResponseEntity<Gerencia> modificar(@RequestBody Gerencia reg, @PathVariable Integer id) {
+	public ResponseEntity<Gerencia> modificar(@RequestBody GerenciaRequest reg, @PathVariable Integer id) {
 		Gerencia entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -101,4 +102,6 @@ public class GerenciaController {
 		return this.service.findAll(paginacion);
 	}
 
+
+	
 }
