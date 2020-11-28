@@ -138,7 +138,7 @@ public class VentaController {
 			fin = ddmmyy.parse(fechafin);
 			return this.service.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta, ini, fin);
 		} catch (ParseException e) {
-			return new ArrayList<Venta>();
+			return new ArrayList<>();
 		}
 	}
 	@GetMapping("/bycliente/{idCiente}/{page}")

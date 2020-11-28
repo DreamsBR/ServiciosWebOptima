@@ -125,7 +125,7 @@ public class InmuebleController {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
 	public ResponseEntity<Inmueble> searchByNumero(@PathVariable Integer idProyecto, @PathVariable Integer idTipoInmueble, @PathVariable String numero) {
-		return new ResponseEntity<Inmueble>(this.service.searchByNumero(idProyecto, idTipoInmueble, numero), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.searchByNumero(idProyecto, idTipoInmueble, numero), HttpStatus.OK);
 	}
 
 	@GetMapping("/disponibles/{idProyecto}/{idTipoInmueble}/{idTipoInmuebleCategoria}")
