@@ -1,7 +1,3 @@
-/**
- * @author Walter Canchan
- * @email wcanchan@gmail.com
- */
 package com.inmobiliaria.services.services;
 
 import java.util.List;
@@ -12,33 +8,33 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.model.TipoPago;
-import com.inmobiliaria.services.repository.TipoPagoRepository;
+import com.inmobiliaria.services.model.Periodo;
+import com.inmobiliaria.services.repository.PeriodoRepository;
 
 @Service
 @Transactional(readOnly=true)
-public class TipoPagoService {
+public class PeriodoService {
 	@Autowired
-	private TipoPagoRepository reporsitory;
+	private PeriodoRepository reporsitory;
 	@Transactional
-	public TipoPago registrar(TipoPago reg) {
+	public Periodo registrar(Periodo reg) {
 		return reporsitory.save(reg);
 	}
 	@Transactional
-	public void delete(TipoPago reg) {
+	public void delete(Periodo reg) {
 		reporsitory.delete(reg);
 	}
 	@Transactional
-	public TipoPago update(TipoPago reg) {
+	public Periodo update(Periodo reg) {
 		return reporsitory.save(reg);
 	}
-	public TipoPago findById(Integer id) {
-		return reporsitory.getOne(id);
+	public Periodo findById(Integer id) {
+		return reporsitory.findById(id).get();
 	}
-	public List<TipoPago> findAll() {
+	public List<Periodo> findAll() {
 		return reporsitory.findAll();
 	}
-	public Page<TipoPago> findAll(Pageable pageable) {
+	public Page<Periodo> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
 }

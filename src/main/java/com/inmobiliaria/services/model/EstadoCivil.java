@@ -19,7 +19,7 @@ public class EstadoCivil implements Serializable {
 	@Column(name="id_estado_civil")
 	private int idEstadoCivil;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
 
@@ -34,11 +34,11 @@ public class EstadoCivil implements Serializable {
 		this.idEstadoCivil = idEstadoCivil;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

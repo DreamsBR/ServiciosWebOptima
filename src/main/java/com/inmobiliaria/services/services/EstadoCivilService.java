@@ -33,7 +33,7 @@ public class EstadoCivilService {
 		return reporsitory.save(reg);
 	}
 	public EstadoCivil findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<EstadoCivil> findAll() {
 		return reporsitory.findAll();

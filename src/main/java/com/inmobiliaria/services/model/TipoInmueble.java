@@ -19,7 +19,7 @@ public class TipoInmueble implements Serializable {
 	@Column(name="id_tipo_inmueble")
 	private int idTipoInmueble;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
 
@@ -34,11 +34,11 @@ public class TipoInmueble implements Serializable {
 		this.idTipoInmueble = idTipoInmueble;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

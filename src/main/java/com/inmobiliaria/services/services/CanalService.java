@@ -33,7 +33,7 @@ public class CanalService {
 		return reporsitory.save(reg);
 	}
 	public Canal findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Canal> findAll() {
 		return reporsitory.findAll();

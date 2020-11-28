@@ -12,14 +12,25 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.repository.ProyectoRepository; 
+import com.inmobiliaria.services.repository.GerenciaProyectoRepository;
+import com.inmobiliaria.services.repository.GerenciaRepository;
+import com.inmobiliaria.services.repository.ProyectoRepository;
+import com.inmobiliaria.services.model.Gerencia;
+import com.inmobiliaria.services.model.GerenciaProyecto;
 import com.inmobiliaria.services.model.Proyecto;
+import com.inmobiliaria.services.model.response.GerenciaInfoResponse;
+import com.inmobiliaria.services.model.response.ProyectoResponse;
 
 @Service
 @Transactional(readOnly=true)
 public class ProyectoService {
 	@Autowired
 	private ProyectoRepository reporsitory;
+	@Autowired
+	private GerenciaProyectoRepository gerenciaProyectoRepository;
+	@Autowired
+	private GerenciaRepository gerenciaRepository;
+
 	@Transactional
 	public Proyecto registrar(Proyecto reg) {
 		return reporsitory.save(reg);
@@ -33,12 +44,41 @@ public class ProyectoService {
 		return reporsitory.save(reg);
 	}
 	public Proyecto findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Proyecto> findAll() {
 		return reporsitory.findAll();
 	}
 	public Page<Proyecto> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
+	}
+	public List<Proyecto> findByIdGerencia(Integer idGerencia) {
+		return reporsitory.findByIdGerencia(idGerencia);
+	}
+	public ProyectoResponse findInfoProyecto(Integer id) {
+		ProyectoResponse response = new ProyectoResponse();
+		GerenciaInfoResponse gerenciaResponse = new GerenciaInfoResponse();
+		Proyecto proyecto;
+		Gerencia gerencia;
+		List<GerenciaProyecto> list;
+		
+		proyecto = reporsitory.findById(id).get();
+		
+		list = gerenciaProyectoRepository.findByIdProyecto(id);
+		if ( list.size() > 0 ) {
+			gerencia = gerenciaRepository.findById(list.get(0).getIdGerencia()).get();
+			gerenciaResponse = new GerenciaInfoResponse();
+			gerenciaResponse.setIdGerencia(gerencia.getIdGerencia());
+			gerenciaResponse.setFechaIngreso(gerencia.getFechaIngreso());
+			gerenciaResponse.setNombre(gerencia.getNombre());
+			gerenciaResponse.setGerente(gerencia.getColaborador());
+		}
+		
+		response.setGerencia(gerenciaResponse);
+		response.setCodigo(proyecto.getCodigo());
+		response.setDireccion(proyecto.getDireccion());
+		response.setIdProyecto(proyecto.getIdProyecto());
+		response.setEnable(proyecto.getEnable());
+		return response;
 	}
 }

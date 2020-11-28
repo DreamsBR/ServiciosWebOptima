@@ -18,7 +18,7 @@ public class Motivo implements Serializable {
 	@Column(name="id_motivo")
 	private int idMotivo;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
 
@@ -33,11 +33,11 @@ public class Motivo implements Serializable {
 		this.idMotivo = idMotivo;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

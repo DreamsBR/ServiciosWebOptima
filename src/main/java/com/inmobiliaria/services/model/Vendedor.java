@@ -18,7 +18,10 @@ public class Vendedor implements Serializable {
 	@Column(name="id_vendedor")
 	private int idVendedor;
 
-	private boolean enable;
+	private byte enable;
+
+	@Column(name="id_colaborador")
+	private int idColaborador;
 
 	@Column(name="id_jefatura")
 	private int idJefatura;
@@ -36,12 +39,20 @@ public class Vendedor implements Serializable {
 		this.idVendedor = idVendedor;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
+	}
+
+	public int getIdColaborador() {
+		return this.idColaborador;
+	}
+
+	public void setIdColaborador(int idColaborador) {
+		this.idColaborador = idColaborador;
 	}
 
 	public int getIdJefatura() {

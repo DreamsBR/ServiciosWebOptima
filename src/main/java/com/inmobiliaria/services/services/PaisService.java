@@ -33,7 +33,7 @@ public class PaisService {
 		return reporsitory.save(reg);
 	}
 	public Pais findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Pais> findAll() {
 		return reporsitory.findAll();

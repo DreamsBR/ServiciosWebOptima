@@ -20,21 +20,18 @@ public class Pago implements Serializable {
 	@Column(name="id_pago")
 	private int idPago;
 
-	private boolean enable;
+	private byte enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
-
-	@Column(name="id_tipo_pago")
-	private int idTipoPago;
 
 	@Column(name="id_venta")
 	private int idVenta;
 
 	private BigDecimal monto;
-
+	
 	@Column(name="numero_operacion")
-	private int numeroOperacion;
+	private String numeroOperacion;
 
 	private byte pagado;
 
@@ -51,11 +48,11 @@ public class Pago implements Serializable {
 		this.idPago = idPago;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
@@ -65,14 +62,6 @@ public class Pago implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
-	}
-
-	public int getIdTipoPago() {
-		return this.idTipoPago;
-	}
-
-	public void setIdTipoPago(int idTipoPago) {
-		this.idTipoPago = idTipoPago;
 	}
 
 	public int getIdVenta() {
@@ -91,11 +80,11 @@ public class Pago implements Serializable {
 		this.monto = monto;
 	}
 
-	public int getNumeroOperacion() {
+	public String getNumeroOperacion() {
 		return this.numeroOperacion;
 	}
 
-	public void setNumeroOperacion(int numeroOperacion) {
+	public void setNumeroOperacion(String numeroOperacion) {
 		this.numeroOperacion = numeroOperacion;
 	}
 

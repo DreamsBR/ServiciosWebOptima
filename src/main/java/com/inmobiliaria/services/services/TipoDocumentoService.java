@@ -33,7 +33,7 @@ public class TipoDocumentoService {
 		return reporsitory.save(reg);
 	}
 	public TipoDocumento findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoDocumento> findAll() {
 		return reporsitory.findAll();

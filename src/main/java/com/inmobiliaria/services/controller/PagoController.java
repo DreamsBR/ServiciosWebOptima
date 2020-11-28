@@ -92,6 +92,15 @@ public class PagoController {
 		return this.service.findAll();
 	}
 
+	@GetMapping("/venta/{idVenta}")
+	@ApiOperation(value = "Listar registros por venta", tags = { "Controlador Pago" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Pago.class)
+	})
+	public List<Pago> findByIdVenta(@PathVariable Integer idVenta) {
+		return this.service.findByIdVenta(idVenta);
+	}
+	
 	@GetMapping("/page/{page}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Pago" })
 	@ApiResponses(value = {

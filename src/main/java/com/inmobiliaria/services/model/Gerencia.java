@@ -2,6 +2,7 @@ package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
 import javax.persistence.*;
+import java.util.Date;
 
 
 /**
@@ -18,14 +19,32 @@ public class Gerencia implements Serializable {
 	@Column(name="id_gerencia")
 	private int idGerencia;
 
-	private boolean enable;
+	private byte enable;
 
-	@Column(name="id_gerente")
-	private int idGerente;
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_ingreso")
+	private Date fechaIngreso;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_termino")
+	private Date fechaTermino;
+	
+	//bi-directional many-to-one association to Colaborador
+	@ManyToOne
+	@JoinColumn(name="id_gerente")
+	private Colaborador colaborador;
+	
 	private String nombre;
 
 	public Gerencia() {
+	}
+
+	public Date getFechaTermino() {
+		return fechaTermino;
+	}
+
+	public void setFechaTermino(Date fechaTermino) {
+		this.fechaTermino = fechaTermino;
 	}
 
 	public int getIdGerencia() {
@@ -36,20 +55,20 @@ public class Gerencia implements Serializable {
 		this.idGerencia = idGerencia;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
-	public int getIdGerente() {
-		return this.idGerente;
+	public Date getFechaIngreso() {
+		return this.fechaIngreso;
 	}
 
-	public void setIdGerente(int idGerente) {
-		this.idGerente = idGerente;
+	public void setFechaIngreso(Date fechaIngreso) {
+		this.fechaIngreso = fechaIngreso;
 	}
 
 	public String getNombre() {
@@ -58,6 +77,14 @@ public class Gerencia implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Colaborador getColaborador() {
+		return colaborador;
+	}
+
+	public void setColaborador(Colaborador colaborador) {
+		this.colaborador = colaborador;
 	}
 
 }

@@ -1,13 +1,15 @@
 package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
-/**
- * The persistent class for the gerencia_proyecto database table.
- * 
- */
 @Entity
 @Table(name="gerencia_proyecto")
 @NamedQuery(name="GerenciaProyecto.findAll", query="SELECT g FROM GerenciaProyecto g")
@@ -19,7 +21,7 @@ public class GerenciaProyecto implements Serializable {
 	@Column(name="id_gerencia_proyecto")
 	private int idGerenciaProyecto;
 
-	private boolean enable;
+	private byte enable;
 
 	@Column(name="id_gerencia")
 	private int idGerencia;
@@ -38,11 +40,11 @@ public class GerenciaProyecto implements Serializable {
 		this.idGerenciaProyecto = idGerenciaProyecto;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
@@ -61,5 +63,4 @@ public class GerenciaProyecto implements Serializable {
 	public void setIdProyecto(int idProyecto) {
 		this.idProyecto = idProyecto;
 	}
-
 }

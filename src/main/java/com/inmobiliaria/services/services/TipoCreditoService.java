@@ -33,7 +33,7 @@ public class TipoCreditoService {
 		return reporsitory.save(reg);
 	}
 	public TipoCredito findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoCredito> findAll() {
 		return reporsitory.findAll();

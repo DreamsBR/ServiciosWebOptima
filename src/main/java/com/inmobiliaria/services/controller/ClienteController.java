@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.ClienteService;
 import com.inmobiliaria.services.model.Cliente;
+import com.inmobiliaria.services.model.request.ClienteRequest;
 
 @RestController
 @RequestMapping(value = "/v1/cliente")
@@ -40,7 +41,7 @@ public class ClienteController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
 	})
-	public ResponseEntity<Cliente> registrar(@RequestBody Cliente reg) {
+	public ResponseEntity<Cliente> registrar(@RequestBody ClienteRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -58,7 +59,7 @@ public class ClienteController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
 	})
-	public ResponseEntity<Cliente> modificar(@RequestBody Cliente reg, @PathVariable Integer id) {
+	public ResponseEntity<Cliente> modificar(@RequestBody ClienteRequest reg, @PathVariable Integer id) {
 		Cliente entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -102,4 +103,20 @@ public class ClienteController {
 		return this.service.findAll(paginacion);
 	}
 
+	@GetMapping("/nroDocumento/{nroDocumento}")
+	@ApiOperation(value = "Listar registros por nro documento", tags = { "Controlador Cliente" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
+	})
+	public List<Cliente> findByNroDocumento(@PathVariable String nroDocumento) {
+		return this.service.findByNroDocumento(nroDocumento);
+	}
+	@GetMapping("/bynombresandapellidos/{nombres}/{apellidos}")
+	@ApiOperation(value = "Listar registros por cliente", tags = { "Controlador Cliente" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
+	})
+	public List<Cliente> bynombresandapellidos(@PathVariable String nombres, @PathVariable String apellidos) {
+		return this.service.findByNombresAndApellidos(nombres, apellidos);
+	}
 }
