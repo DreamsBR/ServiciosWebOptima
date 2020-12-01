@@ -98,4 +98,22 @@ public class PeriodoProyectoController {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
 	}
+	
+	@GetMapping("/porProyecto/{idProyecto}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo Proyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
+	})
+	public List<PeriodoProyecto> porProyecto(@PathVariable Integer idProyecto) {
+		return this.service.findByIdProyecto(idProyecto);
+	}
+	@GetMapping("/porPeriodo/{idPeriodo}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo Proyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
+	})
+	public List<PeriodoProyecto> porPeriodo(@PathVariable Integer idPeriodo) {
+		return this.service.findByIdPeriodo(idPeriodo);
+	}
+	
 }

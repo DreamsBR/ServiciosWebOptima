@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.JefaturaProyectoService;
 import com.inmobiliaria.services.model.JefaturaProyecto;
+import com.inmobiliaria.services.model.request.JefaturaProyectoRequest;
 
 @RestController
 @RequestMapping(value = "/v1/jefaturaproyecto")
@@ -40,7 +41,7 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
-	public ResponseEntity<JefaturaProyecto> registrar(@RequestBody JefaturaProyecto reg) {
+	public ResponseEntity<JefaturaProyecto> registrar(@RequestBody JefaturaProyectoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -58,7 +59,7 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
-	public ResponseEntity<JefaturaProyecto> modificar(@RequestBody JefaturaProyecto reg, @PathVariable Integer id) {
+	public ResponseEntity<JefaturaProyecto> modificar(@RequestBody JefaturaProyectoRequest reg, @PathVariable Integer id) {
 		JefaturaProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -102,4 +103,20 @@ public class JefaturaProyectoController {
 		return this.service.findAll(paginacion);
 	}
 
+	@GetMapping("/porProyecto/{idProyecto}")
+	@ApiOperation(value = "Listar registros por proyecto", tags = { "Controlador JefaturaProyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
+	})
+	public List<JefaturaProyecto> porProyecto(@PathVariable Integer idProyecto) {
+		return this.service.findByProyecto(idProyecto);
+	}
+	@GetMapping("/porJefatura/{idJefatura}")
+	@ApiOperation(value = "Listar registros por jefatura", tags = { "Controlador JefaturaProyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
+	})
+	public List<JefaturaProyecto> porjefatura(@PathVariable Integer idJefatura) {
+		return this.service.findByProyecto(idJefatura);
+	}
 }

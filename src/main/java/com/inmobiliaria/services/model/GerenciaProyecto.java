@@ -1,14 +1,19 @@
 package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name="gerencia_proyecto")
@@ -23,11 +28,38 @@ public class GerenciaProyecto implements Serializable {
 
 	private byte enable;
 
-	@Column(name="id_gerencia")
-	private int idGerencia;
+	@ManyToOne
+	@JoinColumn(name="id_gerencia")
+	private Gerencia gerencia;
 
-	@Column(name="id_proyecto")
-	private int idProyecto;
+	@ManyToOne
+	@JoinColumn(name="id_proyecto")
+	private Proyecto proyecto;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_asignacion")
+	private Date fechaAsignacion;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_termino")
+	private Date fechaTermino;
+
+	
+	public Date getFechaAsignacion() {
+		return fechaAsignacion;
+	}
+
+	public void setFechaAsignacion(Date fechaAsignacion) {
+		this.fechaAsignacion = fechaAsignacion;
+	}
+
+	public Date getFechaTermin() {
+		return fechaTermino;
+	}
+
+	public void setFechaTermin(Date fechaTermino) {
+		this.fechaTermino = fechaTermino;
+	}
 
 	public int getIdGerenciaProyecto() {
 		return this.idGerenciaProyecto;
@@ -45,19 +77,20 @@ public class GerenciaProyecto implements Serializable {
 		this.enable = enable;
 	}
 
-	public int getIdGerencia() {
-		return this.idGerencia;
+	public Gerencia getGerencia() {
+		return gerencia;
 	}
 
-	public void setIdGerencia(int idGerencia) {
-		this.idGerencia = idGerencia;
+	public void setGerencia(Gerencia gerencia) {
+		this.gerencia = gerencia;
 	}
 
-	public int getIdProyecto() {
-		return this.idProyecto;
+	public Proyecto getProyecto() {
+		return proyecto;
 	}
 
-	public void setIdProyecto(int idProyecto) {
-		this.idProyecto = idProyecto;
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
 	}
+	
 }

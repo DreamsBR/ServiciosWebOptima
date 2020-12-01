@@ -54,4 +54,10 @@ public class PeriodoProyectoService {
 		periodoProyecto.setProyecto(proyectoRepository.findById(reg.getIdProyecto()).get());
 		return periodoProyecto;
 	}
+	public List<PeriodoProyecto> findByIdProyecto(Integer idProyecto) {
+		return reporsitory.findByIdProyecto(idProyecto);
+	}
+	public List<PeriodoProyecto> findByIdPeriodo(Integer idPeriodo) {
+		return reporsitory.findByIdPeriodo(idPeriodo);
+	}
 }
