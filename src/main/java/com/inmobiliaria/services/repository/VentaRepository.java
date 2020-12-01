@@ -25,5 +25,8 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	
 	@Query("select v from Venta v INNER JOIN v.cliente e where e.idCliente = ?1")
 	Page<Venta> findByCliente(Integer idCliente, Pageable pageable);
+	
+	@Query("select v from Venta v INNER JOIN v.vendedor e where e.idVendedor = ?1")
+	List<Venta> findByIdVendedor(Integer idVendedor);
 
 }

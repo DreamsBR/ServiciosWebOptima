@@ -41,4 +41,7 @@ public class VendedorService {
 	public Page<Vendedor> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
+	public List<Vendedor> findByIdJefatura(Integer idJefatura) {
+		return reporsitory.findByIdJefatura(idJefatura);
+	}
 }

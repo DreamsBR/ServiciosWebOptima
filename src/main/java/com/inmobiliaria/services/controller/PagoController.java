@@ -27,6 +27,7 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.PagoService;
 import com.inmobiliaria.services.model.Pago;
+import com.inmobiliaria.services.model.request.PagoRequest;
 
 @RestController
 @RequestMapping(value = "/v1/pago")
@@ -40,7 +41,7 @@ public class PagoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Pago.class)
 	})
-	public ResponseEntity<Pago> registrar(@RequestBody Pago reg) {
+	public ResponseEntity<Pago> registrar(@RequestBody PagoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -58,7 +59,7 @@ public class PagoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Pago.class)
 	})
-	public ResponseEntity<Pago> modificar(@RequestBody Pago reg, @PathVariable Integer id) {
+	public ResponseEntity<Pago> modificar(@RequestBody PagoRequest reg, @PathVariable Integer id) {
 		Pago entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);

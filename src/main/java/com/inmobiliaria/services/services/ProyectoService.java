@@ -57,28 +57,13 @@ public class ProyectoService {
 	}
 	public ProyectoResponse findInfoProyecto(Integer id) {
 		ProyectoResponse response = new ProyectoResponse();
-		GerenciaInfoResponse gerenciaResponse = new GerenciaInfoResponse();
-		Proyecto proyecto;
-		Gerencia gerencia;
 		List<GerenciaProyecto> list;
-		
-		proyecto = reporsitory.findById(id).get();
-		
+		response.setProyecto(reporsitory.findById(id).get());
 		list = gerenciaProyectoRepository.findByIdProyecto(id);
 		if ( list.size() > 0 ) {
-			gerencia = gerenciaRepository.findById(list.get(0).getIdGerencia()).get();
-			gerenciaResponse = new GerenciaInfoResponse();
-			gerenciaResponse.setIdGerencia(gerencia.getIdGerencia());
-			gerenciaResponse.setFechaIngreso(gerencia.getFechaIngreso());
-			gerenciaResponse.setNombre(gerencia.getNombre());
-			gerenciaResponse.setGerente(gerencia.getColaborador());
+			response.setGerencia(list.get(0).getGerencia());
+
 		}
-		
-		response.setGerencia(gerenciaResponse);
-		response.setCodigo(proyecto.getCodigo());
-		response.setDireccion(proyecto.getDireccion());
-		response.setIdProyecto(proyecto.getIdProyecto());
-		response.setEnable(proyecto.getEnable());
 		return response;
 	}
 }

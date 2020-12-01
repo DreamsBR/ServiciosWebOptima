@@ -101,5 +101,12 @@ public class VendedorController {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
 	}
-
+	@GetMapping("/listaporjefatura/{idJefatura}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Vendedor" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
+	})
+	public List<Vendedor> listaporjefatura(@PathVariable Integer idJefatura) {
+		return this.service.findByIdJefatura(idJefatura);
+	}
 }

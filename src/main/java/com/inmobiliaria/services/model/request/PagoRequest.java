@@ -1,37 +1,19 @@
-package com.inmobiliaria.services.model;
+package com.inmobiliaria.services.model.request;
 
-import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
-
-/**
- * The persistent class for the pago database table.
- * 
- */
-@Entity
-@NamedQuery(name="Pago.findAll", query="SELECT p FROM Pago p")
-public class Pago implements Serializable {
-	private static final long serialVersionUID = 1L;
-
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="id_pago")
+public class PagoRequest {
 	private int idPago;
 
 	private byte enable;
 
-	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 
-	@ManyToOne
-	@JoinColumn(name="id_venta")
-	private Venta venta;
-	
+	private int idVenta;
+
 	private BigDecimal monto;
 	
-	@Column(name="numero_operacion")
 	private String numeroOperacion;
 
 	private byte pagado;
@@ -39,7 +21,7 @@ public class Pago implements Serializable {
 	private String porcentaje;
 
 	public int getIdPago() {
-		return this.idPago;
+		return idPago;
 	}
 
 	public void setIdPago(int idPago) {
@@ -47,7 +29,7 @@ public class Pago implements Serializable {
 	}
 
 	public byte getEnable() {
-		return this.enable;
+		return enable;
 	}
 
 	public void setEnable(byte enable) {
@@ -55,23 +37,23 @@ public class Pago implements Serializable {
 	}
 
 	public Date getFecha() {
-		return this.fecha;
+		return fecha;
 	}
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-	
-	public Venta getVenta() {
-		return venta;
+
+	public int getIdVenta() {
+		return idVenta;
 	}
 
-	public void setVenta(Venta venta) {
-		this.venta = venta;
+	public void setIdVenta(int idVenta) {
+		this.idVenta = idVenta;
 	}
 
 	public BigDecimal getMonto() {
-		return this.monto;
+		return monto;
 	}
 
 	public void setMonto(BigDecimal monto) {
@@ -79,7 +61,7 @@ public class Pago implements Serializable {
 	}
 
 	public String getNumeroOperacion() {
-		return this.numeroOperacion;
+		return numeroOperacion;
 	}
 
 	public void setNumeroOperacion(String numeroOperacion) {
@@ -87,7 +69,7 @@ public class Pago implements Serializable {
 	}
 
 	public byte getPagado() {
-		return this.pagado;
+		return pagado;
 	}
 
 	public void setPagado(byte pagado) {
@@ -95,11 +77,10 @@ public class Pago implements Serializable {
 	}
 
 	public String getPorcentaje() {
-		return this.porcentaje;
+		return porcentaje;
 	}
 
 	public void setPorcentaje(String porcentaje) {
 		this.porcentaje = porcentaje;
 	}
-
 }

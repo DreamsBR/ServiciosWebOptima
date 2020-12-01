@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.inmobiliaria.services.model.GerenciaProyecto;
+import com.inmobiliaria.services.model.request.GerenciaProyectoRequest;
 import com.inmobiliaria.services.services.GerenciaProyectoService;
 
 import io.swagger.annotations.Api;
@@ -36,7 +37,7 @@ public class GerenciaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaProyecto.class)
 	})
-	public ResponseEntity<GerenciaProyecto> registrar(@RequestBody GerenciaProyecto reg) {
+	public ResponseEntity<GerenciaProyecto> registrar(@RequestBody GerenciaProyectoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -54,7 +55,7 @@ public class GerenciaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaProyecto.class)
 	})
-	public ResponseEntity<GerenciaProyecto> modificar(@RequestBody GerenciaProyecto reg, @PathVariable Integer id) {
+	public ResponseEntity<GerenciaProyecto> modificar(@RequestBody GerenciaProyectoRequest reg, @PathVariable Integer id) {
 		GerenciaProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -97,5 +98,12 @@ public class GerenciaProyectoController {
 		Pageable paginacion = PageRequest.of(page, 5);
 		return this.service.findAll(paginacion);
 	}
-
+	@GetMapping("/listarproyectos/{idGerencia}")
+	@ApiOperation(value = "Listar registros por gerencia", tags = { "Controlador GerenciaProyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = GerenciaProyecto.class)
+	})
+	public List<GerenciaProyecto> listarproyectos(@PathVariable Integer idGerencia) {
+		return this.service.findByIdGerencia(idGerencia);
+	}
 }

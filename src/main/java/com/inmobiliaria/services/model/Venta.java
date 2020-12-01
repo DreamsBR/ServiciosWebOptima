@@ -101,18 +101,8 @@ public class Venta implements Serializable {
 	private BigDecimal importe;
 
 	private BigDecimal total;
-
-	@OneToMany(mappedBy="venta")
-	private List<Pago> pagos;
 	
-	public List<Pago> getPagos() {
-		return this.pagos;
-	}
 
-	public void setPagos(List<Pago> pagos) {
-		this.pagos = pagos;
-	}
-	
 	public int getIdProyecto() {
 		return idProyecto;
 	}
