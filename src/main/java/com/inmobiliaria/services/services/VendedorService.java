@@ -44,4 +44,7 @@ public class VendedorService {
 	public List<Vendedor> findByIdJefatura(Integer idJefatura) {
 		return reporsitory.findByIdJefatura(idJefatura);
 	}
+	public List<Vendedor> findByIdColaborador(Integer idColaborador) {
+		return reporsitory.findByIdColaborador(idColaborador);
+	}
 }

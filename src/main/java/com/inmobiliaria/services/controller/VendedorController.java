@@ -114,4 +114,12 @@ public class VendedorController {
 	public List<Vendedor> listaporjefatura(@PathVariable Integer idJefatura) {
 		return this.service.findByIdJefatura(idJefatura);
 	}
+	@GetMapping("/findbycolaborador/{idColaborador}")
+	@ApiOperation(value = "buscar vendedor registros", tags = { "Controlador Vendedor" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
+	})
+	public List<Vendedor> findbycolaborador(@PathVariable Integer idColaborador) {
+		return this.service.findByIdColaborador(idColaborador);
+	}
 }
