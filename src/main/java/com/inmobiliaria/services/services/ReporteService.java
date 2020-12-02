@@ -244,6 +244,11 @@ public class ReporteService {
 			for (Vendedor vendedor : listVendedor) {
 				
 				res.setVendedor(vendedor);
+				List<PeriodoColaborador> listPeriodoColaborador = periodoColaboradorRepository.findByIdColaborador(vendedor.getIdColaborador());
+				List<PeriodoColaborador> listPeriodoColaborador1 = listPeriodoColaborador.stream().filter(p -> p.getPeriodo().getIdPeriodo() == idPeriodo).collect(Collectors.toList());
+				if ( listPeriodoColaborador1.size() > 0) {
+					res.setMeta(listPeriodoColaborador1.get(0).getMeta());
+				}
 				
 				List<Venta> listVentas = ventaRepository.findByIdVendedor(vendedor.getIdVendedor());
 				
