@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ import com.inmobiliaria.services.services.EstadoFinanciamientoService;
 @RestController
 @RequestMapping(value = "/v1/estadofinanciamiento")
 @Api(value = "EstadoFinanciamiento", produces = "application/json", tags = { "Controlador EstadoFinanciamiento" })
+@PreAuthorize("isAuthenticated()") 
 public class EstadoFinanciamientoController {
 	@Autowired
 	private EstadoFinanciamientoService service;
@@ -40,6 +42,7 @@ public class EstadoFinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoFinanciamiento> registrar(@RequestBody EstadoFinanciamiento reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +61,7 @@ public class EstadoFinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoFinanciamiento> modificar(@RequestBody EstadoFinanciamiento reg, @PathVariable Integer id) {
 		EstadoFinanciamiento entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +77,7 @@ public class EstadoFinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoFinanciamiento> eliminar(@PathVariable Integer id) {
 		EstadoFinanciamiento entity = this.service.findById(id);
 		if ( entity == null ) {

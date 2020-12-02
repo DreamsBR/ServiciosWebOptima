@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +29,7 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(value = "/v1/periodocolaborador")
 @Api(value = "PeriodoColaborador", produces = "application/json", tags = { "Controlador Periodo Colaborador" })
+@PreAuthorize("isAuthenticated()") 
 public class PeriodoColaboradorController {
 	@Autowired
 	private PeriodoColaboradorService service;
@@ -37,6 +39,7 @@ public class PeriodoColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoColaborador.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoColaborador> registrar(@RequestBody PeriodoColaboradorRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -55,6 +58,7 @@ public class PeriodoColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoColaborador.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoColaborador> modificar(@RequestBody PeriodoColaboradorRequest reg, @PathVariable Integer id) {
 		PeriodoColaborador entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -70,6 +74,7 @@ public class PeriodoColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoColaborador.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoColaborador> eliminar(@PathVariable Integer id) {
 		PeriodoColaborador entity = this.service.findById(id);
 		if ( entity == null ) {

@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ import com.inmobiliaria.services.model.Categoria;
 @RestController
 @RequestMapping(value = "/v1/categoria")
 @Api(value = "Categoria", produces = "application/json", tags = { "Controlador Categoria" })
+@PreAuthorize("isAuthenticated()") 
 public class CategoriaController {
 	@Autowired
 	private CategoriaService service;
@@ -40,6 +42,7 @@ public class CategoriaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Categoria.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Categoria> registrar(@RequestBody Categoria reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +61,7 @@ public class CategoriaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Categoria.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Categoria> modificar(@RequestBody Categoria reg, @PathVariable Integer id) {
 		Categoria entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +77,7 @@ public class CategoriaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Categoria.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Categoria> eliminar(@PathVariable Integer id) {
 		Categoria entity = this.service.findById(id);
 		if ( entity == null ) {

@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ import com.inmobiliaria.services.services.TipoDocumentoService;
 @RestController
 @RequestMapping(value = "/v1/tipodocumento")
 @Api(value = "TipoDocumento", produces = "application/json", tags = { "Controlador TipoDocumento" })
+@PreAuthorize("isAuthenticated()") 
 public class TipoDocumentoController {
 	@Autowired
 	private TipoDocumentoService service;
@@ -40,6 +42,7 @@ public class TipoDocumentoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = TipoDocumento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TipoDocumento> registrar(@RequestBody TipoDocumento reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +61,7 @@ public class TipoDocumentoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = TipoDocumento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TipoDocumento> modificar(@RequestBody TipoDocumento reg, @PathVariable Integer id) {
 		TipoDocumento entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +77,7 @@ public class TipoDocumentoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = TipoDocumento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TipoDocumento> eliminar(@PathVariable Integer id) {
 		TipoDocumento entity = this.service.findById(id);
 		if ( entity == null ) {

@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ import com.inmobiliaria.services.model.Canal;
 @RestController
 @RequestMapping(value = "/v1/canal")
 @Api(value = "Canal", produces = "application/json", tags = { "Controlador Canal" })
+@PreAuthorize("isAuthenticated()") 
 public class CanalController {
 	@Autowired
 	private CanalService service;
@@ -40,6 +42,7 @@ public class CanalController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Canal> registrar(@RequestBody Canal reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +61,7 @@ public class CanalController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Canal> modificar(@RequestBody Canal reg, @PathVariable Integer id) {
 		Canal entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +77,7 @@ public class CanalController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Canal> eliminar(@PathVariable Integer id) {
 		Canal entity = this.service.findById(id);
 		if ( entity == null ) {

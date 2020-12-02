@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ import com.inmobiliaria.services.services.EstadoCivilService;
 @RestController
 @RequestMapping(value = "/v1/estadocivil")
 @Api(value = "EstadoCivil", produces = "application/json", tags = { "Controlador EstadoCivil" })
+@PreAuthorize("isAuthenticated()") 
 public class EstadoCivilController {
 	@Autowired
 	private EstadoCivilService service;
@@ -40,6 +42,7 @@ public class EstadoCivilController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoCivil.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoCivil> registrar(@RequestBody EstadoCivil reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +61,7 @@ public class EstadoCivilController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoCivil.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoCivil> modificar(@RequestBody EstadoCivil reg, @PathVariable Integer id) {
 		EstadoCivil entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +77,7 @@ public class EstadoCivilController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoCivil.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoCivil> eliminar(@PathVariable Integer id) {
 		EstadoCivil entity = this.service.findById(id);
 		if ( entity == null ) {

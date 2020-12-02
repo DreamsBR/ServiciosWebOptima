@@ -11,6 +11,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -36,6 +37,7 @@ import com.inmobiliaria.services.model.request.VentaRequest;
 @RestController
 @RequestMapping(value = "/v1/venta")
 @Api(value = "Venta", produces = "application/json", tags = { "Controlador Venta" })
+@PreAuthorize("isAuthenticated()") 
 public class VentaController {
 	@Autowired
 	private VentaService service;
@@ -78,6 +80,7 @@ public class VentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Venta> eliminar(@PathVariable Integer id) {
 		Venta entity = this.service.findById(id);
 		if ( entity == null ) {

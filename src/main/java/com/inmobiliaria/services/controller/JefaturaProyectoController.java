@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ import com.inmobiliaria.services.model.request.JefaturaProyectoRequest;
 @RestController
 @RequestMapping(value = "/v1/jefaturaproyecto")
 @Api(value = "JefaturaProyecto", produces = "application/json", tags = { "Controlador JefaturaProyecto" })
+@PreAuthorize("isAuthenticated()") 
 public class JefaturaProyectoController {
 	@Autowired
 	private JefaturaProyectoService service;
@@ -41,6 +43,7 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<JefaturaProyecto> registrar(@RequestBody JefaturaProyectoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -59,6 +62,7 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<JefaturaProyecto> modificar(@RequestBody JefaturaProyectoRequest reg, @PathVariable Integer id) {
 		JefaturaProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -74,6 +78,7 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<JefaturaProyecto> eliminar(@PathVariable Integer id) {
 		JefaturaProyecto entity = this.service.findById(id);
 		if ( entity == null ) {

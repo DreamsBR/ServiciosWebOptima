@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ import com.inmobiliaria.services.model.request.ColaboradorRequest;
 @RestController
 @RequestMapping(value = "/v1/colaborador")
 @Api(value = "colaborador", produces = "application/json", tags = { "Controlador Colaborador" })
+@PreAuthorize("isAuthenticated()") 
 public class ColaboradorController {
 	@Autowired
 	private ColaboradorService service;
@@ -41,6 +43,7 @@ public class ColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Colaborador> registrar(@RequestBody ColaboradorRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -59,6 +62,7 @@ public class ColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Colaborador> modificar(@RequestBody ColaboradorRequest reg, @PathVariable Integer id) {
 		Colaborador entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -74,6 +78,7 @@ public class ColaboradorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Colaborador> eliminar(@PathVariable Integer id) {
 		Colaborador entity = this.service.findById(id);
 		if ( entity == null ) {

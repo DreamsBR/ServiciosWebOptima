@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ import com.inmobiliaria.services.model.request.VentaInmuebleRequest;
 @RestController
 @RequestMapping(value = "/v1/ventainmueble")
 @Api(value = "VentaInmueble", produces = "application/json", tags = { "Controlador VentaInmueble" })
+@PreAuthorize("isAuthenticated()") 
 public class VentaInmuebleController {
 	@Autowired
 	private VentaInmuebleService service;

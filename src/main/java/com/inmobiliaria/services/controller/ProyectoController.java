@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ import com.inmobiliaria.services.model.response.ProyectoResponse;
 @RestController
 @RequestMapping(value = "/v1/proyecto")
 @Api(value = "Proyecto", produces = "application/json", tags = { "Controlador Proyecto" })
+@PreAuthorize("isAuthenticated()") 
 public class ProyectoController {
 	@Autowired
 	private ProyectoService service;
@@ -41,6 +43,7 @@ public class ProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Proyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Proyecto> registrar(@RequestBody Proyecto reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -59,6 +62,7 @@ public class ProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Proyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Proyecto> modificar(@RequestBody Proyecto reg, @PathVariable Integer id) {
 		Proyecto entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -74,6 +78,7 @@ public class ProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Proyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Proyecto> eliminar(@PathVariable Integer id) {
 		Proyecto entity = this.service.findById(id);
 		if ( entity == null ) {

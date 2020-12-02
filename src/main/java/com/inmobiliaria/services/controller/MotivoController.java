@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +32,7 @@ import com.inmobiliaria.services.model.Motivo;
 @RestController
 @RequestMapping(value = "/v1/motivo")
 @Api(value = "Motivo", produces = "application/json", tags = { "Controlador Motivo" })
+@PreAuthorize("isAuthenticated()") 
 public class MotivoController {
 	@Autowired
 	private MotivoService service;
@@ -40,6 +42,7 @@ public class MotivoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Motivo.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Motivo> registrar(@RequestBody Motivo reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +61,7 @@ public class MotivoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Motivo.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Motivo> modificar(@RequestBody Motivo reg, @PathVariable Integer id) {
 		Motivo entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +77,7 @@ public class MotivoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Motivo.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Motivo> eliminar(@PathVariable Integer id) {
 		Motivo entity = this.service.findById(id);
 		if ( entity == null ) {

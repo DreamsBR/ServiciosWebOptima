@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +34,7 @@ import com.inmobiliaria.services.model.response.GerenciaResponse;
 @RestController
 @RequestMapping(value = "/v1/gerencia")
 @Api(value = "Gerencia", produces = "application/json", tags = { "Controlador Gerencia" })
+@PreAuthorize("isAuthenticated()") 
 public class GerenciaController {
 	@Autowired
 	private GerenciaService service;
@@ -42,6 +44,7 @@ public class GerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Gerencia> registrar(@RequestBody GerenciaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +61,7 @@ public class GerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Gerencia> modificar(@RequestBody GerenciaRequest reg, @PathVariable Integer id) {
 		Gerencia entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +77,7 @@ public class GerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Gerencia.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Gerencia> eliminar(@PathVariable Integer id) {
 		Gerencia entity = this.service.findById(id);
 		if ( entity == null ) {

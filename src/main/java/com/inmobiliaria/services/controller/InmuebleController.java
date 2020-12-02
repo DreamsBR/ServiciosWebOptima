@@ -7,6 +7,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +33,7 @@ import com.inmobiliaria.services.model.request.InmuebleRequest;
 @RestController
 @RequestMapping(value = "/v1/inmueble")
 @Api(value = "Inmueble", produces = "application/json", tags = { "Controlador Inmueble" })
+@PreAuthorize("isAuthenticated()") 
 public class InmuebleController {
 	@Autowired
 	private InmuebleService service;
@@ -41,6 +43,7 @@ public class InmuebleController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = InmuebleRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Inmueble> registrar(@RequestBody InmuebleRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -59,6 +62,7 @@ public class InmuebleController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Inmueble> modificar(@RequestBody InmuebleRequest reg, @PathVariable Integer id) {
 		Inmueble entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -74,6 +78,7 @@ public class InmuebleController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Inmueble> eliminar(@PathVariable Integer id) {
 		Inmueble entity = this.service.findById(id);
 		if ( entity == null ) {
