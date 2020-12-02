@@ -4,7 +4,6 @@ import java.io.Serializable;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.List;
 
 
 /**
@@ -60,37 +59,30 @@ public class Venta implements Serializable {
 	@Column(name="fecha_caida")
 	private Date fechaCaida;
 	
-	//bi-directional many-to-one association to Canal
 	@ManyToOne
 	@JoinColumn(name="id_canal")
 	private Canal canal;
 
-	//bi-directional many-to-one association to Categoria
 	@ManyToOne
 	@JoinColumn(name="id_categoria")
 	private Categoria categoria;
 
-	//bi-directional many-to-one association to Cliente
 	@ManyToOne
 	@JoinColumn(name="id_cliente")
 	private Cliente cliente;
 
-	//bi-directional many-to-one association to EstadoVenta
 	@ManyToOne
 	@JoinColumn(name="id_estado_venta")
 	private EstadoVenta estadoVenta;
 
-	//bi-directional many-to-one association to Financiamiento
 	@ManyToOne
 	@JoinColumn(name="id_financiamiento")
 	private Financiamiento financiamiento;
 
-	//bi-directional many-to-one association to Motivo
 	@ManyToOne
 	@JoinColumn(name="id_motivo")
 	private Motivo motivo;
 
-	//bi-directional many-to-one association to Vendedor
 	@ManyToOne
 	@JoinColumn(name="id_vendedor")
 	private Vendedor vendedor;

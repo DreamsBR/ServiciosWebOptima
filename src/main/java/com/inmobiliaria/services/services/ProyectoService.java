@@ -13,12 +13,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.inmobiliaria.services.repository.GerenciaProyectoRepository;
-import com.inmobiliaria.services.repository.GerenciaRepository;
 import com.inmobiliaria.services.repository.ProyectoRepository;
-import com.inmobiliaria.services.model.Gerencia;
 import com.inmobiliaria.services.model.GerenciaProyecto;
 import com.inmobiliaria.services.model.Proyecto;
-import com.inmobiliaria.services.model.response.GerenciaInfoResponse;
 import com.inmobiliaria.services.model.response.ProyectoResponse;
 
 @Service
@@ -28,9 +25,6 @@ public class ProyectoService {
 	private ProyectoRepository reporsitory;
 	@Autowired
 	private GerenciaProyectoRepository gerenciaProyectoRepository;
-	@Autowired
-	private GerenciaRepository gerenciaRepository;
-
 	@Transactional
 	public Proyecto registrar(Proyecto reg) {
 		return reporsitory.save(reg);
