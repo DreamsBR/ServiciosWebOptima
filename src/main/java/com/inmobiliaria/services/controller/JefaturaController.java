@@ -98,13 +98,13 @@ public class JefaturaController {
 		return this.service.findAll();
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Jefatura" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
-	public Page<Jefatura> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Jefatura> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

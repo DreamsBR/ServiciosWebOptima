@@ -95,13 +95,13 @@ public class VentaInmuebleController {
 		return this.service.findAll();
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador VentaInmueble" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = VentaInmueble.class)
 	})
-	public Page<VentaInmueble> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<VentaInmueble> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 	

@@ -97,13 +97,13 @@ public class EstadoCivilController {
 		return this.service.findAll();
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador EstadoCivil" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoCivil.class)
 	})
-	public Page<EstadoCivil> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<EstadoCivil> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

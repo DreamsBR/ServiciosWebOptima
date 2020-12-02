@@ -95,13 +95,13 @@ public class FinanciamientoController {
 		return this.service.findAll();
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Financiamiento" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
-	public Page<Financiamiento> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Financiamiento> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

@@ -100,23 +100,23 @@ public class VentaController {
 		return this.service.findAll();
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public Page<Venta> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Venta> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 	
-	@GetMapping("/byproyecto/{idProyecto}/{page}")
+	@GetMapping("/byproyecto/{idProyecto}/{page}/{count}")
 	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public Page<Venta> findByIdProyecto(@PathVariable Integer idProyecto, @PathVariable Integer page ) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Venta> findByIdProyecto(@PathVariable Integer idProyecto, @PathVariable Integer page, @PathVariable Integer count ) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findByIdProyecto(idProyecto, paginacion);
 	}
 	@GetMapping("/byproyectoandestado/{idProyecto}/{idEstadoVenta}")
@@ -144,13 +144,13 @@ public class VentaController {
 			return new ArrayList<>();
 		}
 	}
-	@GetMapping("/bycliente/{idCiente}/{page}")
+	@GetMapping("/bycliente/{idCiente}/{page}/{count}")
 	@ApiOperation(value = "Listar ventas por cliente", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public Page<Venta> findByIdCliente(@PathVariable Integer idCiente, @PathVariable Integer page ) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Venta> findByIdCliente(@PathVariable Integer idCiente, @PathVariable Integer page, @PathVariable Integer count ) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findByIdCliente(idCiente, paginacion);
 	}
 }

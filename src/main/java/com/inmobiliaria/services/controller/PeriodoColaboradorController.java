@@ -94,13 +94,13 @@ public class PeriodoColaboradorController {
 		return this.service.findAll();
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Periodo Colaborador" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoColaborador.class)
 	})
-	public Page<PeriodoColaborador> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<PeriodoColaborador> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 	
