@@ -1,6 +1,7 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,7 +92,9 @@ public class GerenciaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaProyecto.class)
 	})
 	public List<GerenciaProyecto> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream()
+				.filter(x -> x.getEnable() == 1 && x.getGerencia().getEnable() == 1 && x.getProyecto().getEnable() == 1 )
+				.collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")
@@ -109,6 +112,8 @@ public class GerenciaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaProyecto.class)
 	})
 	public List<GerenciaProyecto> listarproyectos(@PathVariable Integer idGerencia) {
-		return this.service.findByIdGerencia(idGerencia);
+		return this.service.findByIdGerencia(idGerencia).stream()
+				.filter(x -> x.getEnable() == 1 && x.getGerencia().getEnable() == 1 && x.getProyecto().getEnable() == 1 )
+				.collect(Collectors.toList());
 	}
 }

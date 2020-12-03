@@ -31,7 +31,8 @@ public class ProyectoService {
 	}
 	@Transactional
 	public void delete(Proyecto reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Proyecto update(Proyecto reg) {

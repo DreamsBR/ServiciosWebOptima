@@ -14,4 +14,5 @@ public interface GerenciaProyectoRepository extends JpaRepository<GerenciaProyec
 
 	@Query("select a from GerenciaProyecto a INNER JOIN a.gerencia b where b.idGerencia = ?1")
 	List<GerenciaProyecto> findByIdGerencia(Integer idGerencia);
+
 }

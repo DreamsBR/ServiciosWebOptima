@@ -1,6 +1,5 @@
 package com.inmobiliaria.services.security.services;
 
-import com.inmobiliaria.services.security.model.Role;
 import com.inmobiliaria.services.security.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -10,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserPrinciple implements UserDetails {

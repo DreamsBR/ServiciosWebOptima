@@ -5,6 +5,8 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -95,7 +97,9 @@ public class JefaturaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
 	public List<JefaturaProyecto> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream()
+				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")
@@ -114,7 +118,9 @@ public class JefaturaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
 	public List<JefaturaProyecto> porProyecto(@PathVariable Integer idProyecto) {
-		return this.service.findByProyecto(idProyecto);
+		return this.service.findByProyecto(idProyecto).stream()
+				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 	@GetMapping("/porJefatura/{idJefatura}")
 	@ApiOperation(value = "Listar registros por jefatura", tags = { "Controlador JefaturaProyecto" })
@@ -122,6 +128,8 @@ public class JefaturaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
 	public List<JefaturaProyecto> porjefatura(@PathVariable Integer idJefatura) {
-		return this.service.findByProyecto(idJefatura);
+		return this.service.findByProyecto(idJefatura).stream()
+				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 }

@@ -1,6 +1,7 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,7 +92,10 @@ public class PeriodoProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
 	public List<PeriodoProyecto> findAll() {
-		return this.service.findAll();
+		return this.service.findAll()
+				.stream()
+				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")
@@ -110,7 +114,10 @@ public class PeriodoProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
 	public List<PeriodoProyecto> porProyecto(@PathVariable Integer idProyecto) {
-		return this.service.findByIdProyecto(idProyecto);
+		return this.service.findByIdProyecto(idProyecto)
+				.stream()
+				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 	@GetMapping("/porPeriodo/{idPeriodo}")
 	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo Proyecto" })
@@ -118,7 +125,10 @@ public class PeriodoProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
 	public List<PeriodoProyecto> porPeriodo(@PathVariable Integer idPeriodo) {
-		return this.service.findByIdPeriodo(idPeriodo);
+		return this.service.findByIdPeriodo(idPeriodo)
+				.stream()
+				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 	
 }

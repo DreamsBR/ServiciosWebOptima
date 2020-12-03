@@ -5,6 +5,8 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -92,7 +94,7 @@ public class FinanciamientoController {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
 	public List<Financiamiento> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")

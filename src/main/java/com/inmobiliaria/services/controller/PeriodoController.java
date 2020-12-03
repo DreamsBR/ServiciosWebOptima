@@ -1,6 +1,7 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -91,7 +92,7 @@ public class PeriodoController {
 		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
 	})
 	public List<Periodo> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")

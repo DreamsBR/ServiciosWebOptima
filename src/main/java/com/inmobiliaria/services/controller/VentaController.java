@@ -9,6 +9,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -97,7 +99,7 @@ public class VentaController {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public List<Venta> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")
@@ -125,7 +127,7 @@ public class VentaController {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public List<Venta> findByProyectoAndEstadoVenta(@PathVariable Integer idProyecto, @PathVariable Integer idEstadoVenta) {
-		return this.service.findByProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta);
+		return this.service.findByProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 	@GetMapping("/byproyectoandestadorange/{idProyecto}/{idEstadoVenta}/{fechaini}/{fechafin}")
 	@ApiOperation(value = "Listar ventas por proyecto, estado y rango de fechas", tags = { "Controlador Venta" })
@@ -139,7 +141,7 @@ public class VentaController {
 		try {
 			ini = ddmmyy.parse(fechaini);
 			fin = ddmmyy.parse(fechafin);
-			return this.service.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta, ini, fin);
+			return this.service.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta, ini, fin).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 		} catch (ParseException e) {
 			return new ArrayList<>();
 		}
@@ -165,7 +167,7 @@ public class VentaController {
 		try {
 			ini = ddmmyy.parse(fechaini);
 			fin = ddmmyy.parse(fechafin);
-			return this.service.byrange(ini, fin);
+			return this.service.byrange(ini, fin).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 		} catch (ParseException e) {
 			return new ArrayList<>();
 		}

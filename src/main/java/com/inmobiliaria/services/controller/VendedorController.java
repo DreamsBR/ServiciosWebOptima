@@ -5,6 +5,8 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -94,7 +96,7 @@ public class VendedorController {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
 	public List<Vendedor> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")
@@ -112,7 +114,7 @@ public class VendedorController {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
 	public List<Vendedor> listaporjefatura(@PathVariable Integer idJefatura) {
-		return this.service.findByIdJefatura(idJefatura);
+		return this.service.findByIdJefatura(idJefatura).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 	@GetMapping("/findbycolaborador/{idColaborador}")
 	@ApiOperation(value = "buscar vendedor registros", tags = { "Controlador Vendedor" })
@@ -120,6 +122,6 @@ public class VendedorController {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
 	public List<Vendedor> findbycolaborador(@PathVariable Integer idColaborador) {
-		return this.service.findByIdColaborador(idColaborador);
+		return this.service.findByIdColaborador(idColaborador).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 }
