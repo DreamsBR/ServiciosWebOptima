@@ -3,6 +3,7 @@ package com.inmobiliaria.services.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(value = "/v1/reporte")
 @Api(value = "reporte", produces = "application/json", tags = { "Controlador Reporte" })
+@PreAuthorize("isAuthenticated()") 
 public class ReporteController {
 	@Autowired
 	private ReporteService service;

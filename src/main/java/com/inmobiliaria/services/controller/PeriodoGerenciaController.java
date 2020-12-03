@@ -1,6 +1,7 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(value = "/v1/periodogerencia")
 @Api(value = "PeriodoGerencia", produces = "application/json", tags = { "Controlador Periodo Gerencia" })
+@PreAuthorize("isAuthenticated()") 
 public class PeriodoGerenciaController {
 	@Autowired
 	private PeriodoGerenciaService service;
@@ -37,6 +40,7 @@ public class PeriodoGerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoGerenciaRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoGerencia> registrar(@RequestBody PeriodoGerenciaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -55,6 +59,7 @@ public class PeriodoGerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoGerenciaRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoGerencia> modificar(@RequestBody PeriodoGerenciaRequest reg, @PathVariable Integer id) {
 		PeriodoGerencia entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -70,6 +75,7 @@ public class PeriodoGerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoGerencia.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoGerencia> eliminar(@PathVariable Integer id) {
 		PeriodoGerencia entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -86,16 +92,18 @@ public class PeriodoGerenciaController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoGerencia.class)
 	})
 	public List<PeriodoGerencia> findAll() {
-		return this.service.findAll();
+		return this.service.findAll()
+				.stream().filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 )
+				.collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Periodo Gerencia" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoGerencia.class)
 	})
-	public Page<PeriodoGerencia> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<PeriodoGerencia> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 	
@@ -105,6 +113,8 @@ public class PeriodoGerenciaController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoGerencia.class)
 	})
 	public List<PeriodoGerencia> findByIdGerencia(@PathVariable Integer idGerencia) {
-		return this.service.findByIdGerencia(idGerencia);
+		return this.service.findByIdGerencia(idGerencia)
+				.stream().filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 )
+				.collect(Collectors.toList());
 	}
 }

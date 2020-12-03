@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -33,6 +36,7 @@ import com.inmobiliaria.services.model.response.GerenciaResponse;
 @RestController
 @RequestMapping(value = "/v1/gerencia")
 @Api(value = "Gerencia", produces = "application/json", tags = { "Controlador Gerencia" })
+@PreAuthorize("isAuthenticated()") 
 public class GerenciaController {
 	@Autowired
 	private GerenciaService service;
@@ -42,6 +46,7 @@ public class GerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Gerencia> registrar(@RequestBody GerenciaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +63,7 @@ public class GerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = GerenciaRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Gerencia> modificar(@RequestBody GerenciaRequest reg, @PathVariable Integer id) {
 		Gerencia entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +79,7 @@ public class GerenciaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Gerencia.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Gerencia> eliminar(@PathVariable Integer id) {
 		Gerencia entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,16 +96,16 @@ public class GerenciaController {
 		@ApiResponse(code = 200, message = "OK", response = Gerencia.class)
 	})
 	public List<Gerencia> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Gerencia" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Gerencia.class)
 	})
-	public Page<Gerencia> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Gerencia> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

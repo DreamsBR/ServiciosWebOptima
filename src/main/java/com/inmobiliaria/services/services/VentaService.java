@@ -133,4 +133,7 @@ public class VentaService {
 	public Page<Venta> findByIdCliente(Integer idCiente, Pageable paginacion) {
 		return reporsitory.findByCliente(idCiente, paginacion);
 	}
+	public List<Venta> byrange(Date ini, Date fin) {
+		return reporsitory.findByFechaRegistroRange(ini, fin);
+	}
 }

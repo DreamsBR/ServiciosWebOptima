@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +34,7 @@ import com.inmobiliaria.services.services.TipoCreditoService;
 @RestController
 @RequestMapping(value = "/v1/tipocredito")
 @Api(value = "TipoCredito", produces = "application/json", tags = { "Controlador TipoCredito" })
+@PreAuthorize("isAuthenticated()") 
 public class TipoCreditoController {
 	@Autowired
 	private TipoCreditoService service;
@@ -40,6 +44,7 @@ public class TipoCreditoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = TipoCredito.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TipoCredito> registrar(@RequestBody TipoCredito reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -58,6 +63,7 @@ public class TipoCreditoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = TipoCredito.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TipoCredito> modificar(@RequestBody TipoCredito reg, @PathVariable Integer id) {
 		TipoCredito entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +79,7 @@ public class TipoCreditoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = TipoCredito.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<TipoCredito> eliminar(@PathVariable Integer id) {
 		TipoCredito entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,16 +96,16 @@ public class TipoCreditoController {
 		@ApiResponse(code = 200, message = "OK", response = TipoCredito.class)
 	})
 	public List<TipoCredito> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador TipoCredito" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = TipoCredito.class)
 	})
-	public Page<TipoCredito> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<TipoCredito> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

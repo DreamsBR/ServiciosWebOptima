@@ -1,6 +1,7 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -8,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,6 +30,7 @@ import io.swagger.annotations.ApiResponses;
 @RestController
 @RequestMapping(value = "/v1/periodoproyecto")
 @Api(value = "PeriodoProyecto", produces = "application/json", tags = { "Controlador Periodo Proyecto" })
+@PreAuthorize("isAuthenticated()") 
 public class PeriodoProyectoController {
 	@Autowired
 	private PeriodoProyectoService service;
@@ -37,6 +40,7 @@ public class PeriodoProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoProyecto> registrar(@RequestBody PeriodoProyectoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -55,6 +59,7 @@ public class PeriodoProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoProyecto> modificar(@RequestBody PeriodoProyectoRequest reg, @PathVariable Integer id) {
 		PeriodoProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -70,6 +75,7 @@ public class PeriodoProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<PeriodoProyecto> eliminar(@PathVariable Integer id) {
 		PeriodoProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -86,16 +92,19 @@ public class PeriodoProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
 	public List<PeriodoProyecto> findAll() {
-		return this.service.findAll();
+		return this.service.findAll()
+				.stream()
+				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Periodo Proyecto" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
-	public Page<PeriodoProyecto> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<PeriodoProyecto> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 	
@@ -105,7 +114,10 @@ public class PeriodoProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
 	public List<PeriodoProyecto> porProyecto(@PathVariable Integer idProyecto) {
-		return this.service.findByIdProyecto(idProyecto);
+		return this.service.findByIdProyecto(idProyecto)
+				.stream()
+				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 	@GetMapping("/porPeriodo/{idPeriodo}")
 	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo Proyecto" })
@@ -113,7 +125,10 @@ public class PeriodoProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = PeriodoProyecto.class)
 	})
 	public List<PeriodoProyecto> porPeriodo(@PathVariable Integer idPeriodo) {
-		return this.service.findByIdPeriodo(idPeriodo);
+		return this.service.findByIdPeriodo(idPeriodo)
+				.stream()
+				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 	
 }

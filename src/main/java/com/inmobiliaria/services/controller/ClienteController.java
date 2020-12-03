@@ -5,8 +5,10 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +34,7 @@ import com.inmobiliaria.services.model.request.ClienteRequest;
 @RestController
 @RequestMapping(value = "/v1/cliente")
 @Api(value = "Cliente", produces = "application/json", tags = { "Controlador Cliente" })
+@PreAuthorize("isAuthenticated()") 
 public class ClienteController {
 	@Autowired
 	private ClienteService service;
@@ -74,6 +77,7 @@ public class ClienteController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Cliente> eliminar(@PathVariable Integer id) {
 		Cliente entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -93,13 +97,13 @@ public class ClienteController {
 		return this.service.findAll();
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Cliente" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Cliente.class)
 	})
-	public Page<Cliente> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Cliente> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

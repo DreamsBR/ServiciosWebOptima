@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,6 +35,7 @@ import com.inmobiliaria.services.model.request.InmuebleRequest;
 @RestController
 @RequestMapping(value = "/v1/inmueble")
 @Api(value = "Inmueble", produces = "application/json", tags = { "Controlador Inmueble" })
+@PreAuthorize("isAuthenticated()") 
 public class InmuebleController {
 	@Autowired
 	private InmuebleService service;
@@ -41,6 +45,7 @@ public class InmuebleController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = InmuebleRequest.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Inmueble> registrar(@RequestBody InmuebleRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -59,6 +64,7 @@ public class InmuebleController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Inmueble> modificar(@RequestBody InmuebleRequest reg, @PathVariable Integer id) {
 		Inmueble entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -74,6 +80,7 @@ public class InmuebleController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Inmueble> eliminar(@PathVariable Integer id) {
 		Inmueble entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -90,16 +97,16 @@ public class InmuebleController {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
 	public List<Inmueble> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Inmueble" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
-	public Page<Inmueble> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Inmueble> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 	@GetMapping("/listarporproyecto/{idProyecto}")
@@ -108,7 +115,7 @@ public class InmuebleController {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
 	public List<Inmueble> searchByProyecto(@PathVariable Integer idProyecto) {
-		return this.service.searchByProyecto(idProyecto);
+		return this.service.searchByProyecto(idProyecto).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 	@GetMapping("/listarporcategoria/{idProyecto}/{idTipoInmueble}/{idTipoInmuebleCategoria}")
 	@ApiOperation(value = "Listar registros", tags = { "Controlador Inmueble" })
@@ -116,7 +123,7 @@ public class InmuebleController {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
 	public List<Inmueble> searchByCategoria(@PathVariable Integer idProyecto, @PathVariable Integer idTipoInmueble, @PathVariable Integer idTipoInmuebleCategoria) {
-		return this.service.searchByCategoria(idProyecto, idTipoInmueble, idTipoInmuebleCategoria);
+		return this.service.searchByCategoria(idProyecto, idTipoInmueble, idTipoInmuebleCategoria).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 	
 	@GetMapping("/searchByNumero/{idProyecto}/{idTipoInmueble}/{numero}")
@@ -134,6 +141,6 @@ public class InmuebleController {
 		@ApiResponse(code = 200, message = "OK", response = Inmueble.class)
 	})
 	public List<Inmueble> searchdisponibles(@PathVariable Integer idProyecto, @PathVariable Integer idTipoInmueble, @PathVariable Integer idTipoInmuebleCategoria) {
-		return this.service.searchDisponibles(idProyecto, idTipoInmueble, idTipoInmuebleCategoria);
+		return this.service.searchDisponibles(idProyecto, idTipoInmueble, idTipoInmuebleCategoria).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 }
