@@ -5,12 +5,14 @@
 package com.inmobiliaria.services.repository;
 
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.inmobiliaria.services.model.Venta;
@@ -28,5 +30,8 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	
 	@Query("select v from Venta v INNER JOIN v.vendedor e where e.idVendedor = ?1")
 	List<Venta> findByIdVendedor(Integer idVendedor);
+
+	@Query("select v from Venta v where v.fechaRegistro BETWEEN :startDate AND :endDate")
+	List<Venta> findByFechaRegistroRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }

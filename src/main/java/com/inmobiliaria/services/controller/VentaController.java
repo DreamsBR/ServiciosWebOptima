@@ -153,4 +153,21 @@ public class VentaController {
 		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findByIdCliente(idCiente, paginacion);
 	}
+	@GetMapping("/byrange/{fechaini}/{fechafin}")
+	@ApiOperation(value = "Listar ventas por fechas", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> byrange(@PathVariable String fechaini, @PathVariable String fechafin) {
+		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd");
+		Date ini;
+		Date fin;
+		try {
+			ini = ddmmyy.parse(fechaini);
+			fin = ddmmyy.parse(fechafin);
+			return this.service.byrange(ini, fin);
+		} catch (ParseException e) {
+			return new ArrayList<>();
+		}
+	}
 }

@@ -1,5 +1,6 @@
 package com.inmobiliaria.services.security.services;
 
+import com.inmobiliaria.services.security.model.Role;
 import com.inmobiliaria.services.security.model.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserPrinciple implements UserDetails {
@@ -29,10 +31,12 @@ public class UserPrinciple implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
 
+	private List<String> roles;
+
     public UserPrinciple(Long id, String name, 
 			    		String username, String email, String password, 
 			    		Integer idColaborador,
-			    		Collection<? extends GrantedAuthority> authorities) {
+			    		List<String> roles, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.name = name;
         this.username = username;
@@ -40,6 +44,7 @@ public class UserPrinciple implements UserDetails {
         this.password = password;
         this.authorities = authorities;
         this.idColaborador = idColaborador;
+        this.roles = roles;
     }
 
     public static UserPrinciple build(User user) {
@@ -54,6 +59,7 @@ public class UserPrinciple implements UserDetails {
                 user.getEmail(),
                 user.getPassword(),
                 user.getIdColaborador(),
+                user.getRoles().stream().map(role -> role.getName().name()).collect(Collectors.toList()),
                 authorities
         );
     }
@@ -84,7 +90,16 @@ public class UserPrinciple implements UserDetails {
     	return idColaborador;
     }
 
-    @Override
+    
+    public List<String> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
+	}
+
+	@Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return authorities;
     }
@@ -117,4 +132,5 @@ public class UserPrinciple implements UserDetails {
         UserPrinciple user = (UserPrinciple) o;
         return Objects.equals(id, user.id);
     }
+
 }
