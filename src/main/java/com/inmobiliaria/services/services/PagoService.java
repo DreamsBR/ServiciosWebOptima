@@ -26,6 +26,7 @@ public class PagoService {
 	private VentaRepository ventaRepository;
 	@Transactional
 	public Pago registrar(PagoRequest reg) {
+		reg.setEnable((byte) 1);
 		Pago pago = mapperPago(reg);
 		return reporsitory.save(pago);
 	}
@@ -48,6 +49,7 @@ public class PagoService {
 		pago.setPagado(reg.getPagado());
 		pago.setPorcentaje(reg.getPorcentaje());
 		pago.setVenta(ventaRepository.findById(reg.getIdVenta()).get());
+		pago.setFileRuta(reg.getFileRuta());
 		return pago;
 	}
 	public Pago findById(Integer id) {

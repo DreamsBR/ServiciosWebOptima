@@ -24,6 +24,7 @@ public class GerenciaProyectoService {
 	private ProyectoRepository proyectoRepository;
 	@Transactional
 	public GerenciaProyecto registrar(GerenciaProyectoRequest reg) {
+		reg.setEnable((byte) 1);
 		GerenciaProyecto gerenciaProyecto = mapperGerenciaProyecto(reg);
 		return repository.save(gerenciaProyecto);
 	}
@@ -56,7 +57,6 @@ public class GerenciaProyectoService {
 		return repository.findAll(pageable);
 	}
 	public List<GerenciaProyecto> findByIdGerencia(Integer idGerencia) {
-		// TODO Auto-generated method stub
 		return repository.findByIdGerencia(idGerencia);
 	}
 }

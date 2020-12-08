@@ -21,6 +21,7 @@ public class PeriodoGerenciaService {
 	private PeriodoRepository periodoRepository;
 	@Transactional
 	public PeriodoGerencia registrar(PeriodoGerenciaRequest reg) {
+		reg.setEnable((byte) 1);
 		PeriodoGerencia periodoGerencia = mapperPeriodoGerencia(reg);
 		return reporsitory.save(periodoGerencia);
 	}

@@ -58,6 +58,14 @@ public class GerenciaController {
 	public ResponseEntity<GerenciaResponse> info(@PathVariable Integer id) {
 		return new ResponseEntity<>(this.service.findGerencia(id), HttpStatus.OK);
 	}
+	@GetMapping("/porgerente/{idColaborador}")
+	@ApiOperation(value = "obtener informacion", tags = { "Controlador Gerencia" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = GerenciaResponse.class)
+	})
+	public ResponseEntity<GerenciaResponse> findByIdColaborador(@PathVariable Integer idColaborador) {
+		return new ResponseEntity<>(this.service.findByIdColaborador(idColaborador), HttpStatus.OK);
+	}
 	@PutMapping("/{id}")
 	@ApiOperation(value = "modificar registro", tags = { "Controlador Gerencia" })
 	@ApiResponses(value = {

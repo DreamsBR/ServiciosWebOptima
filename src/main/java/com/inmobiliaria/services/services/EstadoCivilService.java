@@ -22,6 +22,7 @@ public class EstadoCivilService {
 	private EstadoCivilRepository reporsitory;
 	@Transactional
 	public EstadoCivil registrar(EstadoCivil reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

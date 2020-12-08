@@ -35,7 +35,15 @@ public class JwtProvider {
 		                .signWith(SignatureAlgorithm.HS512, jwtSecret)
 		                .compact();
     }
-    
+    public String generateJwtTokenChangePassword(String userName) {
+
+        return Jwts.builder()
+		                .setSubject(userName)
+		                .setIssuedAt(new Date())
+		                .setExpiration(new Date((new Date()).getTime() + jwtExpiration*1000))
+		                .signWith(SignatureAlgorithm.HS512, jwtSecret)
+		                .compact();
+    }
     public boolean validateJwtToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

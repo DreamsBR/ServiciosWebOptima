@@ -31,6 +31,8 @@ import io.swagger.annotations.ApiResponses;
 import com.inmobiliaria.services.services.ColaboradorService;
 import com.inmobiliaria.services.model.Colaborador;
 import com.inmobiliaria.services.model.request.ColaboradorRequest;
+import com.inmobiliaria.services.security.model.User;
+import com.inmobiliaria.services.security.repository.UserRepository;
 
 @RestController
 @RequestMapping(value = "/v1/colaborador")
@@ -39,6 +41,9 @@ import com.inmobiliaria.services.model.request.ColaboradorRequest;
 public class ColaboradorController {
 	@Autowired
 	private ColaboradorService service;
+	
+	@Autowired
+	private UserRepository UserRepository;
 
 	@PostMapping
 	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Colaborador" })
@@ -58,7 +63,14 @@ public class ColaboradorController {
 	public ResponseEntity<Colaborador> obtener(@PathVariable Integer id) {
 		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
-
+	@GetMapping("/user/{idColaborador}")
+	@ApiOperation(value = "obtener registro", tags = { "Controlador Colaborador" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = User.class)
+	})
+	public List<User> obtenerUsuario(@PathVariable Integer idColaborador) {
+		return this.service.findByIdColaborador(idColaborador);
+	}
 	@PutMapping("/{id}")
 	@ApiOperation(value = "modificar registro", tags = { "Controlador Colaborador" })
 	@ApiResponses(value = {
@@ -118,5 +130,16 @@ public class ColaboradorController {
 	public List<Colaborador> obtener(@PathVariable String numeroDocumento) {
 		return this.service.findByNumeroDocumento(numeroDocumento).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
-
+	@GetMapping("/findUser/{idColaborador}")
+	@ApiOperation(value = "obtener registro", tags = { "Controlador Colaborador" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Colaborador.class)
+	})
+	public List<User> findUser(@PathVariable Integer idColaborador) {
+		List<User> listUser = this.UserRepository.findByIdColaborador(idColaborador);
+		for (int i = 0; i < listUser.size(); i++) {
+			listUser.get(i).setPassword("");
+		}
+		return listUser;
+	}
 }

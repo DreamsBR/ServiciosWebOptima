@@ -20,6 +20,16 @@ public class PagoRequest {
 
 	private String porcentaje;
 
+	private String fileRuta;
+	
+	public String getFileRuta() {
+		return fileRuta;
+	}
+
+	public void setFileRuta(String fileRuta) {
+		this.fileRuta = fileRuta;
+	}
+
 	public int getIdPago() {
 		return idPago;
 	}

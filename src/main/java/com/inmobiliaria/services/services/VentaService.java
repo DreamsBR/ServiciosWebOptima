@@ -4,6 +4,7 @@
  */
 package com.inmobiliaria.services.services;
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,6 +52,7 @@ public class VentaService {
 	
 	@Transactional
 	public Venta registrar(VentaRequest reg) {
+		reg.setEnable((byte) 1);
 		Venta venta = mapperVenta(reg);
 		venta.setFechaRegistro(new Date());
 		return reporsitory.save(venta);
@@ -133,7 +135,10 @@ public class VentaService {
 	public Page<Venta> findByIdCliente(Integer idCiente, Pageable paginacion) {
 		return reporsitory.findByCliente(idCiente, paginacion);
 	}
-	public List<Venta> byrange(Date ini, Date fin) {
-		return reporsitory.findByFechaRegistroRange(ini, fin);
+	public List<Venta> byrange(Integer idProyecto, Date ini, Date fin) {
+		return reporsitory.findByFechaRegistroRange(idProyecto, ini, fin);
+	}
+	public List<Venta> findByIdVendedor(Integer idVendedor) {
+		return reporsitory.findByIdVendedor(idVendedor);
 	}
 }

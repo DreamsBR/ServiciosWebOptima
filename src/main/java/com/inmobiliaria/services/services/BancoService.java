@@ -22,6 +22,7 @@ public class BancoService {
 	private BancoRepository reporsitory;
 	@Transactional
 	public Banco registrar(Banco entity) {
+		entity.setEnable((byte) 1);
 		return reporsitory.save(entity);
 	}
 	@Transactional

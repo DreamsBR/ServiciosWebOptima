@@ -57,7 +57,7 @@ public class ClienteService {
 		return reporsitory.findByNroDocumento(nroDocumento);
 	}
 	public List<Cliente> findByNombresAndApellidos(String nombres, String apellidos) {
-		return reporsitory.findByNombresAndApellidos(nombres, apellidos);
+		return reporsitory.findByNombresStartsWithIgnoreCaseAndApellidosStartsWithIgnoreCase(nombres, apellidos);
 	}
 	private Cliente mapperCliente(ClienteRequest reg) {
 		Cliente cliente = new Cliente();

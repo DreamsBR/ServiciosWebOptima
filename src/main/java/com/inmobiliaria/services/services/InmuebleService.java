@@ -41,6 +41,7 @@ public class InmuebleService {
 	private VentaRepository ventaRepository;
 	@Transactional
 	public Inmueble registrar(InmuebleRequest reg) {
+		reg.setEnable((byte) 1);
 		Inmueble inmueble = mapperInmueble(reg);
 		return reporsitory.save(inmueble);
 	}

@@ -22,6 +22,7 @@ public class MotivoService {
 	private MotivoRepository reporsitory;
 	@Transactional
 	public Motivo registrar(Motivo reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

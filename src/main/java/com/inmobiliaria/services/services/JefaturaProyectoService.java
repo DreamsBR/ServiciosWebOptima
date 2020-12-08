@@ -29,6 +29,7 @@ public class JefaturaProyectoService {
 	private ProyectoRepository proyectoRepository;
 	@Transactional
 	public JefaturaProyecto registrar(JefaturaProyectoRequest reg) {
+		reg.setEnable((byte) 1);
 		JefaturaProyecto jefaturaProyecto = mapperJefaturaProyecto(reg);
 		return repository.save(jefaturaProyecto);
 	}

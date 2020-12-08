@@ -22,6 +22,7 @@ public class TipoVistaService {
 	private TipoVistaRepository reporsitory;
 	@Transactional
 	public TipoVista registrar(TipoVista reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

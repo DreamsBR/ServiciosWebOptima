@@ -24,6 +24,7 @@ public class PeriodoProyectoService {
 	private ProyectoRepository proyectoRepository;
 	@Transactional
 	public PeriodoProyecto registrar(PeriodoProyectoRequest reg) {
+		reg.setEnable((byte) 1);
 		PeriodoProyecto periodoProyecto = mapperPeriodoProyecto(reg);
 		return reporsitory.save(periodoProyecto);
 	}

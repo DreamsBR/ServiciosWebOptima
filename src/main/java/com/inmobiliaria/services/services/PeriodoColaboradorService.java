@@ -21,6 +21,7 @@ public class PeriodoColaboradorService {
 	private PeriodoRepository periodoRepository;
 	@Transactional
 	public PeriodoColaborador registrar(PeriodoColaboradorRequest reg) {
+		reg.setEnable((byte) 1);
 		PeriodoColaborador periodoColaborador = mapperPeriodoColaborador(reg);
 		return reporsitory.save(periodoColaborador);
 	}

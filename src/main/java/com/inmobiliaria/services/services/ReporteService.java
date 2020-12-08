@@ -57,7 +57,7 @@ public class ReporteService {
 		List<PeriodoProyecto> list = periodoProyectoRepository.findByIdPeriodo(idPeriodo)				
 				.stream()
 				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
-				.collect(Collectors.toList());;
+				.collect(Collectors.toList());
 		List<GerenciaProyecto> listGerenciaProyecto = gerenciaProyectoRepository.findByIdGerencia(idGerencia)
 				.stream()
 				.filter(x -> x.getEnable() == 1 && x.getProyecto().getEnable() == 1)
@@ -164,7 +164,9 @@ public class ReporteService {
 				.stream()
 				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 && x.getProyecto().getEnable() == 1)
 				.collect(Collectors.toList());
-		
+		Collections.sort(listPeriodoProyecto, (d1, d2) -> {
+			return (int) (d2.getPeriodo().getFechaInicio().getTime() - d1.getPeriodo().getFechaInicio().getTime());
+		});
 		for (PeriodoProyecto periodoProyecto : listPeriodoProyecto) {
 			ConsolidadoProyectoPeriodoResponse item = new ConsolidadoProyectoPeriodoResponse();
 			item.setPeriodoProyecto(periodoProyecto);
@@ -271,7 +273,7 @@ public class ReporteService {
 	}
 	public List<ConsolidadoProyectoResponse> consolidadoProyecto(Integer idProyecto, Integer idPeriodo) {
 		List<ConsolidadoProyectoResponse> listResponse = new ArrayList<>();
-		List<JefaturaProyecto> JefaturaProyecto = jefaturaProyectoRepository.findByIdProyecto(idProyecto)
+		List<JefaturaProyecto> listJefaturaProyecto = jefaturaProyectoRepository.findByIdProyecto(idProyecto)
 				.stream()
 				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
 				.collect(Collectors.toList());
@@ -279,15 +281,14 @@ public class ReporteService {
 		
 		Periodo periodo = periodoRepository.findById(idPeriodo).get();
 		
-		for (JefaturaProyecto jefaturaProyecto : JefaturaProyecto) {
-			ConsolidadoProyectoResponse res = new ConsolidadoProyectoResponse();
+		for (JefaturaProyecto jefaturaProyecto : listJefaturaProyecto) {
 			List<Vendedor> listVendedor = vendedorRepository.findByIdJefatura(jefaturaProyecto.getJefatura().getIdJefatura())
 					.stream()
 					.filter(x -> x.getEnable() == 1 )
 					.collect(Collectors.toList());
 			
 			for (Vendedor vendedor : listVendedor) {
-				
+				ConsolidadoProyectoResponse res = new ConsolidadoProyectoResponse();
 				res.setVendedor(vendedor);
 				List<PeriodoColaborador> listPeriodoColaborador = periodoColaboradorRepository.findByIdColaborador(vendedor.getIdColaborador())
 						.stream()
@@ -303,7 +304,7 @@ public class ReporteService {
 						.filter(x -> x.getEnable() == 1 )
 						.collect(Collectors.toList());
 				
-				List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() && v.getVendedor().getIdColaborador() == vendedor.getIdColaborador() ).collect(Collectors.toList());
+				List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
 				double suma = listVentasResult.stream()
 			      .mapToDouble(o -> 
 			    	  pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()

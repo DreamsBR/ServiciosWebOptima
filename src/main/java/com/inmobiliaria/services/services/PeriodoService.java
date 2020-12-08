@@ -18,6 +18,7 @@ public class PeriodoService {
 	private PeriodoRepository reporsitory;
 	@Transactional
 	public Periodo registrar(Periodo reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

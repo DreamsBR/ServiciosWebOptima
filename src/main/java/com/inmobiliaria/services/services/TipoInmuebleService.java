@@ -22,6 +22,7 @@ public class TipoInmuebleService {
 	private TipoInmuebleRepository reporsitory;
 	@Transactional
 	public TipoInmueble registrar(TipoInmueble reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

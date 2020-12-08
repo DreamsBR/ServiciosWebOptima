@@ -135,12 +135,12 @@ public class VentaController {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public List<Venta> findByProyectoAndIdEstadoVenta(@PathVariable Integer idProyecto, @PathVariable Integer idEstadoVenta, @PathVariable String fechaini, @PathVariable String fechafin) {
-		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date ini;
 		Date fin;
 		try {
-			ini = ddmmyy.parse(fechaini);
-			fin = ddmmyy.parse(fechafin);
+			ini = ddmmyy.parse(fechaini + " 00:00");
+			fin = ddmmyy.parse(fechafin + " 23:59");
 			return this.service.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta, ini, fin).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 		} catch (ParseException e) {
 			return new ArrayList<>();
@@ -155,21 +155,30 @@ public class VentaController {
 		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findByIdCliente(idCiente, paginacion);
 	}
-	@GetMapping("/byrange/{fechaini}/{fechafin}")
+	@GetMapping("/byrange/{idProyecto}/{fechaini}/{fechafin}")
 	@ApiOperation(value = "Listar ventas por fechas", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public List<Venta> byrange(@PathVariable String fechaini, @PathVariable String fechafin) {
-		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd");
+	public List<Venta> byrange(@PathVariable Integer idProyecto, @PathVariable String fechaini, @PathVariable String fechafin) {
+		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd HH:mm");
 		Date ini;
 		Date fin;
 		try {
-			ini = ddmmyy.parse(fechaini);
-			fin = ddmmyy.parse(fechafin);
-			return this.service.byrange(ini, fin).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+			ini = ddmmyy.parse(fechaini + " 00:00");
+			fin = ddmmyy.parse(fechafin + " 23:59");
+			return this.service.byrange(idProyecto, ini, fin).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 		} catch (ParseException e) {
 			return new ArrayList<>();
 		}
+	}
+	@GetMapping("/byvendedor/{idVendedor}")
+	@ApiOperation(value = "Listar ventas por vendedor", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> byVendedor(@PathVariable Integer idVendedor) {
+			return this.service.findByIdVendedor(idVendedor).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+
 	}
 }

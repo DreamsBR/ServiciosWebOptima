@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.inmobiliaria.services.repository.ColaboradorRepository;
 import com.inmobiliaria.services.repository.TipoDocumentoRepository;
+import com.inmobiliaria.services.security.model.User;
+import com.inmobiliaria.services.security.repository.UserRepository;
 import com.inmobiliaria.services.model.Colaborador;
 import com.inmobiliaria.services.model.request.ColaboradorRequest;
 
@@ -24,8 +26,11 @@ public class ColaboradorService {
 	private ColaboradorRepository reporsitory;
 	@Autowired
 	private TipoDocumentoRepository tipoDocumentoRepository;
+    @Autowired
+    private UserRepository userRepository;
 	@Transactional
 	public Colaborador registrar(ColaboradorRequest reg) {
+		reg.setEnable((byte) 1);
 		Colaborador colaborador = mapperColaborador(reg);
 		return reporsitory.save(colaborador);
 	}
@@ -60,5 +65,12 @@ public class ColaboradorService {
 		colaborador.setSexo(reg.getSexo());
 		colaborador.setTipoDocumento(tipoDocumentoRepository.findById(reg.getIdTipoDocumento()).get());
 		return colaborador;
+	}
+	public List<User> findByIdColaborador(Integer idColaborador) {
+		List<User> list = userRepository.findByIdColaborador(idColaborador);
+		for (int i = 0; i < list.size(); i++) {
+			 list.get(i).setPassword("");
+		}
+		return list;
 	}
 }

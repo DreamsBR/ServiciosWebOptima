@@ -22,6 +22,7 @@ public class PaisService {
 	private PaisRepository reporsitory;
 	@Transactional
 	public Pais registrar(Pais reg) {
+		reg.setEnable(true);
 		return reporsitory.save(reg);
 	}
 	@Transactional

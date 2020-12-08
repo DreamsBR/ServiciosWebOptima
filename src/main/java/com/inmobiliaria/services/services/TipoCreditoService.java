@@ -22,6 +22,7 @@ public class TipoCreditoService {
 	private TipoCreditoRepository reporsitory;
 	@Transactional
 	public TipoCredito registrar(TipoCredito reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

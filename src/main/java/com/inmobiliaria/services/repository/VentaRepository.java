@@ -31,7 +31,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	@Query("select v from Venta v INNER JOIN v.vendedor e where e.idVendedor = ?1")
 	List<Venta> findByIdVendedor(Integer idVendedor);
 
-	@Query("select v from Venta v where v.fechaRegistro BETWEEN :startDate AND :endDate")
-	List<Venta> findByFechaRegistroRange(@Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	@Query("select v from Venta v where v.idProyecto = :idProyecto AND v.fechaRegistro BETWEEN :startDate AND :endDate")
+	List<Venta> findByFechaRegistroRange(@Param("idProyecto") Integer idProyecto, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 
 }

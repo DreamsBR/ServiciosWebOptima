@@ -22,6 +22,7 @@ public class VendedorService {
 	private VendedorRepository reporsitory;
 	@Transactional
 	public Vendedor registrar(Vendedor reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
