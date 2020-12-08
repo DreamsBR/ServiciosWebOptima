@@ -22,3 +22,4 @@ server:
 app:
   jwtSecret: jwtSecretKey
   jwtExpiration: 86400  
+  urlChangePassword: http://admin.yoreparocpu.xyz/recordar-contrasenia-cambio

@@ -5,6 +5,7 @@
 package com.inmobiliaria.services.services;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -34,6 +35,7 @@ public class GerenciaService {
 
 	@Transactional
 	public Gerencia registrar(GerenciaRequest reg) {
+		reg.setEnable((byte) 1);
 		Gerencia gerencia = mapperGerencia(reg);
 		return reporsitory.save(gerencia);
 	}
@@ -69,9 +71,14 @@ public class GerenciaService {
 		GerenciaResponse response = new GerenciaResponse();
 		response.setGerencia(reporsitory.findById(id).get());
 		response.setGerente(response.getGerencia().getColaborador());
-		response.setListJefatura(jefaturaRepository.findByIdGerencia(id));
-		response.setListProyecto(proyectoRepository.findByIdGerencia(id));
+		response.setListJefatura(jefaturaRepository.findByIdGerencia(id).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList()));
+		response.setListProyecto(proyectoRepository.findByIdGerencia(id).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList()));
 		return response;
 	}
+	public GerenciaResponse findByIdColaborador(Integer idColaborador) {
+		List<Gerencia> listGerencia = reporsitory.findByIdColaborador(idColaborador);
+		return this.findGerencia(listGerencia.get(0).getIdGerencia());
+	}
+
 
 }

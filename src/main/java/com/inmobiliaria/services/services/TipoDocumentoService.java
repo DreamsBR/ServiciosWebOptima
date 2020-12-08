@@ -22,6 +22,7 @@ public class TipoDocumentoService {
 	private TipoDocumentoRepository reporsitory;
 	@Transactional
 	public TipoDocumento registrar(TipoDocumento reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

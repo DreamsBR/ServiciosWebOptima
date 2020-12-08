@@ -32,6 +32,7 @@ public class FinanciamientoService {
 	private TipoCreditoRepository tipoCreditoRepository;
 	@Transactional
 	public Financiamiento registrar(FinanciamientoRequest reg) {
+		reg.setEnable((byte) 1);
 		Financiamiento financiamiento = mapperFinanciamiento(reg);
 		return reporsitory.save(financiamiento);
 	}

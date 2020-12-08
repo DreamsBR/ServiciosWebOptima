@@ -27,6 +27,7 @@ public class VentaInmuebleService {
 	
 	@Transactional
 	public VentaInmueble registrar(VentaInmuebleRequest reg) {
+		reg.setEnable((byte) 1);
 		VentaInmueble ventaInmueble = mapperVentaInmueble(reg);
 		return reporsitory.save(ventaInmueble);
 	}

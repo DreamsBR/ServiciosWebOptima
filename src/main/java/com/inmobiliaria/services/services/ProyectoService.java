@@ -27,12 +27,12 @@ public class ProyectoService {
 	private GerenciaProyectoRepository gerenciaProyectoRepository;
 	@Transactional
 	public Proyecto registrar(Proyecto reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
 	public void delete(Proyecto reg) {
-		reg.setEnable((byte) 0);
-		reporsitory.save(reg);
+		reporsitory.delete(reg);
 	}
 	@Transactional
 	public Proyecto update(Proyecto reg) {

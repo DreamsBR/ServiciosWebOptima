@@ -22,6 +22,7 @@ public class EstadoVentaService {
 	private EstadoVentaRepository reporsitory;
 	@Transactional
 	public EstadoVenta registrar(EstadoVenta reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

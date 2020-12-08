@@ -26,6 +26,7 @@ public class JefaturaService {
 	private ColaboradorRepository colaboradorRepository;
 	@Transactional
 	public Jefatura registrar(JefaturaRequest reg) {
+		reg.setEnable((byte) 1);
 		Jefatura jefatura = mapperJefatura(reg);
 		return reporsitory.save(jefatura);
 	}

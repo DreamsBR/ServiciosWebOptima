@@ -22,6 +22,7 @@ public class CanalService {
 	private CanalRepository reporsitory;
 	@Transactional
 	public Canal registrar(Canal reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

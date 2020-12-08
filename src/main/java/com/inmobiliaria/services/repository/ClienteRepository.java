@@ -15,4 +15,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Integer> {
 	List<Cliente> findByNroDocumento(String nroDocumento);
 
 	List<Cliente> findByNombresAndApellidos(String nombres, String apellidos);
+	
+	List<Cliente> findByNombresStartsWithIgnoreCaseAndApellidosStartsWithIgnoreCase(String nombres, String apellidos);
 }

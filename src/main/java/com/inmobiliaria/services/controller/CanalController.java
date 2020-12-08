@@ -96,7 +96,7 @@ public class CanalController {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
 	public List<Canal> findAll() {
-		return this.service.findAll().stream().filter(x -> x.getEnabe() == 1).collect(Collectors.toList());
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
 	@GetMapping("/page/{page}/{count}")

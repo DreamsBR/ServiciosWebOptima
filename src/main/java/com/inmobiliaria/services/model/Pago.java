@@ -38,6 +38,9 @@ public class Pago implements Serializable {
 
 	private String porcentaje;
 
+	@Column(name="file_ruta")
+	private String fileRuta;
+	
 	public int getIdPago() {
 		return this.idPago;
 	}
@@ -100,6 +103,14 @@ public class Pago implements Serializable {
 
 	public void setPorcentaje(String porcentaje) {
 		this.porcentaje = porcentaje;
+	}
+
+	public String getFileRuta() {
+		return fileRuta;
+	}
+
+	public void setFileRuta(String fileRuta) {
+		this.fileRuta = fileRuta;
 	}
 
 }

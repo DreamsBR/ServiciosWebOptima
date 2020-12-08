@@ -22,6 +22,7 @@ public class CategoriaService {
 	private CategoriaRepository reporsitory;
 	@Transactional
 	public Categoria registrar(Categoria reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

@@ -22,6 +22,7 @@ public class EstadoFinanciamientoService {
 	private EstadoFinanciamientoRepository reporsitory;
 	@Transactional
 	public EstadoFinanciamiento registrar(EstadoFinanciamiento reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional

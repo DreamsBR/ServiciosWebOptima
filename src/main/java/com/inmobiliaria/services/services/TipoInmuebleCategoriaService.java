@@ -17,6 +17,7 @@ public class TipoInmuebleCategoriaService {
 	private TipoInmuebleCategoriaRepository reporsitory;
 	@Transactional
 	public TipoInmuebleCategoria registrar(TipoInmuebleCategoria reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
