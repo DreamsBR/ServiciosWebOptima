@@ -79,6 +79,8 @@ public class ClienteService {
 		cliente.setProvincia(reg.getProvincia());
 		cliente.setSexo(reg.getSexo());
 		cliente.setTelefono(reg.getTelefono());
+		cliente.setFotoDni(reg.getFotoDni());
+		cliente.setFotoDniConyuge(reg.getFotoDniConyuge());
 		cliente.setPais(paisRepository.findById(reg.getIdPais()).get());
 		cliente.setTipoDocumento(tipoDocumentoRepository.findById(reg.getIdTipoDocumento()).get());
 		cliente.setTipoDocumentoConyuge(tipoDocumentoRepository.findById(reg.getIdTipoDocumentoConyuge()).get());

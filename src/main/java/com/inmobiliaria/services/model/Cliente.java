@@ -77,6 +77,12 @@ public class Cliente implements Serializable {
 
 	private String telefono;
 
+	@Column(name="foto_dni")
+	private String fotoDni;
+	
+	@Column(name="foto_dni_conyuge")
+	private String fotoDniConyuge;
+	
 	@ManyToOne
 	@JoinColumn(name="tipo_doc_conyuge")
 	private TipoDocumento tipoDocumentoConyuge;
@@ -263,6 +269,22 @@ public class Cliente implements Serializable {
 
 	public void setTipoDocumentoConyuge(TipoDocumento tipoDocumentoConyuge) {
 		this.tipoDocumentoConyuge = tipoDocumentoConyuge;
+	}
+
+	public String getFotoDni() {
+		return fotoDni;
+	}
+
+	public void setFotoDni(String fotoDni) {
+		this.fotoDni = fotoDni;
+	}
+
+	public String getFotoDniConyuge() {
+		return fotoDniConyuge;
+	}
+
+	public void setFotoDniConyuge(String fotoDniConyuge) {
+		this.fotoDniConyuge = fotoDniConyuge;
 	}
 
 }

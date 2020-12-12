@@ -76,9 +76,18 @@ public class ReporteService {
 					.filter(x -> x.getEnable() == 1 )
 					.collect(Collectors.toList());
 			List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
-			double suma = listVentasResult.stream()
+			
+			List<Venta> listVentasResultpago = listVentasResult
+					.stream()
+					.filter(v -> 
+						v.getEstadoVenta().getIdEstadoVenta() != 14 &&
+						v.getFechaMinuta() != null )
+					.collect(Collectors.toList());
+					
+			double suma = listVentasResultpago.stream()
 		      .mapToDouble(o -> 
-		    	  pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
+		      		o.getTotal().doubleValue()
+		    	  //pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
 		    ).sum();
 			res.setAvance(suma);
 			
@@ -134,11 +143,21 @@ public class ReporteService {
 						.stream()
 						.filter(x -> x.getEnable() == 1 )
 						.collect(Collectors.toList());
-				List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodoGerencia.getPeriodo().getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodoGerencia.getPeriodo().getFechaFin().getTime() ).collect(Collectors.toList());
+				List<Venta> listVentasResult = listVentas
+						.stream()
+						.filter(v -> 
+							v.getFechaRegistro().getTime() >= periodoGerencia.getPeriodo().getFechaInicio().getTime() && 
+							v.getFechaRegistro().getTime() <= periodoGerencia.getPeriodo().getFechaFin().getTime() &&
+							v.getEstadoVenta().getIdEstadoVenta() != 14 &&
+							v.getFechaMinuta() != null )
+						.collect(Collectors.toList());
+
+				
 				double suma = listVentasResult.stream()
-					      .mapToDouble(o -> 
-					      pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum())
-					      .sum();
+			      .mapToDouble(o -> 
+			      		o.getTotal().doubleValue()
+			    ).sum();
+				
 				avancemeta = avancemeta + suma;
 			}
 			item.setVenta(avancemeta);
@@ -174,10 +193,16 @@ public class ReporteService {
 					.stream()
 					.filter(x -> x.getEnable() == 1 )
 					.collect(Collectors.toList());
-			List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodoProyecto.getPeriodo().getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodoProyecto.getPeriodo().getFechaFin().getTime() ).collect(Collectors.toList());
+			List<Venta> listVentasResult = listVentas
+					.stream()
+					.filter(v -> v.getFechaRegistro().getTime() >= periodoProyecto.getPeriodo().getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodoProyecto.getPeriodo().getFechaFin().getTime() &&
+					v.getEstadoVenta().getIdEstadoVenta() != 14 &&
+					v.getFechaMinuta() != null )
+					.collect(Collectors.toList());
 			double suma = listVentasResult.stream().mapToDouble(o -> 
-					      pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum())
-					      .sum();
+						  o.getTotal().doubleValue()
+					      //pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum())
+					      ).sum();
 			item.setVenta(suma);
 			listConsolidadoProyectoPeriodoResponse.add(item);
 		}
@@ -197,10 +222,16 @@ public class ReporteService {
 					.stream()
 					.filter(x -> x.getEnable() == 1 )
 					.collect(Collectors.toList());
-			List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodoColaborador.getPeriodo().getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodoColaborador.getPeriodo().getFechaFin().getTime() ).collect(Collectors.toList());
+			List<Venta> listVentasResult = listVentas
+					.stream()
+					.filter(v -> v.getFechaRegistro().getTime() >= periodoColaborador.getPeriodo().getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodoColaborador.getPeriodo().getFechaFin().getTime() 
+					&& v.getEstadoVenta().getIdEstadoVenta() != 14 &&
+					v.getFechaMinuta() != null 
+					).collect(Collectors.toList());
 			double suma = listVentasResult.stream().mapToDouble(o -> 
-					      pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum())
-					      .sum();
+				o.getTotal().doubleValue()
+				//pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum())
+				).sum();
 			item.setVenta(suma);
 			listConsolidadoColaboradorPeriodoResponse.add(item);
 		}
@@ -233,9 +264,14 @@ public class ReporteService {
 					.filter(x -> x.getEnable() == 1 )
 					.collect(Collectors.toList());
 			List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() && v.getVendedor().getIdColaborador() == idColaborador ).collect(Collectors.toList());
-			double suma = listVentasResult.stream()
-		      .mapToDouble(o -> 
-		    	  pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
+			
+			List<Venta> listVentasResultPago = listVentas.stream().filter(v ->
+				v.getFechaMinuta() != null && v.getEstadoVenta().getIdEstadoVenta() != 14
+			).collect(Collectors.toList());
+			
+			double suma = listVentasResultPago.stream()
+		      .mapToDouble(o -> o.getTotal().doubleValue()
+		    	  //pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
 		    ).sum();
 			res.setAvance(suma);
 			
@@ -305,9 +341,14 @@ public class ReporteService {
 						.collect(Collectors.toList());
 				
 				List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
-				double suma = listVentasResult.stream()
-			      .mapToDouble(o -> 
-			    	  pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
+				
+				List<Venta> listVentasResultPago = listVentas.stream().filter(v ->
+				v.getFechaMinuta() != null && v.getEstadoVenta().getIdEstadoVenta() != 14
+						).collect(Collectors.toList());
+				
+				double suma = listVentasResultPago.stream()
+			      .mapToDouble(o -> o.getTotal().doubleValue()
+			    	  //pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
 			    ).sum();
 				res.setAvance(suma);
 				

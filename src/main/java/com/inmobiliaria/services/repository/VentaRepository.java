@@ -5,6 +5,7 @@
 package com.inmobiliaria.services.repository;
 
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -33,5 +34,71 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 
 	@Query("select v from Venta v where v.idProyecto = :idProyecto AND v.fechaRegistro BETWEEN :startDate AND :endDate")
 	List<Venta> findByFechaRegistroRange(@Param("idProyecto") Integer idProyecto, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
+	
+	@Query("select v from Venta v "
+			+ "INNER JOIN v.cliente e "
+			+ "INNER JOIN v.estadoVenta ev "
+			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "e.idCliente = :idCliente AND "
+			+ "ev.idEstadoVenta = :idEstadoVenta AND "
+			+ "v.fechaRegistro BETWEEN :startDate AND :endDate")
+	List<Venta> search(
+			@Param("idProyecto") Integer idProyecto, 
+			@Param("idCliente") Integer idCliente, 
+			@Param("idEstadoVenta") Integer idEstadoVenta, 
+			@Param("startDate") Date startDate, 
+			@Param("endDate") Date endDate);
+	
+	@Query("select v from Venta v INNER JOIN v.cliente e where e.idCliente = ?1")
+	Collection<Venta> findByCliente(Integer idCiente);
+	
+	@Query("select v from Venta v "
+			+ "INNER JOIN v.cliente e "
+			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "e.idCliente = :idCliente AND "
+			+ "v.fechaRegistro BETWEEN :startDate AND :endDate")
+	List<Venta> findByProyectoAndClienteAndRangeFechas(
+			@Param("idProyecto") Integer idProyecto, 
+			@Param("idCliente") Integer idCliente, 
+			@Param("startDate") Date startDate, 
+			@Param("endDate") Date endDate);
+	
+	@Query("select v from Venta v "
+			+ "INNER JOIN v.cliente e "
+			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "e.idCliente = :idCliente ")
+	List<Venta> findByProyectoAndCliente(
+			@Param("idProyecto") Integer idProyecto, 
+			@Param("idCliente") Integer idCliente);
+	
+	@Query("select v from Venta v "
+			+ "INNER JOIN v.cliente e "
+			+ "INNER JOIN v.estadoVenta ev "
+			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "ev.idEstadoVenta = :idEstadoVenta AND "
+			+ "e.idCliente = :idCliente ")
+	List<Venta> findByProyectoAndClienteAndEstado(
+			@Param("idProyecto") Integer idProyecto, 
+			@Param("idCliente") Integer idCliente, 
+			@Param("idEstadoVenta") Integer idEstadoVenta);
+	
+	@Query("select v from Venta v "
+			+ "INNER JOIN v.estadoVenta ev "
+			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "ev.idEstadoVenta = :idEstadoVenta AND "
+			+ "v.fechaRegistro BETWEEN :startDate AND :endDate")
+	List<Venta> findByProyectoAndEstadoAndFechas(
+			@Param("idProyecto") Integer idProyecto, 
+			@Param("idEstadoVenta") Integer idEstadoVenta, 
+			@Param("startDate") Date startDate, 
+			@Param("endDate") Date endDate);
+	
+	@Query("select v from Venta v "
+			+ "INNER JOIN v.estadoVenta ev "
+			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "ev.idEstadoVenta = :idEstadoVenta ")
+	List<Venta> findByProyectoAndEstado(
+			@Param("idProyecto") Integer idProyecto, 
+			@Param("idEstadoVenta") Integer idEstadoVenta);
 
 }

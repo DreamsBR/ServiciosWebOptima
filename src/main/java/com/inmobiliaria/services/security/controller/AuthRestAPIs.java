@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inmobiliaria.services.security.message.request.ChangePasswordAdminForm;
 import com.inmobiliaria.services.security.message.request.ChangePasswordForm;
+import com.inmobiliaria.services.security.message.request.ChangeRoleAdminForm;
 import com.inmobiliaria.services.security.message.request.LoginForm;
 import com.inmobiliaria.services.security.message.request.SendEmailChangePassordForm;
 import com.inmobiliaria.services.security.message.request.SignUpForm;
@@ -191,7 +192,7 @@ public class AuthRestAPIs {
     
     private void sendEmail(String email, String token) {
     	String link = urlChangePassword + "?token=" + token;
-    	String content ="ingrese al enlace: <a href='" + link + "'>zona segura<a/>";
+    	String content ="Hola, <br>Recupera el acceso a la intranet restableciendo tu contraseña. Para restablecerla haz clic en el siguiente enlace y sigue las instrucciones. <a href='" + link + "'>restablecer contraseña<a/>";
     	
     	EmailBody emailBody = new EmailBody();   	
     	emailBody.setEmail(email);
@@ -211,9 +212,74 @@ public class AuthRestAPIs {
             User user =  userRepository.findByUsername(changePasswordFormRequest.getUserName()).get();
             user.setPassword(encoder.encode(changePasswordFormRequest.getPassword()));
 
+            Set<String> strRoles = changePasswordFormRequest.getRole();
+            Set<Role> roles = new HashSet<>();
+
+            strRoles.forEach(role -> {
+            	switch(role) {
+    	    		case "ROLE_ADMIN":
+    	    			Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
+    	    			roles.add(adminRole);
+    	    			
+    	    			break;
+    	    		case "ROLE_GERENCIA":
+    	            	Role gerenciaRole = roleRepository.findByName(RoleName.ROLE_GERENCIA).get();
+    	            	roles.add(gerenciaRole);
+    	            	
+    	    			break;
+    	    		case "ROLE_EJECUTIVO":
+    	            	Role ejecutivoRole = roleRepository.findByName(RoleName.ROLE_EJECUTIVO).get();
+    	            	roles.add(ejecutivoRole);
+    	            	
+    	    			break;
+    	    		default:
+    	        		Role userRole = roleRepository.findByName(RoleName.ROLE_USER).get();
+    	        		roles.add(userRole);        			
+            	}
+            });
+            user.setRoles(roles);
             userRepository.save(user);
             return ResponseEntity.ok().body("Password registered successfully!");
+    }
+    
+    
+    @PostMapping("/changeroleadmin")
+	@ApiOperation(value = "Change role", tags = { "Controlador auth" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = String.class)
+	})
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<String> changeroleadmin(@Valid @RequestBody ChangeRoleAdminForm changeRoleAdminForm) {
 
-        
+            User user =  userRepository.findByUsername(changeRoleAdminForm.getUserName()).get();
+
+            Set<String> strRoles = changeRoleAdminForm.getRole();
+            Set<Role> roles = new HashSet<>();
+
+            strRoles.forEach(role -> {
+            	switch(role) {
+    	    		case "ROLE_ADMIN":
+    	    			Role adminRole = roleRepository.findByName(RoleName.ROLE_ADMIN).get();
+    	    			roles.add(adminRole);
+    	    			
+    	    			break;
+    	    		case "ROLE_GERENCIA":
+    	            	Role gerenciaRole = roleRepository.findByName(RoleName.ROLE_GERENCIA).get();
+    	            	roles.add(gerenciaRole);
+    	            	
+    	    			break;
+    	    		case "ROLE_EJECUTIVO":
+    	            	Role ejecutivoRole = roleRepository.findByName(RoleName.ROLE_EJECUTIVO).get();
+    	            	roles.add(ejecutivoRole);
+    	            	
+    	    			break;
+    	    		default:
+    	        		Role userRole = roleRepository.findByName(RoleName.ROLE_USER).get();
+    	        		roles.add(userRole);        			
+            	}
+            });
+            user.setRoles(roles);
+            userRepository.save(user);
+            return ResponseEntity.ok().body("Role registered successfully!");
     }
 }
