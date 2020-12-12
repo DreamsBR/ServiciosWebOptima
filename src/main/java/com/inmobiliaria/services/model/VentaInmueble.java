@@ -35,10 +35,25 @@ public class VentaInmueble implements Serializable {
 
 	private int dormitorios;
 
-	private boolean enable;
+	private byte enable;
+	
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
 
-	@Column(name="id_inmueble")
-	private int idInmueble;
+	//bi-directional many-to-one association to Inmueble
+	@ManyToOne
+	@JoinColumn(name="id_inmueble")
+	private Inmueble inmueble;
+	
+
+	public Inmueble getInmueble() {
+		return inmueble;
+	}
+
+	public void setInmueble(Inmueble inmueble) {
+		this.inmueble = inmueble;
+	}
 
 	@Column(name="id_venta")
 	private int idVenta;
@@ -48,9 +63,6 @@ public class VentaInmueble implements Serializable {
 	private BigDecimal precio;
 
 	private String vista;
-
-	public VentaInmueble() {
-	}
 
 	public int getIdVentaInmueble() {
 		return this.idVentaInmueble;
@@ -108,20 +120,12 @@ public class VentaInmueble implements Serializable {
 		this.dormitorios = dormitorios;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
-	}
-
-	public int getIdInmueble() {
-		return this.idInmueble;
-	}
-
-	public void setIdInmueble(int idInmueble) {
-		this.idInmueble = idInmueble;
 	}
 
 	public int getIdVenta() {

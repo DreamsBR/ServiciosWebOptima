@@ -22,6 +22,7 @@ public class TipoCreditoService {
 	private TipoCreditoRepository reporsitory;
 	@Transactional
 	public TipoCredito registrar(TipoCredito reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class TipoCreditoService {
 		return reporsitory.save(reg);
 	}
 	public TipoCredito findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoCredito> findAll() {
 		return reporsitory.findAll();

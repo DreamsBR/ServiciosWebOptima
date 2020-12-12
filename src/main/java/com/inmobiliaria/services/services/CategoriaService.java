@@ -22,6 +22,7 @@ public class CategoriaService {
 	private CategoriaRepository reporsitory;
 	@Transactional
 	public Categoria registrar(Categoria reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class CategoriaService {
 		return reporsitory.save(reg);
 	}
 	public Categoria findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Categoria> findAll() {
 		return reporsitory.findAll();

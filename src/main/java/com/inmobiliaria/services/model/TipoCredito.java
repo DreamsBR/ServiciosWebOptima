@@ -19,12 +19,9 @@ public class TipoCredito implements Serializable {
 	@Column(name="id_tipo_credito")
 	private int idTipoCredito;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
-
-	public TipoCredito() {
-	}
 
 	public int getIdTipoCredito() {
 		return this.idTipoCredito;
@@ -34,11 +31,11 @@ public class TipoCredito implements Serializable {
 		this.idTipoCredito = idTipoCredito;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

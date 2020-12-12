@@ -22,6 +22,7 @@ public class BancoService {
 	private BancoRepository reporsitory;
 	@Transactional
 	public Banco registrar(Banco entity) {
+		entity.setEnable((byte) 1);
 		return reporsitory.save(entity);
 	}
 	@Transactional
@@ -34,7 +35,7 @@ public class BancoService {
 		return nuevo;
 	}
 	public Banco findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Banco> findAll() {
 		return reporsitory.findAll();

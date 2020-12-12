@@ -22,6 +22,7 @@ public class VendedorService {
 	private VendedorRepository reporsitory;
 	@Transactional
 	public Vendedor registrar(Vendedor reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,12 +34,18 @@ public class VendedorService {
 		return reporsitory.save(reg);
 	}
 	public Vendedor findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Vendedor> findAll() {
 		return reporsitory.findAll();
 	}
 	public Page<Vendedor> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
+	}
+	public List<Vendedor> findByIdJefatura(Integer idJefatura) {
+		return reporsitory.findByIdJefatura(idJefatura);
+	}
+	public List<Vendedor> findByIdColaborador(Integer idColaborador) {
+		return reporsitory.findByIdColaborador(idColaborador);
 	}
 }

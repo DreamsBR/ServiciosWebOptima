@@ -2,14 +2,14 @@ package com.inmobiliaria.services.model.response;
 
 import java.util.List;
 
+import com.inmobiliaria.services.model.Colaborador;
 import com.inmobiliaria.services.model.Gerencia;
-import com.inmobiliaria.services.model.Gerente;
 import com.inmobiliaria.services.model.Jefatura;
 import com.inmobiliaria.services.model.Proyecto;
 
 public class GerenciaResponse {
 	private Gerencia gerencia;
-	private Gerente gerente;
+	private Colaborador gerente;
 	private List<Jefatura> listJefatura;
 	private List<Proyecto> listProyecto;
 	public Gerencia getGerencia() {
@@ -18,10 +18,10 @@ public class GerenciaResponse {
 	public void setGerencia(Gerencia gerencia) {
 		this.gerencia = gerencia;
 	}
-	public Gerente getGerente() {
+	public Colaborador getGerente() {
 		return gerente;
 	}
-	public void setGerente(Gerente gerente) {
+	public void setGerente(Colaborador gerente) {
 		this.gerente = gerente;
 	}
 	public List<Jefatura> getListJefatura() {

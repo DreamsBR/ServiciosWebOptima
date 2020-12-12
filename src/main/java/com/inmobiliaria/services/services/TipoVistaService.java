@@ -22,6 +22,7 @@ public class TipoVistaService {
 	private TipoVistaRepository reporsitory;
 	@Transactional
 	public TipoVista registrar(TipoVista reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class TipoVistaService {
 		return reporsitory.save(reg);
 	}
 	public TipoVista findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoVista> findAll() {
 		return reporsitory.findAll();

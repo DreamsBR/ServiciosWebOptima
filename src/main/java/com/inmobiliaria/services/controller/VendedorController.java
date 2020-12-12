@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +34,7 @@ import com.inmobiliaria.services.model.Vendedor;
 @RestController
 @RequestMapping(value = "/v1/vendedor")
 @Api(value = "Vendedor", produces = "application/json", tags = { "Controlador Vendedor" })
+@PreAuthorize("isAuthenticated()") 
 public class VendedorController {
 	@Autowired
 	private VendedorService service;
@@ -40,6 +44,7 @@ public class VendedorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Vendedor> registrar(@RequestBody Vendedor reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -50,7 +55,7 @@ public class VendedorController {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
 	public ResponseEntity<Vendedor> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Vendedor>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,6 +63,7 @@ public class VendedorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Vendedor> modificar(@RequestBody Vendedor reg, @PathVariable Integer id) {
 		Vendedor entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +79,7 @@ public class VendedorController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Vendedor> eliminar(@PathVariable Integer id) {
 		Vendedor entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,17 +96,32 @@ public class VendedorController {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
 	public List<Vendedor> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Vendedor" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
 	})
-	public Page<Vendedor> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Vendedor> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
-
+	@GetMapping("/listaporjefatura/{idJefatura}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Vendedor" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
+	})
+	public List<Vendedor> listaporjefatura(@PathVariable Integer idJefatura) {
+		return this.service.findByIdJefatura(idJefatura).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
+	@GetMapping("/findbycolaborador/{idColaborador}")
+	@ApiOperation(value = "buscar vendedor registros", tags = { "Controlador Vendedor" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Vendedor.class)
+	})
+	public List<Vendedor> findbycolaborador(@PathVariable Integer idColaborador) {
+		return this.service.findByIdColaborador(idColaborador).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
 }

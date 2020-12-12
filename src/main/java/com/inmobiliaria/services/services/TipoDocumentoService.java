@@ -22,6 +22,7 @@ public class TipoDocumentoService {
 	private TipoDocumentoRepository reporsitory;
 	@Transactional
 	public TipoDocumento registrar(TipoDocumento reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class TipoDocumentoService {
 		return reporsitory.save(reg);
 	}
 	public TipoDocumento findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoDocumento> findAll() {
 		return reporsitory.findAll();

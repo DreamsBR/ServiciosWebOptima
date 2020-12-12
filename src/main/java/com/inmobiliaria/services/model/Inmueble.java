@@ -20,34 +20,41 @@ public class Inmueble implements Serializable {
 	private int idInmueble;
 
 	@Column(name="area_libre")
-	private int areaLibre;
+	private BigDecimal areaLibre;
 
 	@Column(name="area_techada")
-	private int areaTechada;
+	private BigDecimal areaTechada;
 
 	@Column(name="area_total")
-	private int areaTotal;
+	private BigDecimal areaTotal;
 
 	@Column(name="cantidad_dormitorio")
 	private int cantidadDormitorio;
 
-	private boolean enable;
+	private byte enable;
 
 	@Column(name="id_proyecto")
 	private int idProyecto;
 
-	@Column(name="id_tipo_inmueble")
-	private int idTipoInmueble;
+	//bi-directional many-to-one association to TipoInmueble
+	@ManyToOne
+	@JoinColumn(name="id_tipo_inmueble")
+	private TipoInmueble tipoInmueble;
 
-	@Column(name="id_tipo_vista")
-	private int idTipoVista;
+	//bi-directional many-to-one association to TipoInmuebleCategoria
+	@ManyToOne
+	@JoinColumn(name="id_tipo_inmueble_categoria")
+	private TipoInmuebleCategoria tipoInmuebleCategoria;
+	
 
+	//bi-directional many-to-one association to TipoInmueble
+	@ManyToOne
+	@JoinColumn(name="id_tipo_vista")
+	private TipoVista tipoVista;
+	
 	private String numero;
 
 	private BigDecimal precio;
-
-	public Inmueble() {
-	}
 
 	public int getIdInmueble() {
 		return this.idInmueble;
@@ -57,27 +64,27 @@ public class Inmueble implements Serializable {
 		this.idInmueble = idInmueble;
 	}
 
-	public int getAreaLibre() {
+	public BigDecimal getAreaLibre() {
 		return this.areaLibre;
 	}
 
-	public void setAreaLibre(int areaLibre) {
+	public void setAreaLibre(BigDecimal areaLibre) {
 		this.areaLibre = areaLibre;
 	}
 
-	public int getAreaTechada() {
+	public BigDecimal getAreaTechada() {
 		return this.areaTechada;
 	}
 
-	public void setAreaTechada(int areaTechada) {
+	public void setAreaTechada(BigDecimal areaTechada) {
 		this.areaTechada = areaTechada;
 	}
 
-	public int getAreaTotal() {
+	public BigDecimal getAreaTotal() {
 		return this.areaTotal;
 	}
 
-	public void setAreaTotal(int areaTotal) {
+	public void setAreaTotal(BigDecimal areaTotal) {
 		this.areaTotal = areaTotal;
 	}
 
@@ -89,11 +96,11 @@ public class Inmueble implements Serializable {
 		this.cantidadDormitorio = cantidadDormitorio;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
@@ -103,22 +110,6 @@ public class Inmueble implements Serializable {
 
 	public void setIdProyecto(int idProyecto) {
 		this.idProyecto = idProyecto;
-	}
-
-	public int getIdTipoInmueble() {
-		return this.idTipoInmueble;
-	}
-
-	public void setIdTipoInmueble(int idTipoInmueble) {
-		this.idTipoInmueble = idTipoInmueble;
-	}
-
-	public int getIdTipoVista() {
-		return this.idTipoVista;
-	}
-
-	public void setIdTipoVista(int idTipoVista) {
-		this.idTipoVista = idTipoVista;
 	}
 
 	public String getNumero() {
@@ -135,6 +126,30 @@ public class Inmueble implements Serializable {
 
 	public void setPrecio(BigDecimal precio) {
 		this.precio = precio;
+	}
+
+	public TipoInmueble getTipoInmueble() {
+		return tipoInmueble;
+	}
+
+	public void setTipoInmueble(TipoInmueble tipoInmueble) {
+		this.tipoInmueble = tipoInmueble;
+	}
+
+	public TipoInmuebleCategoria getTipoInmuebleCategoria() {
+		return tipoInmuebleCategoria;
+	}
+
+	public void setTipoInmuebleCategoria(TipoInmuebleCategoria tipoInmuebleCategoria) {
+		this.tipoInmuebleCategoria = tipoInmuebleCategoria;
+	}
+
+	public TipoVista getTipoVista() {
+		return tipoVista;
+	}
+
+	public void setTipoVista(TipoVista tipoVista) {
+		this.tipoVista = tipoVista;
 	}
 
 }

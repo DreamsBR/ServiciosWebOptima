@@ -22,6 +22,7 @@ public class MotivoService {
 	private MotivoRepository reporsitory;
 	@Transactional
 	public Motivo registrar(Motivo reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class MotivoService {
 		return reporsitory.save(reg);
 	}
 	public Motivo findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Motivo> findAll() {
 		return reporsitory.findAll();

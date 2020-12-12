@@ -22,6 +22,7 @@ public class EstadoFinanciamientoService {
 	private EstadoFinanciamientoRepository reporsitory;
 	@Transactional
 	public EstadoFinanciamiento registrar(EstadoFinanciamiento reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class EstadoFinanciamientoService {
 		return reporsitory.save(reg);
 	}
 	public EstadoFinanciamiento findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<EstadoFinanciamiento> findAll() {
 		return reporsitory.findAll();

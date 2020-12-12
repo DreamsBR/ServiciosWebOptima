@@ -18,12 +18,9 @@ public class Banco implements Serializable {
 	@Column(name="id_banco")
 	private int idBanco;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
-
-	public Banco() {
-	}
 
 	public int getIdBanco() {
 		return this.idBanco;
@@ -33,11 +30,11 @@ public class Banco implements Serializable {
 		this.idBanco = idBanco;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

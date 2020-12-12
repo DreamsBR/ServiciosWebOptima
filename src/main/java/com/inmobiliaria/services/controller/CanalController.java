@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +34,7 @@ import com.inmobiliaria.services.model.Canal;
 @RestController
 @RequestMapping(value = "/v1/canal")
 @Api(value = "Canal", produces = "application/json", tags = { "Controlador Canal" })
+@PreAuthorize("isAuthenticated()") 
 public class CanalController {
 	@Autowired
 	private CanalService service;
@@ -40,6 +44,7 @@ public class CanalController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Canal> registrar(@RequestBody Canal reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -50,7 +55,7 @@ public class CanalController {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
 	public ResponseEntity<Canal> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Canal>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,6 +63,7 @@ public class CanalController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Canal> modificar(@RequestBody Canal reg, @PathVariable Integer id) {
 		Canal entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +79,7 @@ public class CanalController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Canal> eliminar(@PathVariable Integer id) {
 		Canal entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,16 +96,16 @@ public class CanalController {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
 	public List<Canal> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Canal" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Canal.class)
 	})
-	public Page<Canal> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Canal> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

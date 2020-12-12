@@ -19,12 +19,9 @@ public class EstadoVenta implements Serializable {
 	@Column(name="id_estado_venta")
 	private int idEstadoVenta;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
-
-	public EstadoVenta() {
-	}
 
 	public int getIdEstadoVenta() {
 		return this.idEstadoVenta;
@@ -34,11 +31,11 @@ public class EstadoVenta implements Serializable {
 		this.idEstadoVenta = idEstadoVenta;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

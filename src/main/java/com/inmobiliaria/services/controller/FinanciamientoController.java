@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,10 +30,12 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.FinanciamientoService;
 import com.inmobiliaria.services.model.Financiamiento;
+import com.inmobiliaria.services.model.request.FinanciamientoRequest;
 
 @RestController
 @RequestMapping(value = "/v1/financiamiento")
 @Api(value = "Financiamiento", produces = "application/json", tags = { "Controlador Financiamiento" })
+@PreAuthorize("isAuthenticated()") 
 public class FinanciamientoController {
 	@Autowired
 	private FinanciamientoService service;
@@ -40,7 +45,7 @@ public class FinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
-	public ResponseEntity<Financiamiento> registrar(@RequestBody Financiamiento reg) {
+	public ResponseEntity<Financiamiento> registrar(@RequestBody FinanciamientoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -50,7 +55,7 @@ public class FinanciamientoController {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
 	public ResponseEntity<Financiamiento> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Financiamiento>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,7 +63,7 @@ public class FinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
-	public ResponseEntity<Financiamiento> modificar(@RequestBody Financiamiento reg, @PathVariable Integer id) {
+	public ResponseEntity<Financiamiento> modificar(@RequestBody FinanciamientoRequest reg, @PathVariable Integer id) {
 		Financiamiento entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -89,16 +94,16 @@ public class FinanciamientoController {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
 	public List<Financiamiento> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Financiamiento" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Financiamiento.class)
 	})
-	public Page<Financiamiento> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Financiamiento> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

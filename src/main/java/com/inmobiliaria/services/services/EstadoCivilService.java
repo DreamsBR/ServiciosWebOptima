@@ -22,6 +22,7 @@ public class EstadoCivilService {
 	private EstadoCivilRepository reporsitory;
 	@Transactional
 	public EstadoCivil registrar(EstadoCivil reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class EstadoCivilService {
 		return reporsitory.save(reg);
 	}
 	public EstadoCivil findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<EstadoCivil> findAll() {
 		return reporsitory.findAll();

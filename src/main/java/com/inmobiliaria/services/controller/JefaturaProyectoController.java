@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,10 +30,12 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.JefaturaProyectoService;
 import com.inmobiliaria.services.model.JefaturaProyecto;
+import com.inmobiliaria.services.model.request.JefaturaProyectoRequest;
 
 @RestController
 @RequestMapping(value = "/v1/jefaturaproyecto")
 @Api(value = "JefaturaProyecto", produces = "application/json", tags = { "Controlador JefaturaProyecto" })
+@PreAuthorize("isAuthenticated()") 
 public class JefaturaProyectoController {
 	@Autowired
 	private JefaturaProyectoService service;
@@ -40,7 +45,8 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
-	public ResponseEntity<JefaturaProyecto> registrar(@RequestBody JefaturaProyecto reg) {
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<JefaturaProyecto> registrar(@RequestBody JefaturaProyectoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -50,7 +56,7 @@ public class JefaturaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
 	public ResponseEntity<JefaturaProyecto> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<JefaturaProyecto>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,7 +64,8 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
-	public ResponseEntity<JefaturaProyecto> modificar(@RequestBody JefaturaProyecto reg, @PathVariable Integer id) {
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<JefaturaProyecto> modificar(@RequestBody JefaturaProyectoRequest reg, @PathVariable Integer id) {
 		JefaturaProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -73,6 +80,7 @@ public class JefaturaProyectoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<JefaturaProyecto> eliminar(@PathVariable Integer id) {
 		JefaturaProyecto entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,17 +97,40 @@ public class JefaturaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
 	public List<JefaturaProyecto> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream()
+				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador JefaturaProyecto" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
-	public Page<JefaturaProyecto> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<JefaturaProyecto> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 
+	@GetMapping("/porProyecto/{idProyecto}")
+	@ApiOperation(value = "Listar registros por proyecto", tags = { "Controlador JefaturaProyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
+	})
+	public List<JefaturaProyecto> porProyecto(@PathVariable Integer idProyecto) {
+		return this.service.findByProyecto(idProyecto).stream()
+				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
+	}
+	@GetMapping("/porJefatura/{idJefatura}")
+	@ApiOperation(value = "Listar registros por jefatura", tags = { "Controlador JefaturaProyecto" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
+	})
+	public List<JefaturaProyecto> porjefatura(@PathVariable Integer idJefatura) {
+		List<JefaturaProyecto> list = this.service.findByJefatura(idJefatura);
+		return list.stream()
+				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
+				.collect(Collectors.toList());
+	}
 }

@@ -4,10 +4,17 @@
  */
 package com.inmobiliaria.services.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import com.inmobiliaria.services.model.Gerencia;
 @Repository
-public interface GerenciaRepository extends JpaRepository<Gerencia, Integer> { 
+public interface GerenciaRepository extends JpaRepository<Gerencia, Integer> {
+	
+	@Query("select a from Gerencia a INNER JOIN a.colaborador b where b.idColaborador = ?1")
+	List<Gerencia> findByIdColaborador(Integer idColaborador); 
+
 }

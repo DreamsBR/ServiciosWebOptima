@@ -6,7 +6,7 @@ spring:
   datasource:
     url: jdbc:mysql://mysql-inmo:3306/inmobiliaria?useSSL=false
     username: testuser
-    password: testuser@123
+    password: M!bN2d#S#!w3qCGbxEdSYyY&
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
@@ -18,4 +18,9 @@ spring:
 server:
   port: 8080
   servlet:
-    context-path: /services    
+    context-path: /services
+app:
+  jwtSecret: jwtSecretKey
+  jwtExpiration: 86400  
+  urlChangePassword: http://admin.yoreparocpu.xyz/recordar-contrasenia-cambio
+  files: /serverfile

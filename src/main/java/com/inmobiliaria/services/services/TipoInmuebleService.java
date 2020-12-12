@@ -22,6 +22,7 @@ public class TipoInmuebleService {
 	private TipoInmuebleRepository reporsitory;
 	@Transactional
 	public TipoInmueble registrar(TipoInmueble reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class TipoInmuebleService {
 		return reporsitory.save(reg);
 	}
 	public TipoInmueble findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<TipoInmueble> findAll() {
 		return reporsitory.findAll();

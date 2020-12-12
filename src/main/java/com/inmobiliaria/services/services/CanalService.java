@@ -22,6 +22,7 @@ public class CanalService {
 	private CanalRepository reporsitory;
 	@Transactional
 	public Canal registrar(Canal reg) {
+		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class CanalService {
 		return reporsitory.save(reg);
 	}
 	public Canal findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Canal> findAll() {
 		return reporsitory.findAll();

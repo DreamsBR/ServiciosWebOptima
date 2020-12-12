@@ -19,12 +19,9 @@ public class TipoVista implements Serializable {
 	@Column(name="id_tipo_vista")
 	private int idTipoVista;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
-
-	public TipoVista() {
-	}
 
 	public int getIdTipoVista() {
 		return this.idTipoVista;
@@ -34,11 +31,11 @@ public class TipoVista implements Serializable {
 		this.idTipoVista = idTipoVista;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

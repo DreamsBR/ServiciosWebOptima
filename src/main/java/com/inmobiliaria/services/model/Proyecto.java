@@ -20,11 +20,18 @@ public class Proyecto implements Serializable {
 
 	private String direccion;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
 
-	public Proyecto() {
+	private String codigo;
+	
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 
 	public int getIdProyecto() {
@@ -43,11 +50,11 @@ public class Proyecto implements Serializable {
 		this.direccion = direccion;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

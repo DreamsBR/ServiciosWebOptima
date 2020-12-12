@@ -18,12 +18,9 @@ public class Canal implements Serializable {
 	@Column(name="id_canal")
 	private int idCanal;
 
-	private boolean enabe;
+	private byte enable;
 
 	private String nombre;
-
-	public Canal() {
-	}
 
 	public int getIdCanal() {
 		return this.idCanal;
@@ -33,20 +30,20 @@ public class Canal implements Serializable {
 		this.idCanal = idCanal;
 	}
 
-	public boolean getEnabe() {
-		return this.enabe;
-	}
-
-	public void setEnabe(boolean enabe) {
-		this.enabe = enabe;
-	}
-
 	public String getNombre() {
 		return this.nombre;
 	}
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public byte getEnable() {
+		return enable;
+	}
+
+	public void setEnable(byte enable) {
+		this.enable = enable;
 	}
 
 }

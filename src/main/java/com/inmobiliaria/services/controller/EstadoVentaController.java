@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +34,7 @@ import com.inmobiliaria.services.services.EstadoVentaService;
 @RestController
 @RequestMapping(value = "/v1/estadoventa")
 @Api(value = "EstadoVenta", produces = "application/json", tags = { "Controlador EstadoVenta" })
+@PreAuthorize("isAuthenticated()") 
 public class EstadoVentaController {
 	@Autowired
 	private EstadoVentaService service;
@@ -40,6 +44,7 @@ public class EstadoVentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoVenta.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoVenta> registrar(@RequestBody EstadoVenta reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -50,7 +55,7 @@ public class EstadoVentaController {
 		@ApiResponse(code = 200, message = "OK", response = EstadoVenta.class)
 	})
 	public ResponseEntity<EstadoVenta> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<EstadoVenta>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,6 +63,7 @@ public class EstadoVentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoVenta.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoVenta> modificar(@RequestBody EstadoVenta reg, @PathVariable Integer id) {
 		EstadoVenta entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +79,7 @@ public class EstadoVentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoVenta.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoVenta> eliminar(@PathVariable Integer id) {
 		EstadoVenta entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,16 +96,16 @@ public class EstadoVentaController {
 		@ApiResponse(code = 200, message = "OK", response = EstadoVenta.class)
 	})
 	public List<EstadoVenta> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador EstadoVenta" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoVenta.class)
 	})
-	public Page<EstadoVenta> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<EstadoVenta> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

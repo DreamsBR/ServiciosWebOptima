@@ -22,6 +22,7 @@ public class PaisService {
 	private PaisRepository reporsitory;
 	@Transactional
 	public Pais registrar(Pais reg) {
+		reg.setEnable(true);
 		return reporsitory.save(reg);
 	}
 	@Transactional
@@ -33,7 +34,7 @@ public class PaisService {
 		return reporsitory.save(reg);
 	}
 	public Pais findById(Integer id) {
-		return reporsitory.getOne(id);
+		return reporsitory.findById(id).get();
 	}
 	public List<Pais> findAll() {
 		return reporsitory.findAll();

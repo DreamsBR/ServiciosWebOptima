@@ -20,7 +20,7 @@ public class Financiamiento implements Serializable {
 	@Column(name="id_financiamiento")
 	private int idFinanciamiento;
 
-	private byte afp;
+	private BigDecimal afp;
 
 	private BigDecimal ahorro;
 
@@ -28,7 +28,7 @@ public class Financiamiento implements Serializable {
 
 	private BigDecimal bono;
 
-	private boolean enable;
+	private byte enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="fecha_fin_ahorro")
@@ -38,16 +38,41 @@ public class Financiamiento implements Serializable {
 	@Column(name="fecha_inicio_ahorro")
 	private Date fechaInicioAhorro;
 
-	@Column(name="id_banco")
-	private int idBanco;
+	@ManyToOne
+	@JoinColumn(name="id_banco")
+	private Banco banco;
 
-	@Column(name="id_estado_financiamiento")
-	private int idEstadoFinanciamiento;
+	@ManyToOne
+	@JoinColumn(name="id_estado_financiamiento")
+	private EstadoFinanciamiento estadoFinanciamiento;
 
-	@Column(name="id_tipo_credito")
-	private int idTipoCredito;
+	@ManyToOne
+	@JoinColumn(name="id_tipo_credito")
+	private TipoCredito tipoCredito;
 
-	public Financiamiento() {
+	@Column(name="monto_cuota_inicial")
+	private BigDecimal montoCuotaInicial;
+
+	@Column(name="monto_financiado")
+	private BigDecimal montoFinanciado;
+	
+	@Column(name="porc_cuota_inicial")
+	private String porcCuotaInicial;
+	
+	public BigDecimal getMontoCuotaInicial() {
+		return montoCuotaInicial;
+	}
+
+	public void setMontoCuotaInicial(BigDecimal montoCuotaInicial) {
+		this.montoCuotaInicial = montoCuotaInicial;
+	}
+
+	public String getPorcCuotaInicial() {
+		return porcCuotaInicial;
+	}
+
+	public void setPorcCuotaInicial(String porcCuotaInicial) {
+		this.porcCuotaInicial = porcCuotaInicial;
 	}
 
 	public int getIdFinanciamiento() {
@@ -58,11 +83,11 @@ public class Financiamiento implements Serializable {
 		this.idFinanciamiento = idFinanciamiento;
 	}
 
-	public byte getAfp() {
+	public BigDecimal getAfp() {
 		return this.afp;
 	}
 
-	public void setAfp(byte afp) {
+	public void setAfp(BigDecimal afp) {
 		this.afp = afp;
 	}
 
@@ -90,11 +115,11 @@ public class Financiamiento implements Serializable {
 		this.bono = bono;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
@@ -114,28 +139,38 @@ public class Financiamiento implements Serializable {
 		this.fechaInicioAhorro = fechaInicioAhorro;
 	}
 
-	public int getIdBanco() {
-		return this.idBanco;
+	public Banco getBanco() {
+		return banco;
 	}
 
-	public void setIdBanco(int idBanco) {
-		this.idBanco = idBanco;
+	public void setBanco(Banco banco) {
+		this.banco = banco;
 	}
 
-	public int getIdEstadoFinanciamiento() {
-		return this.idEstadoFinanciamiento;
+	public EstadoFinanciamiento getEstadoFinanciamiento() {
+		return estadoFinanciamiento;
 	}
 
-	public void setIdEstadoFinanciamiento(int idEstadoFinanciamiento) {
-		this.idEstadoFinanciamiento = idEstadoFinanciamiento;
+	public void setEstadoFinanciamiento(EstadoFinanciamiento estadoFinanciamiento) {
+		this.estadoFinanciamiento = estadoFinanciamiento;
 	}
 
-	public int getIdTipoCredito() {
-		return this.idTipoCredito;
+	public TipoCredito getTipoCredito() {
+		return tipoCredito;
 	}
 
-	public void setIdTipoCredito(int idTipoCredito) {
-		this.idTipoCredito = idTipoCredito;
+	public void setTipoCredito(TipoCredito tipoCredito) {
+		this.tipoCredito = tipoCredito;
 	}
+
+	public BigDecimal getMontoFinanciado() {
+		return montoFinanciado;
+	}
+
+	public void setMontoFinanciado(BigDecimal montoFinanciado) {
+		this.montoFinanciado = montoFinanciado;
+	}
+
+
 
 }

@@ -20,29 +20,27 @@ public class Pago implements Serializable {
 	@Column(name="id_pago")
 	private int idPago;
 
-	private boolean enable;
+	private byte enable;
 
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
 
-	@Column(name="id_tipo_pago")
-	private int idTipoPago;
-
-	@Column(name="id_venta")
-	private int idVenta;
-
+	@ManyToOne
+	@JoinColumn(name="id_venta")
+	private Venta venta;
+	
 	private BigDecimal monto;
-
+	
 	@Column(name="numero_operacion")
-	private int numeroOperacion;
+	private String numeroOperacion;
 
 	private byte pagado;
 
 	private String porcentaje;
 
-	public Pago() {
-	}
-
+	@Column(name="file_ruta")
+	private String fileRuta;
+	
 	public int getIdPago() {
 		return this.idPago;
 	}
@@ -51,11 +49,11 @@ public class Pago implements Serializable {
 		this.idPago = idPago;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
@@ -66,21 +64,13 @@ public class Pago implements Serializable {
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
 	}
-
-	public int getIdTipoPago() {
-		return this.idTipoPago;
+	
+	public Venta getVenta() {
+		return venta;
 	}
 
-	public void setIdTipoPago(int idTipoPago) {
-		this.idTipoPago = idTipoPago;
-	}
-
-	public int getIdVenta() {
-		return this.idVenta;
-	}
-
-	public void setIdVenta(int idVenta) {
-		this.idVenta = idVenta;
+	public void setVenta(Venta venta) {
+		this.venta = venta;
 	}
 
 	public BigDecimal getMonto() {
@@ -91,11 +81,11 @@ public class Pago implements Serializable {
 		this.monto = monto;
 	}
 
-	public int getNumeroOperacion() {
+	public String getNumeroOperacion() {
 		return this.numeroOperacion;
 	}
 
-	public void setNumeroOperacion(int numeroOperacion) {
+	public void setNumeroOperacion(String numeroOperacion) {
 		this.numeroOperacion = numeroOperacion;
 	}
 
@@ -113,6 +103,14 @@ public class Pago implements Serializable {
 
 	public void setPorcentaje(String porcentaje) {
 		this.porcentaje = porcentaje;
+	}
+
+	public String getFileRuta() {
+		return fileRuta;
+	}
+
+	public void setFileRuta(String fileRuta) {
+		this.fileRuta = fileRuta;
 	}
 
 }

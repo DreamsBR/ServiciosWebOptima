@@ -19,12 +19,9 @@ public class EstadoFinanciamiento implements Serializable {
 	@Column(name="id_estado_financiamiento")
 	private int idEstadoFinanciamiento;
 
-	private boolean enable;
+	private byte enable;
 
 	private String nombre;
-
-	public EstadoFinanciamiento() {
-	}
 
 	public int getIdEstadoFinanciamiento() {
 		return this.idEstadoFinanciamiento;
@@ -34,11 +31,11 @@ public class EstadoFinanciamiento implements Serializable {
 		this.idEstadoFinanciamiento = idEstadoFinanciamiento;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 

@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,10 +30,12 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.PagoService;
 import com.inmobiliaria.services.model.Pago;
+import com.inmobiliaria.services.model.request.PagoRequest;
 
 @RestController
 @RequestMapping(value = "/v1/pago")
 @Api(value = "Pago", produces = "application/json", tags = { "Controlador Pago" })
+@PreAuthorize("isAuthenticated()") 
 public class PagoController {
 	@Autowired
 	private PagoService service;
@@ -40,7 +45,7 @@ public class PagoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Pago.class)
 	})
-	public ResponseEntity<Pago> registrar(@RequestBody Pago reg) {
+	public ResponseEntity<Pago> registrar(@RequestBody PagoRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -50,7 +55,7 @@ public class PagoController {
 		@ApiResponse(code = 200, message = "OK", response = Pago.class)
 	})
 	public ResponseEntity<Pago> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Pago>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,7 +63,7 @@ public class PagoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Pago.class)
 	})
-	public ResponseEntity<Pago> modificar(@RequestBody Pago reg, @PathVariable Integer id) {
+	public ResponseEntity<Pago> modificar(@RequestBody PagoRequest reg, @PathVariable Integer id) {
 		Pago entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -89,16 +94,25 @@ public class PagoController {
 		@ApiResponse(code = 200, message = "OK", response = Pago.class)
 	})
 	public List<Pago> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/venta/{idVenta}")
+	@ApiOperation(value = "Listar registros por venta", tags = { "Controlador Pago" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Pago.class)
+	})
+	public List<Pago> findByIdVenta(@PathVariable Integer idVenta) {
+		return this.service.findByIdVenta(idVenta).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
+	
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Pago" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Pago.class)
 	})
-	public Page<Pago> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Pago> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

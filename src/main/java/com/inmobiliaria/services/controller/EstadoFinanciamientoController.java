@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -31,6 +34,7 @@ import com.inmobiliaria.services.services.EstadoFinanciamientoService;
 @RestController
 @RequestMapping(value = "/v1/estadofinanciamiento")
 @Api(value = "EstadoFinanciamiento", produces = "application/json", tags = { "Controlador EstadoFinanciamiento" })
+@PreAuthorize("isAuthenticated()") 
 public class EstadoFinanciamientoController {
 	@Autowired
 	private EstadoFinanciamientoService service;
@@ -40,6 +44,7 @@ public class EstadoFinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoFinanciamiento> registrar(@RequestBody EstadoFinanciamiento reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
@@ -50,7 +55,7 @@ public class EstadoFinanciamientoController {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
 	public ResponseEntity<EstadoFinanciamiento> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<EstadoFinanciamiento>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,6 +63,7 @@ public class EstadoFinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoFinanciamiento> modificar(@RequestBody EstadoFinanciamiento reg, @PathVariable Integer id) {
 		EstadoFinanciamiento entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -73,6 +79,7 @@ public class EstadoFinanciamientoController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<EstadoFinanciamiento> eliminar(@PathVariable Integer id) {
 		EstadoFinanciamiento entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,16 +96,16 @@ public class EstadoFinanciamientoController {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
 	public List<EstadoFinanciamiento> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador EstadoFinanciamiento" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = EstadoFinanciamiento.class)
 	})
-	public Page<EstadoFinanciamiento> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<EstadoFinanciamiento> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

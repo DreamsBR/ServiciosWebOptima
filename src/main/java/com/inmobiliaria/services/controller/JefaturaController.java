@@ -5,8 +5,11 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,10 +30,12 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.JefaturaService;
 import com.inmobiliaria.services.model.Jefatura;
+import com.inmobiliaria.services.model.request.JefaturaRequest;
 
 @RestController
 @RequestMapping(value = "/v1/jefatura")
 @Api(value = "Jefatura", produces = "application/json", tags = { "Controlador Jefatura" })
+@PreAuthorize("isAuthenticated()") 
 public class JefaturaController {
 	@Autowired
 	private JefaturaService service;
@@ -40,7 +45,8 @@ public class JefaturaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
-	public ResponseEntity<Jefatura> registrar(@RequestBody Jefatura reg) {
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Jefatura> registrar(@RequestBody JefaturaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -50,7 +56,7 @@ public class JefaturaController {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
 	public ResponseEntity<Jefatura> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Jefatura>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,7 +64,8 @@ public class JefaturaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
-	public ResponseEntity<Jefatura> modificar(@RequestBody Jefatura reg, @PathVariable Integer id) {
+	@PreAuthorize("hasRole('ADMIN')")
+	public ResponseEntity<Jefatura> modificar(@RequestBody JefaturaRequest reg, @PathVariable Integer id) {
 		Jefatura entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -73,6 +80,7 @@ public class JefaturaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Jefatura> eliminar(@PathVariable Integer id) {
 		Jefatura entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,16 +97,16 @@ public class JefaturaController {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
 	public List<Jefatura> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Jefatura" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Jefatura.class)
 	})
-	public Page<Jefatura> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Jefatura> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
 

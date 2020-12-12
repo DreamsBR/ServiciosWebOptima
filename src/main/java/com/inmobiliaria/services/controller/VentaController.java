@@ -4,9 +4,16 @@
  */
 package com.inmobiliaria.services.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -27,10 +34,13 @@ import io.swagger.annotations.ApiResponses;
 
 import com.inmobiliaria.services.services.VentaService;
 import com.inmobiliaria.services.model.Venta;
+import com.inmobiliaria.services.model.request.VentaRequest;
+import com.inmobiliaria.services.model.request.VentaSearchRequest;
 
 @RestController
 @RequestMapping(value = "/v1/venta")
 @Api(value = "Venta", produces = "application/json", tags = { "Controlador Venta" })
+@PreAuthorize("isAuthenticated()") 
 public class VentaController {
 	@Autowired
 	private VentaService service;
@@ -40,7 +50,7 @@ public class VentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public ResponseEntity<Venta> registrar(@RequestBody Venta reg) {
+	public ResponseEntity<Venta> registrar(@RequestBody VentaRequest reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
@@ -50,7 +60,7 @@ public class VentaController {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public ResponseEntity<Venta> obtener(@PathVariable Integer id) {
-		return new ResponseEntity<Venta>(this.service.findById(id), HttpStatus.OK);
+		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
@@ -58,7 +68,7 @@ public class VentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public ResponseEntity<Venta> modificar(@RequestBody Venta reg, @PathVariable Integer id) {
+	public ResponseEntity<Venta> modificar(@RequestBody VentaRequest reg, @PathVariable Integer id) {
 		Venta entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
@@ -73,6 +83,7 @@ public class VentaController {
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
+	@PreAuthorize("hasRole('ADMIN')")
 	public ResponseEntity<Venta> eliminar(@PathVariable Integer id) {
 		Venta entity = this.service.findById(id);
 		if ( entity == null ) {
@@ -89,17 +100,102 @@ public class VentaController {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
 	public List<Venta> findAll() {
-		return this.service.findAll();
+		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 
-	@GetMapping("/page/{page}")
+	@GetMapping("/page/{page}/{count}")
 	@ApiOperation(value = "Paginar registros", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
 		@ApiResponse(code = 200, message = "OK", response = Venta.class)
 	})
-	public Page<Venta> findAll(@PathVariable Integer page) {
-		Pageable paginacion = PageRequest.of(page, 5);
+	public Page<Venta> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
+	
+	@GetMapping("/byproyecto/{idProyecto}/{page}/{count}")
+	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public Page<Venta> findByIdProyecto(@PathVariable Integer idProyecto, @PathVariable Integer page, @PathVariable Integer count ) {
+		Pageable paginacion = PageRequest.of(page, count);
+		return this.service.findByIdProyecto(idProyecto, paginacion);
+	}
+	@GetMapping("/byproyectoandestado/{idProyecto}/{idEstadoVenta}")
+	@ApiOperation(value = "Listar ventas por proyecto", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> findByProyectoAndEstadoVenta(@PathVariable Integer idProyecto, @PathVariable Integer idEstadoVenta) {
+		return this.service.findByProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
+	@GetMapping("/byproyectoandestadorange/{idProyecto}/{idEstadoVenta}/{fechaini}/{fechafin}")
+	@ApiOperation(value = "Listar ventas por proyecto, estado y rango de fechas", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> findByProyectoAndIdEstadoVenta(@PathVariable Integer idProyecto, @PathVariable Integer idEstadoVenta, @PathVariable String fechaini, @PathVariable String fechafin) {
+		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date ini;
+		Date fin;
+		try {
+			ini = ddmmyy.parse(fechaini + " 00:00");
+			fin = ddmmyy.parse(fechafin + " 23:59");
+			return this.service.findByIdProyectoAndIdEstadoVenta(idProyecto, idEstadoVenta, ini, fin).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+		} catch (ParseException e) {
+			return new ArrayList<>();
+		}
+	}
+	@GetMapping("/bycliente/{idCiente}/{page}/{count}")
+	@ApiOperation(value = "Listar ventas por cliente", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public Page<Venta> findByIdCliente(@PathVariable Integer idCiente, @PathVariable Integer page, @PathVariable Integer count ) {
+		Pageable paginacion = PageRequest.of(page, count);
+		return this.service.findByIdCliente(idCiente, paginacion);
+	}
+	@GetMapping("/byrange/{idProyecto}/{fechaini}/{fechafin}")
+	@ApiOperation(value = "Listar ventas por fechas", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> byrange(@PathVariable Integer idProyecto, @PathVariable String fechaini, @PathVariable String fechafin) {
+		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date ini;
+		Date fin;
+		try {
+			ini = ddmmyy.parse(fechaini + " 00:00");
+			fin = ddmmyy.parse(fechafin + " 23:59");
+			return this.service.byrange(idProyecto, ini, fin).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+		} catch (ParseException e) {
+			return new ArrayList<>();
+		}
+	}
+	@GetMapping("/byvendedor/{idVendedor}")
+	@ApiOperation(value = "Listar ventas por vendedor", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> byVendedor(@PathVariable Integer idVendedor) {
+			return this.service.findByIdVendedor(idVendedor).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 
+	}
+	@PostMapping("/search")
+	@ApiOperation(value = "Listar ventas", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> search(@RequestBody VentaSearchRequest serach) {
+		return this.service.search(serach).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
+	@GetMapping("/bycliente/{idCiente}")
+	@ApiOperation(value = "Listar ventas por cliente", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> findByIdCliente(@PathVariable Integer idCiente) {
+		return this.service.findByIdCliente(idCiente).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
 }

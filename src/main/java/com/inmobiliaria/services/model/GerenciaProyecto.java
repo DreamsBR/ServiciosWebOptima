@@ -1,13 +1,20 @@
 package com.inmobiliaria.services.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
-/**
- * The persistent class for the gerencia_proyecto database table.
- * 
- */
 @Entity
 @Table(name="gerencia_proyecto")
 @NamedQuery(name="GerenciaProyecto.findAll", query="SELECT g FROM GerenciaProyecto g")
@@ -19,15 +26,39 @@ public class GerenciaProyecto implements Serializable {
 	@Column(name="id_gerencia_proyecto")
 	private int idGerenciaProyecto;
 
-	private boolean enable;
+	private byte enable;
 
-	@Column(name="id_gerencia")
-	private int idGerencia;
+	@ManyToOne
+	@JoinColumn(name="id_gerencia")
+	private Gerencia gerencia;
 
-	@Column(name="id_proyecto")
-	private int idProyecto;
+	@ManyToOne
+	@JoinColumn(name="id_proyecto")
+	private Proyecto proyecto;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_asignacion")
+	private Date fechaAsignacion;
 
-	public GerenciaProyecto() {
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(name="fecha_termino")
+	private Date fechaTermino;
+
+	
+	public Date getFechaAsignacion() {
+		return fechaAsignacion;
+	}
+
+	public void setFechaAsignacion(Date fechaAsignacion) {
+		this.fechaAsignacion = fechaAsignacion;
+	}
+
+	public Date getFechaTermin() {
+		return fechaTermino;
+	}
+
+	public void setFechaTermin(Date fechaTermino) {
+		this.fechaTermino = fechaTermino;
 	}
 
 	public int getIdGerenciaProyecto() {
@@ -38,28 +69,28 @@ public class GerenciaProyecto implements Serializable {
 		this.idGerenciaProyecto = idGerenciaProyecto;
 	}
 
-	public boolean getEnable() {
+	public byte getEnable() {
 		return this.enable;
 	}
 
-	public void setEnable(boolean enable) {
+	public void setEnable(byte enable) {
 		this.enable = enable;
 	}
 
-	public int getIdGerencia() {
-		return this.idGerencia;
+	public Gerencia getGerencia() {
+		return gerencia;
 	}
 
-	public void setIdGerencia(int idGerencia) {
-		this.idGerencia = idGerencia;
+	public void setGerencia(Gerencia gerencia) {
+		this.gerencia = gerencia;
 	}
 
-	public int getIdProyecto() {
-		return this.idProyecto;
+	public Proyecto getProyecto() {
+		return proyecto;
 	}
 
-	public void setIdProyecto(int idProyecto) {
-		this.idProyecto = idProyecto;
+	public void setProyecto(Proyecto proyecto) {
+		this.proyecto = proyecto;
 	}
-
+	
 }
