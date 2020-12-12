@@ -3,8 +3,11 @@ version: '3'
 services:
   inmobiliaria-service:
     image: inmobiliaria-service
+    volumes:
+      - /serverfile:/serverfile
     ports:
       - 8080:8080
+      - 587:587
     build:
       context: ./
       dockerfile: Dockerfile
