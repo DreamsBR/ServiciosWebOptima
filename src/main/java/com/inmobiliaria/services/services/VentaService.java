@@ -4,6 +4,9 @@
  */
 package com.inmobiliaria.services.services;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +29,7 @@ import com.inmobiliaria.services.repository.VendedorRepository;
 import com.inmobiliaria.services.repository.VentaRepository; 
 import com.inmobiliaria.services.model.Venta;
 import com.inmobiliaria.services.model.request.VentaRequest;
+import com.inmobiliaria.services.model.request.VentaSearchRequest;
 
 @Service
 @Transactional(readOnly=true)
@@ -140,5 +144,48 @@ public class VentaService {
 	}
 	public List<Venta> findByIdVendedor(Integer idVendedor) {
 		return reporsitory.findByIdVendedor(idVendedor);
+	}
+	public List<Venta> search(VentaSearchRequest search) {
+		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date ini = null;
+		Date fin = null;
+		boolean fechas= true;
+		boolean client= true;
+		boolean estado= true;
+		try {
+			
+			ini = ddmmyy.parse(search.getFechaIni() + " 00:00");
+			fin = ddmmyy.parse(search.getFechaFin() + " 23:59");
+
+		} catch (Exception e) {
+			fechas = false;
+		}
+		if (search.getIdCliente() == 0 ) {
+			client = false;
+		}
+		if (search.getIdEstadoVenta() == 0 ) {
+			estado = false;
+		}
+		
+		if ( fechas & client & estado )
+			return reporsitory.search(search.getIdProyecto(), search.getIdCliente(), search.getIdEstadoVenta(), ini, fin);
+		if ( fechas & client & estado == false )
+			return reporsitory.findByProyectoAndClienteAndRangeFechas(search.getIdProyecto(), search.getIdCliente(), ini, fin);
+		if (fechas & client == false & estado == false )
+			return reporsitory.findByFechaRegistroRange(search.getIdProyecto(), ini, fin);
+		if (fechas == false & client & estado == false )
+			return reporsitory.findByProyectoAndCliente(search.getIdProyecto(), search.getIdCliente());
+		if (fechas == false & client & estado )
+			return reporsitory.findByProyectoAndClienteAndEstado(search.getIdProyecto(), search.getIdCliente(), search.getIdEstadoVenta());
+		if (fechas & client == false & estado )
+			return reporsitory.findByProyectoAndEstadoAndFechas(search.getIdProyecto(), search.getIdEstadoVenta(), ini, fin);
+		if (fechas == false & client == false & estado )
+			return reporsitory.findByProyectoAndEstado(search.getIdProyecto(), search.getIdEstadoVenta());
+		if ( fechas & client == false & estado == false )
+			return reporsitory.findByFechaRegistroRange(search.getIdProyecto(), ini, fin);
+		return new ArrayList<>();
+	}
+	public Collection<Venta> findByIdCliente(Integer idCiente) {
+		return reporsitory.findByCliente(idCiente);
 	}
 }

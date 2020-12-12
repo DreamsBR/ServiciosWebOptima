@@ -35,6 +35,7 @@ import io.swagger.annotations.ApiResponses;
 import com.inmobiliaria.services.services.VentaService;
 import com.inmobiliaria.services.model.Venta;
 import com.inmobiliaria.services.model.request.VentaRequest;
+import com.inmobiliaria.services.model.request.VentaSearchRequest;
 
 @RestController
 @RequestMapping(value = "/v1/venta")
@@ -180,5 +181,21 @@ public class VentaController {
 	public List<Venta> byVendedor(@PathVariable Integer idVendedor) {
 			return this.service.findByIdVendedor(idVendedor).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 
+	}
+	@PostMapping("/search")
+	@ApiOperation(value = "Listar ventas", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> search(@RequestBody VentaSearchRequest serach) {
+		return this.service.search(serach).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
+	@GetMapping("/bycliente/{idCiente}")
+	@ApiOperation(value = "Listar ventas por cliente", tags = { "Controlador Venta" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+	})
+	public List<Venta> findByIdCliente(@PathVariable Integer idCiente) {
+		return this.service.findByIdCliente(idCiente).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
 	}
 }
