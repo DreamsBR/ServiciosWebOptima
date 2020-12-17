@@ -2,6 +2,8 @@ package com.inmobiliaria.services.model.request;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+
 public class InmuebleRequest {
 	private int idInmueble;
 
@@ -26,6 +28,26 @@ public class InmuebleRequest {
 	private String numero;
 
 	private BigDecimal precio;
+
+	private String moneda;
+
+	private BigDecimal tipoCambio;
+	
+	public String getMoneda() {
+		return moneda;
+	}
+
+	public void setMoneda(String moneda) {
+		this.moneda = moneda;
+	}
+
+	public BigDecimal getTipoCambio() {
+		return tipoCambio;
+	}
+
+	public void setTipoCambio(BigDecimal tipoCambio) {
+		this.tipoCambio = tipoCambio;
+	}
 
 	public int getIdInmueble() {
 		return idInmueble;

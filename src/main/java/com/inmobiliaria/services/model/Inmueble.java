@@ -52,9 +52,30 @@ public class Inmueble implements Serializable {
 	@JoinColumn(name="id_tipo_vista")
 	private TipoVista tipoVista;
 	
+	private String moneda;
+
+	@Column(name="tipo_cambio")
+	private BigDecimal tipoCambio;
+	
 	private String numero;
 
 	private BigDecimal precio;
+
+	public String getMoneda() {
+		return moneda;
+	}
+
+	public void setMoneda(String moneda) {
+		this.moneda = moneda;
+	}
+
+	public BigDecimal getTipoCambio() {
+		return tipoCambio;
+	}
+
+	public void setTipoCambio(BigDecimal tipoCambio) {
+		this.tipoCambio = tipoCambio;
+	}
 
 	public int getIdInmueble() {
 		return this.idInmueble;
