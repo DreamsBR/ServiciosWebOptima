@@ -4,7 +4,6 @@
  */
 package com.inmobiliaria.services.services;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;

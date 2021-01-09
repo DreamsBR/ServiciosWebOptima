@@ -26,7 +26,6 @@ import com.inmobiliaria.services.model.response.ConsolidadoVentaResponse;
 import com.inmobiliaria.services.repository.GerenciaProyectoRepository;
 import com.inmobiliaria.services.repository.GerenciaRepository;
 import com.inmobiliaria.services.repository.JefaturaProyectoRepository;
-import com.inmobiliaria.services.repository.PagoRepository;
 import com.inmobiliaria.services.repository.PeriodoColaboradorRepository;
 import com.inmobiliaria.services.repository.PeriodoGerenciaRepository;
 import com.inmobiliaria.services.repository.PeriodoProyectoRepository;
@@ -47,8 +46,6 @@ public class ReporteService {
 	private VentaRepository ventaRepository;
 	@Autowired
 	private PeriodoRepository periodoRepository;
-	@Autowired
-	private PagoRepository pagoRepository;
 	@Autowired
 	private VendedorRepository vendedorRepository;
 	@Autowired
