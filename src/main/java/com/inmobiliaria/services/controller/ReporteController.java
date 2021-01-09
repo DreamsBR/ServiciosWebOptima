@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.inmobiliaria.services.model.response.ConsolidadoColaboradorPeriodoResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoGerenciaResponse;
+import com.inmobiliaria.services.model.response.ConsolidadoGerenciaVentaResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoProyectoPeriodoResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoProyectoResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoVentaResponse;
@@ -76,5 +77,13 @@ public class ReporteController {
 	})
 	public List<ConsolidadoColaboradorPeriodoResponse> consolidadoColaboradorPeriodo(@PathVariable Integer idColaborador, @PathVariable Integer idPeriodo) {
 		return this.service.consolidadoColaboradorPeriodo(idColaborador, idPeriodo);
+	}
+	@GetMapping("/consolidadogerenciaventa/{idPeriodo}")
+	@ApiOperation(value = "Listar consolidado gerencia venta", tags = { "Controlador Reporte" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = ConsolidadoGerenciaVentaResponse.class)
+	})
+	public List<ConsolidadoGerenciaVentaResponse> consolidadoGerenciaVenta(@PathVariable Integer idPeriodo) {
+		return this.service.consolidadoGerenciaVenta(idPeriodo);
 	}
 }

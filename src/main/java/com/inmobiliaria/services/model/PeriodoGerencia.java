@@ -22,11 +22,10 @@ public class PeriodoGerencia implements Serializable {
 	private int idPeriodoGerencia;
 
 	private byte enable;
-
+	
 	@Column(name="id_gerencia")
 	private int idGerencia;
 
-	//bi-directional many-to-one association 
 	@ManyToOne
 	@JoinColumn(name="id_periodo")
 	private Periodo periodo;
@@ -49,14 +48,6 @@ public class PeriodoGerencia implements Serializable {
 		this.enable = enable;
 	}
 
-	public int getIdGerencia() {
-		return this.idGerencia;
-	}
-
-	public void setIdGerencia(int idGerencia) {
-		this.idGerencia = idGerencia;
-	}
-
 	public BigDecimal getMeta() {
 		return this.meta;
 	}
@@ -72,5 +63,14 @@ public class PeriodoGerencia implements Serializable {
 	public void setPeriodo(Periodo periodo) {
 		this.periodo = periodo;
 	}
+
+	public int getIdGerencia() {
+		return idGerencia;
+	}
+
+	public void setIdGerencia(int idGerencia) {
+		this.idGerencia = idGerencia;
+	}
+
 
 }
