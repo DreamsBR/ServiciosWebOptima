@@ -1,7 +1,6 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inmobiliaria.services.model.Periodo;
-import com.inmobiliaria.services.services.PeriodoService;
+import com.inmobiliaria.services.model.RangoPeriodo;
+import com.inmobiliaria.services.services.RangoPeriodoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,56 +27,56 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
 @RestController
-@RequestMapping(value = "/v1/periodo")
-@Api(value = "Periodo", produces = "application/json", tags = { "Controlador Periodo" })
+@RequestMapping(value = "/v1/rangoperiodo")
+@Api(value = "RangoPeriodo", produces = "application/json", tags = { "Controlador Rango Periodo" })
 @PreAuthorize("isAuthenticated()") 
-public class PeriodoController {
+public class RangoPeriodoController {
 	@Autowired
-	private PeriodoService service;
+	private RangoPeriodoService service;
 
 	@PostMapping
-	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Rango Periodo" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = RangoPeriodo.class)
 	})
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Periodo> registrar(@RequestBody Periodo reg) {
+	public ResponseEntity<RangoPeriodo> registrar(@RequestBody RangoPeriodo reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "obtener registro", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "obtener registro", tags = { "Controlador Rango Periodo" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = RangoPeriodo.class)
 	})
-	public ResponseEntity<Periodo> obtener(@PathVariable Integer id) {
+	public ResponseEntity<RangoPeriodo> obtener(@PathVariable Integer id) {
 		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
-	@ApiOperation(value = "modificar registro", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "modificar registro", tags = { "Controlador Rango Periodo" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = RangoPeriodo.class)
 	})
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Periodo> modificar(@RequestBody Periodo reg, @PathVariable Integer id) {
-		Periodo entity = this.service.findById(id);
+	public ResponseEntity<RangoPeriodo> modificar(@RequestBody RangoPeriodo reg, @PathVariable Integer id) {
+		RangoPeriodo entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
-			reg.setIdPeriodo(id);
+			reg.setIdRangoPeriodo(id);
 			return new ResponseEntity<>(this.service.update(reg), HttpStatus.OK);
 		}
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "eliminar registro", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "eliminar registro", tags = { "Controlador Rango Periodo" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = RangoPeriodo.class)
 	})
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Periodo> eliminar(@PathVariable Integer id) {
-		Periodo entity = this.service.findById(id);
+	public ResponseEntity<RangoPeriodo> eliminar(@PathVariable Integer id) {
+		RangoPeriodo entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
@@ -87,29 +86,30 @@ public class PeriodoController {
 	}
 
 	@GetMapping("/")
-	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Rango Periodo" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = RangoPeriodo.class)
 	})
-	public List<Periodo> findAll() {
-		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	public List<RangoPeriodo> findAll() {
+		return this.service.findAll();
 	}
 
 	@GetMapping("/page/{page}/{count}")
-	@ApiOperation(value = "Paginar registros", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "Paginar registros", tags = { "Controlador Rango Periodo" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = RangoPeriodo.class)
 	})
-	public Page<Periodo> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+	public Page<RangoPeriodo> findAll(@PathVariable Integer page, @PathVariable Integer count) {
 		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
-	@GetMapping("/byanio/{anio}")
-	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo" })
+	@GetMapping("/byrango/{idRango}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Rango Periodo" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = RangoPeriodo.class)
 	})
-	public List<Periodo> byanio(@PathVariable Integer anio) {
-		return this.service.findByAnio(anio).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	public List<RangoPeriodo> byrango(@PathVariable Integer idRango) {
+		return this.service.findByIdRango(idRango);
 	}
+
 }

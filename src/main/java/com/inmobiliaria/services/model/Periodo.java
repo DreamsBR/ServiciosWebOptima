@@ -31,6 +31,8 @@ public class Periodo implements Serializable {
 
 	private String nombre;
 
+	private int anio;
+	
 	public int getIdPeriodo() {
 		return this.idPeriodo;
 	}
@@ -69,6 +71,14 @@ public class Periodo implements Serializable {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public int getAnio() {
+		return anio;
+	}
+
+	public void setAnio(int anio) {
+		this.anio = anio;
 	}
 
 }

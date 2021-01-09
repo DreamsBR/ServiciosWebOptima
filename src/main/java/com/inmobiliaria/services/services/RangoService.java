@@ -1,6 +1,5 @@
 package com.inmobiliaria.services.services;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,37 +8,44 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.model.Periodo;
-import com.inmobiliaria.services.repository.PeriodoRepository;
+import com.inmobiliaria.services.model.Rango;
+import com.inmobiliaria.services.repository.RangoRepository;
+
 
 @Service
 @Transactional(readOnly=true)
-public class PeriodoService {
+public class RangoService {
 	@Autowired
-	private PeriodoRepository reporsitory;
+	private RangoRepository reporsitory;
 	@Transactional
-	public Periodo registrar(Periodo reg) {
+	public Rango registrar(Rango reg) {
 		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
-	public void delete(Periodo reg) {
+	public void delete(Rango reg) {
 		reporsitory.delete(reg);
 	}
 	@Transactional
-	public Periodo update(Periodo reg) {
+	public Rango update(Rango reg) {
 		return reporsitory.save(reg);
 	}
-	public Periodo findById(Integer id) {
+	public Rango findById(Integer id) {
 		return reporsitory.findById(id).get();
 	}
-	public List<Periodo> findAll() {
+	public List<Rango> findAll() {
 		return reporsitory.findAll();
 	}
-	public Page<Periodo> findAll(Pageable pageable) {
+	public Page<Rango> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
-	public Collection<Periodo> findByAnio(Integer anio) {
+	public List<Rango> findByTipoPeriodo(Integer idTipoPeriodo) {
+		return reporsitory.findByIdTipoPeriodo(idTipoPeriodo);
+	}
+	public List<Rango> findByAnio(Integer anio) {
 		return reporsitory.findByAnio(anio);
+	}
+	public List<Rango> findByAnioAndIdTipoPeriodo(Integer anio, Integer idTipoPeriodo) {
+		return reporsitory.findByAnioAndIdTipoPeriodo(anio, idTipoPeriodo);
 	}
 }
