@@ -86,4 +86,5 @@ public class ReporteController {
 	public List<ConsolidadoGerenciaVentaResponse> consolidadoGerenciaVenta(@PathVariable Integer idPeriodo) {
 		return this.service.consolidadoGerenciaVenta(idPeriodo);
 	}
+
 }
