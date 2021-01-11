@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.inmobiliaria.services.model.Gerencia;
 import com.inmobiliaria.services.model.GerenciaProyecto;
 import com.inmobiliaria.services.model.JefaturaProyecto;
 import com.inmobiliaria.services.model.Periodo;
@@ -18,12 +19,13 @@ import com.inmobiliaria.services.model.Vendedor;
 import com.inmobiliaria.services.model.Venta;
 import com.inmobiliaria.services.model.response.ConsolidadoColaboradorPeriodoResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoGerenciaResponse;
+import com.inmobiliaria.services.model.response.ConsolidadoGerenciaVentaResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoProyectoPeriodoResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoProyectoResponse;
 import com.inmobiliaria.services.model.response.ConsolidadoVentaResponse;
 import com.inmobiliaria.services.repository.GerenciaProyectoRepository;
+import com.inmobiliaria.services.repository.GerenciaRepository;
 import com.inmobiliaria.services.repository.JefaturaProyectoRepository;
-import com.inmobiliaria.services.repository.PagoRepository;
 import com.inmobiliaria.services.repository.PeriodoColaboradorRepository;
 import com.inmobiliaria.services.repository.PeriodoGerenciaRepository;
 import com.inmobiliaria.services.repository.PeriodoProyectoRepository;
@@ -45,13 +47,13 @@ public class ReporteService {
 	@Autowired
 	private PeriodoRepository periodoRepository;
 	@Autowired
-	private PagoRepository pagoRepository;
-	@Autowired
 	private VendedorRepository vendedorRepository;
 	@Autowired
 	private JefaturaProyectoRepository jefaturaProyectoRepository;
 	@Autowired
 	private GerenciaProyectoRepository gerenciaProyectoRepository;
+	@Autowired
+	private GerenciaRepository gerenciaRepository;
 	public List<ConsolidadoVentaResponse> consolidadoVenta(Integer idGerencia, Integer idPeriodo) {
 		List<ConsolidadoVentaResponse> listResponse = new ArrayList<>();
 		List<PeriodoProyecto> list = periodoProyectoRepository.findByIdPeriodo(idPeriodo)				
@@ -375,6 +377,65 @@ public class ReporteService {
 			
 		}
 		return listResponse;
+	}
+	public List<ConsolidadoGerenciaVentaResponse> consolidadoGerenciaVenta(Integer idPeriodo) {
+		List<ConsolidadoGerenciaVentaResponse> listConsolidadoGerenciaVentaResponse = new ArrayList<>();
+		List<PeriodoGerencia> listPeriodoGerencia = periodoGerenciaRepository.findByIdPeriodo(idPeriodo)
+				.stream()
+				.filter(x -> x.getEnable() == 1 && x.getPeriodo().getEnable() == 1 )
+				.collect(Collectors.toList());
+		for (PeriodoGerencia periodoGerencia : listPeriodoGerencia) {
+			Gerencia gerencia = gerenciaRepository.findById(periodoGerencia.getIdGerencia()).get();
+			ConsolidadoGerenciaVentaResponse item = new ConsolidadoGerenciaVentaResponse();
+			item.setGerencia(gerencia);
+			item.setMeta(periodoGerencia.getMeta().doubleValue());
+			
+			List<GerenciaProyecto> listGerenciaProyecto = gerenciaProyectoRepository.findByIdGerencia(gerencia.getIdGerencia())
+					.stream()
+					.filter(x -> x.getEnable() == 1 )
+					.collect(Collectors.toList());
+			List<Venta> listVentasGerencia = new ArrayList<>();
+			for (GerenciaProyecto gerenciaProyecto : listGerenciaProyecto) {
+				List<Venta> listVentas = ventaRepository.findByFechaRegistroRange(gerenciaProyecto.getProyecto().getIdProyecto(), periodoGerencia.getPeriodo().getFechaInicio(), periodoGerencia.getPeriodo().getFechaFin())
+						.stream()
+						.filter(x -> x.getEnable() == 1 )
+						.collect(Collectors.toList());
+				listVentasGerencia.addAll(listVentas);
+			}
+			
+			List<Venta> listVentasResultPago = listVentasGerencia.stream().filter(v ->
+			v.getFechaMinuta() != null && v.getEstadoVenta().getIdEstadoVenta() != 14
+					).collect(Collectors.toList());
+			
+			
+			double suma = listVentasResultPago.stream()
+		      .mapToDouble(o -> o.getTotal().doubleValue()
+		    ).sum();
+			item.setAvance(suma);
+			
+			List<Venta> spVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 1).collect(Collectors.toList());
+			item.setSp(spVenta.size());
+
+			List<Venta> minutaVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
+			item.setMinuta(minutaVenta.size());
+			
+			List<Venta> ciVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 4).collect(Collectors.toList());
+			item.setCi(ciVenta.size());
+			
+			List<Venta> preVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 2).collect(Collectors.toList());
+			item.setPreca(preVenta.size());
+			
+			List<Venta> evVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 3).collect(Collectors.toList());
+			item.setEv(evVenta.size());
+			
+			List<Venta> caidaVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 14).collect(Collectors.toList());
+			item.setCaida(caidaVenta.size());
+			
+			listConsolidadoGerenciaVentaResponse.add(item);
+					
+		}
+		
+		return listConsolidadoGerenciaVentaResponse;
 	}
 	
 

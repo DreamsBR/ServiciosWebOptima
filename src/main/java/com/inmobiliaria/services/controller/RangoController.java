@@ -1,7 +1,6 @@
 package com.inmobiliaria.services.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,65 +18,66 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.inmobiliaria.services.model.Periodo;
-import com.inmobiliaria.services.services.PeriodoService;
+import com.inmobiliaria.services.model.Rango;
+import com.inmobiliaria.services.services.RangoService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+
 @RestController
-@RequestMapping(value = "/v1/periodo")
-@Api(value = "Periodo", produces = "application/json", tags = { "Controlador Periodo" })
+@RequestMapping(value = "/v1/rango")
+@Api(value = "Rango", produces = "application/json", tags = { "Controlador Rango" })
 @PreAuthorize("isAuthenticated()") 
-public class PeriodoController {
+public class RangoController {
 	@Autowired
-	private PeriodoService service;
+	private RangoService service;
 
 	@PostMapping
-	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "servicio para registrar", tags = { "Controlador Rango" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = Rango.class)
 	})
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Periodo> registrar(@RequestBody Periodo reg) {
+	public ResponseEntity<Rango> registrar(@RequestBody Rango reg) {
 		return new ResponseEntity<>(this.service.registrar(reg), HttpStatus.OK);
 	}
 
 	@GetMapping("/{id}")
-	@ApiOperation(value = "obtener registro", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "obtener registro", tags = { "Controlador Rango" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = Rango.class)
 	})
-	public ResponseEntity<Periodo> obtener(@PathVariable Integer id) {
+	public ResponseEntity<Rango> obtener(@PathVariable Integer id) {
 		return new ResponseEntity<>(this.service.findById(id), HttpStatus.OK);
 	}
 
 	@PutMapping("/{id}")
-	@ApiOperation(value = "modificar registro", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "modificar registro", tags = { "Controlador Rango" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = Rango.class)
 	})
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Periodo> modificar(@RequestBody Periodo reg, @PathVariable Integer id) {
-		Periodo entity = this.service.findById(id);
+	public ResponseEntity<Rango> modificar(@RequestBody Rango reg, @PathVariable Integer id) {
+		Rango entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
-			reg.setIdPeriodo(id);
+			reg.setIdRango(id);
 			return new ResponseEntity<>(this.service.update(reg), HttpStatus.OK);
 		}
 	}
 
 	@DeleteMapping("/{id}")
-	@ApiOperation(value = "eliminar registro", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "eliminar registro", tags = { "Controlador Rango" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = Rango.class)
 	})
 	@PreAuthorize("hasRole('ADMIN')")
-	public ResponseEntity<Periodo> eliminar(@PathVariable Integer id) {
-		Periodo entity = this.service.findById(id);
+	public ResponseEntity<Rango> eliminar(@PathVariable Integer id) {
+		Rango entity = this.service.findById(id);
 		if ( entity == null ) {
 			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		} else {
@@ -87,29 +87,30 @@ public class PeriodoController {
 	}
 
 	@GetMapping("/")
-	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Rango" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = Rango.class)
 	})
-	public List<Periodo> findAll() {
-		return this.service.findAll().stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	public List<Rango> findAll() {
+		return this.service.findAll();
 	}
 
 	@GetMapping("/page/{page}/{count}")
-	@ApiOperation(value = "Paginar registros", tags = { "Controlador Periodo" })
+	@ApiOperation(value = "Paginar registros", tags = { "Controlador Rango" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = Rango.class)
 	})
-	public Page<Periodo> findAll(@PathVariable Integer page, @PathVariable Integer count) {
+	public Page<Rango> findAll(@PathVariable Integer page, @PathVariable Integer count) {
 		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
-	@GetMapping("/byanio/{anio}")
-	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo" })
+	@GetMapping("/byanioandtipoperiodo/{anio}/{idTipoPeriodo}")
+	@ApiOperation(value = "Listar registros por tipo de periodo", tags = { "Controlador Rango" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+		@ApiResponse(code = 200, message = "OK", response = Rango.class)
 	})
-	public List<Periodo> byanio(@PathVariable Integer anio) {
-		return this.service.findByAnio(anio).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	public List<Rango> byanioandtipoperiodo(@PathVariable Integer anio, @PathVariable Integer idTipoPeriodo) {
+		return this.service.findByAnioAndIdTipoPeriodo(anio, idTipoPeriodo);
 	}
+
 }

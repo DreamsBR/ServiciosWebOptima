@@ -36,6 +36,7 @@ import com.inmobiliaria.services.services.VentaService;
 import com.inmobiliaria.services.model.Venta;
 import com.inmobiliaria.services.model.request.VentaRequest;
 import com.inmobiliaria.services.model.request.VentaSearchRequest;
+import com.inmobiliaria.services.model.response.VentaSearchResponse;
 
 @RestController
 @RequestMapping(value = "/v1/venta")
@@ -185,10 +186,10 @@ public class VentaController {
 	@PostMapping("/search")
 	@ApiOperation(value = "Listar ventas", tags = { "Controlador Venta" })
 	@ApiResponses(value = {
-		@ApiResponse(code = 200, message = "OK", response = Venta.class)
+		@ApiResponse(code = 200, message = "OK", response = VentaSearchResponse.class)
 	})
-	public List<Venta> search(@RequestBody VentaSearchRequest serach) {
-		return this.service.search(serach).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	public List<VentaSearchResponse> search(@RequestBody VentaSearchRequest serach) {
+		return this.service.search(serach);
 	}
 	@GetMapping("/bycliente/{idCiente}")
 	@ApiOperation(value = "Listar ventas por cliente", tags = { "Controlador Venta" })
