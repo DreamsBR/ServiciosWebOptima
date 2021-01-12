@@ -9,6 +9,6 @@ import com.inmobiliaria.services.model.Periodo;
 @Repository
 public interface PeriodoRepository extends JpaRepository<Periodo, Integer>{
 
-	Collection<Periodo> findByAnio(Integer anio);
+	Collection<Periodo> findByIdTipoPeriodo(Integer idTipoPeriodo);
 
 }

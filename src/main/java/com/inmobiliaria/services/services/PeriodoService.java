@@ -39,7 +39,7 @@ public class PeriodoService {
 	public Page<Periodo> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
 	}
-	public Collection<Periodo> findByAnio(Integer anio) {
-		return reporsitory.findByAnio(anio);
+	public Collection<Periodo> findByIdTipoPeriodo(Integer idTipoPeriodo) {
+		return reporsitory.findByIdTipoPeriodo(idTipoPeriodo);
 	}
 }
