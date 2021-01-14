@@ -4,7 +4,9 @@ services:
   inmobiliaria-service:
     image: inmobiliaria-service
     volumes:
-      - /serverfile:/serverfile
+      - type: volume
+        source: serverfile
+        target: /serverfile
     ports:
       - 8080:8080
       - 587:587
@@ -16,3 +18,5 @@ services:
 networks:
   inmo-red:
     name: inmo-red
+volumes:
+  serverfile:
