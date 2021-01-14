@@ -62,7 +62,7 @@ public class ClienteService {
 	private Cliente mapperCliente(ClienteRequest reg) {
 		Cliente cliente = new Cliente();
 		cliente.setApellidos(reg.getApellidos());
-		cliente.setAsesor(reg.getApellidos());
+		cliente.setAsesor(reg.getAsesor());
 		cliente.setConyuge(reg.getConyuge());
 		cliente.setDireccion(reg.getDireccion());
 		cliente.setDistrito(reg.getDistrito());
