@@ -68,6 +68,8 @@ public class InmuebleService {
 		inmueble.setTipoInmueble(tipoInmuebleRepository.findById(reg.getIdTipoInmueble()).get());
 		inmueble.setTipoInmuebleCategoria(tipoInmuebleCategoriaRepository.findById(reg.getIdTipoInmuebleCategoria()).get());
 		inmueble.setTipoVista(tipoVistaRepository.findById(reg.getIdTipoVista()).get());
+		inmueble.setTipoCambio(reg.getTipoCambio());
+		inmueble.setMoneda(reg.getMoneda());
 		return inmueble;
 	}
 	public Inmueble findById(Integer id) {

@@ -104,4 +104,12 @@ public class PeriodoController {
 		Pageable paginacion = PageRequest.of(page, count);
 		return this.service.findAll(paginacion);
 	}
+	@GetMapping("/bytipoperiodo/{idTipoPeriodo}")
+	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo" })
+	@ApiResponses(value = {
+		@ApiResponse(code = 200, message = "OK", response = Periodo.class)
+	})
+	public List<Periodo> findByIdTipoPeriodo(@PathVariable Integer idTipoPeriodo) {
+		return this.service.findByIdTipoPeriodo(idTipoPeriodo).stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+	}
 }

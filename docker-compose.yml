@@ -3,8 +3,13 @@ version: '3'
 services:
   inmobiliaria-service:
     image: inmobiliaria-service
+    volumes:
+      - type: volume
+        source: serverfile
+        target: /serverfile
     ports:
       - 8080:8080
+      - 587:587
     build:
       context: ./
       dockerfile: Dockerfile
@@ -13,3 +18,5 @@ services:
 networks:
   inmo-red:
     name: inmo-red
+volumes:
+  serverfile:

@@ -49,6 +49,26 @@ public class ClienteRequest {
 	private String telefono;
 
 	private int idTipoDocumentoConyuge;
+	
+	private String fotoDni;
+	
+	private String fotoDniConyuge;
+
+	public String getFotoDni() {
+		return fotoDni;
+	}
+
+	public void setFotoDni(String fotoDni) {
+		this.fotoDni = fotoDni;
+	}
+
+	public String getFotoDniConyuge() {
+		return fotoDniConyuge;
+	}
+
+	public void setFotoDniConyuge(String fotoDniConyuge) {
+		this.fotoDniConyuge = fotoDniConyuge;
+	}
 
 	public int getIdCliente() {
 		return idCliente;

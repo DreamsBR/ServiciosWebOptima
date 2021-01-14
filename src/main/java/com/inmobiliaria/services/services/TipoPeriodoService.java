@@ -1,6 +1,5 @@
 package com.inmobiliaria.services.services;
 
-import java.util.Collection;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,37 +8,35 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.model.Periodo;
-import com.inmobiliaria.services.repository.PeriodoRepository;
+import com.inmobiliaria.services.model.TipoPeriodo;
+import com.inmobiliaria.services.repository.TipoPeriodoRepository;
+
 
 @Service
 @Transactional(readOnly=true)
-public class PeriodoService {
+public class TipoPeriodoService {
 	@Autowired
-	private PeriodoRepository reporsitory;
+	private TipoPeriodoRepository reporsitory;
 	@Transactional
-	public Periodo registrar(Periodo reg) {
+	public TipoPeriodo registrar(TipoPeriodo reg) {
 		reg.setEnable((byte) 1);
 		return reporsitory.save(reg);
 	}
 	@Transactional
-	public void delete(Periodo reg) {
+	public void delete(TipoPeriodo reg) {
 		reporsitory.delete(reg);
 	}
 	@Transactional
-	public Periodo update(Periodo reg) {
+	public TipoPeriodo update(TipoPeriodo reg) {
 		return reporsitory.save(reg);
 	}
-	public Periodo findById(Integer id) {
+	public TipoPeriodo findById(Integer id) {
 		return reporsitory.findById(id).get();
 	}
-	public List<Periodo> findAll() {
+	public List<TipoPeriodo> findAll() {
 		return reporsitory.findAll();
 	}
-	public Page<Periodo> findAll(Pageable pageable) {
+	public Page<TipoPeriodo> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
-	}
-	public Collection<Periodo> findByIdTipoPeriodo(Integer idTipoPeriodo) {
-		return reporsitory.findByIdTipoPeriodo(idTipoPeriodo);
 	}
 }

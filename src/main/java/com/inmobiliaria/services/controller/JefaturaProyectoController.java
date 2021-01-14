@@ -128,7 +128,8 @@ public class JefaturaProyectoController {
 		@ApiResponse(code = 200, message = "OK", response = JefaturaProyecto.class)
 	})
 	public List<JefaturaProyecto> porjefatura(@PathVariable Integer idJefatura) {
-		return this.service.findByProyecto(idJefatura).stream()
+		List<JefaturaProyecto> list = this.service.findByJefatura(idJefatura);
+		return list.stream()
 				.filter(x -> x.getEnable() == 1 && x.getJefatura().getEnable() == 1 && x.getProyecto().getEnable() == 1)
 				.collect(Collectors.toList());
 	}

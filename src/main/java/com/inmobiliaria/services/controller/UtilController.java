@@ -7,7 +7,7 @@ import java.nio.file.Files;
 import java.util.Base64;
 import java.util.Date;
 
-import org.apache.tomcat.jni.Directory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,6 +30,10 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "util", produces = "application/json", tags = { "Controlador util" })
 @PreAuthorize("isAuthenticated()") 
 public class UtilController {
+	
+    @Value("${app.files}")
+    private String serverfile;
+    
 	@PostMapping("/upload")
 	@ApiOperation(value = "servicio upload", tags = { "Controlador util" })
 	@ApiResponses(value = {
@@ -38,8 +42,8 @@ public class UtilController {
 	public ResponseEntity<DecodeFileResponse> upload(@RequestBody DecodeFileRequest fileRequest) {
 		DecodeFileResponse response = new DecodeFileResponse();
 		Date date= new Date();
-		String ruta= "/serverfile/" + date.getTime() + "_" +  fileRequest.getFileName();
-		File directorio = new File("/serverfile");
+		String ruta= serverfile + "/" + date.getTime() + "_" +  fileRequest.getFileName();
+		File directorio = new File(serverfile);
         if (!directorio.exists()) {
             directorio.mkdirs();
         }

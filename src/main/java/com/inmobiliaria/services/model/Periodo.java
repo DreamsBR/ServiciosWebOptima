@@ -31,6 +31,9 @@ public class Periodo implements Serializable {
 
 	private String nombre;
 
+	@Column(name="id_tipo_periodo")
+	private int idTipoPeriodo;
+	
 	public int getIdPeriodo() {
 		return this.idPeriodo;
 	}
@@ -70,5 +73,15 @@ public class Periodo implements Serializable {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+
+	public int getIdTipoPeriodo() {
+		return idTipoPeriodo;
+	}
+
+	public void setIdTipoPeriodo(int idTipoPeriodo) {
+		this.idTipoPeriodo = idTipoPeriodo;
+	}
+
+
 
 }

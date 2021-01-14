@@ -4,6 +4,8 @@
  */
 package com.inmobiliaria.services.services;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -22,10 +24,16 @@ import com.inmobiliaria.services.repository.ClienteRepository;
 import com.inmobiliaria.services.repository.EstadoVentaRepository;
 import com.inmobiliaria.services.repository.FinanciamientoRepository;
 import com.inmobiliaria.services.repository.MotivoRepository;
+import com.inmobiliaria.services.repository.PagoRepository;
 import com.inmobiliaria.services.repository.VendedorRepository;
-import com.inmobiliaria.services.repository.VentaRepository; 
+import com.inmobiliaria.services.repository.VentaInmuebleRepository;
+import com.inmobiliaria.services.repository.VentaRepository;
+import com.inmobiliaria.services.model.Pago;
 import com.inmobiliaria.services.model.Venta;
+import com.inmobiliaria.services.model.VentaInmueble;
 import com.inmobiliaria.services.model.request.VentaRequest;
+import com.inmobiliaria.services.model.request.VentaSearchRequest;
+import com.inmobiliaria.services.model.response.VentaSearchResponse;
 
 @Service
 @Transactional(readOnly=true)
@@ -46,7 +54,10 @@ public class VentaService {
 	private MotivoRepository motivoRepository;
 	@Autowired
 	private VendedorRepository vendedorRepository;
-	
+	@Autowired
+	private VentaInmuebleRepository ventaInmuebleRepository;
+	@Autowired
+	private PagoRepository pagoRepository;
 	@Autowired
 	EntityManager em;
 	
@@ -140,5 +151,58 @@ public class VentaService {
 	}
 	public List<Venta> findByIdVendedor(Integer idVendedor) {
 		return reporsitory.findByIdVendedor(idVendedor);
+	}
+	public List<VentaSearchResponse> search(VentaSearchRequest search) {
+		List<VentaSearchResponse> listVentaSearchResponse = new ArrayList<>();
+		List<Venta> listVentas = new ArrayList<>();
+		SimpleDateFormat ddmmyy=new SimpleDateFormat("yyyy-MM-dd HH:mm");
+		Date ini = null;
+		Date fin = null;
+		boolean fechas= true;
+		boolean client= true;
+		boolean estado= true;
+		try {
+			
+			ini = ddmmyy.parse(search.getFechaIni() + " 00:00");
+			fin = ddmmyy.parse(search.getFechaFin() + " 23:59");
+
+		} catch (Exception e) {
+			fechas = false;
+		}
+		if (search.getIdCliente() == 0 ) {
+			client = false;
+		}
+		if (search.getIdEstadoVenta() == 0 ) {
+			estado = false;
+		}
+		
+		if ( fechas & client & estado )
+			listVentas = reporsitory.search(search.getIdProyecto(), search.getIdCliente(), search.getIdEstadoVenta(), ini, fin);
+		if ( fechas & client & estado == false )
+			listVentas = reporsitory.findByProyectoAndClienteAndRangeFechas(search.getIdProyecto(), search.getIdCliente(), ini, fin);
+		if (fechas & client == false & estado == false )
+			listVentas = reporsitory.findByFechaRegistroRange(search.getIdProyecto(), ini, fin);
+		if (fechas == false & client & estado == false )
+			listVentas = reporsitory.findByProyectoAndCliente(search.getIdProyecto(), search.getIdCliente());
+		if (fechas == false & client & estado )
+			listVentas = reporsitory.findByProyectoAndClienteAndEstado(search.getIdProyecto(), search.getIdCliente(), search.getIdEstadoVenta());
+		if (fechas & client == false & estado )
+			listVentas = reporsitory.findByProyectoAndEstadoAndFechas(search.getIdProyecto(), search.getIdEstadoVenta(), ini, fin);
+		if (fechas == false & client == false & estado )
+			listVentas = reporsitory.findByProyectoAndEstado(search.getIdProyecto(), search.getIdEstadoVenta());
+		if ( fechas & client == false & estado == false )
+			listVentas = reporsitory.findByFechaRegistroRange(search.getIdProyecto(), ini, fin);
+		
+		List<Venta> ventas = listVentas.stream().filter(x -> x.getEnable() == 1).collect(Collectors.toList());
+		for (Venta venta : ventas) {
+			List<VentaInmueble> listVentaInmueble = ventaInmuebleRepository.findByIdVenta(venta.getIdVenta());
+			List<Pago> listPagos = pagoRepository.findByIdVenta(venta.getIdVenta());
+			listVentaSearchResponse.add(new VentaSearchResponse(venta, listVentaInmueble, listPagos));
+		}
+		
+		return listVentaSearchResponse;
+	}
+	public Collection<Venta> findByIdCliente(Integer idCiente) {
+		return reporsitory.findByCliente(idCiente);
 	}
 }
