@@ -114,7 +114,7 @@ public class GerenciaController {
 	})
 	public Page<Gerencia> findAll(@PathVariable Integer page, @PathVariable Integer count) {
 		Pageable paginacion = PageRequest.of(page, count);
-		return this.service.findAll(paginacion);
+		return this.service.findAllEnable(paginacion);
 	}
 
 

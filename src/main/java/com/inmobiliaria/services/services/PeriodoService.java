@@ -43,4 +43,7 @@ public class PeriodoService {
 	public Collection<Periodo> findByIdTipoPeriodo(Integer idTipoPeriodo) {
 		return reporsitory.findByIdTipoPeriodo(idTipoPeriodo);
 	}
+	public Page<Periodo> findAllEnable(Pageable paginacion) {
+		return reporsitory.findAllEnable(paginacion);
+	}
 }

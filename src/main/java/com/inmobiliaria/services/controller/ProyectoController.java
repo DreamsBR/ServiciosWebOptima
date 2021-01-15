@@ -107,7 +107,7 @@ public class ProyectoController {
 	})
 	public Page<Proyecto> findAll(@PathVariable Integer page, @PathVariable Integer count) {
 		Pageable paginacion = PageRequest.of(page, count);
-		return this.service.findAllEnagle(paginacion);
+		return this.service.findAllEnable(paginacion);
 	}
 	
 	@GetMapping("/porGerencia/{idGerencia}")

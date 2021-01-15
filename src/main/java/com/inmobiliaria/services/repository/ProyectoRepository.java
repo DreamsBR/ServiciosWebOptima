@@ -34,6 +34,6 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 	List<Proyecto> findByIdGerencia(Integer idGerencia);
 
 	@Query("select a from Proyecto a where a.enable = 1")
-	Page<Proyecto> findAllEnagle(Pageable paginacion);
+	Page<Proyecto> findAllEnable(Pageable paginacion);
 
 }

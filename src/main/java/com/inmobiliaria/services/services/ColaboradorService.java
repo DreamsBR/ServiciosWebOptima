@@ -74,4 +74,7 @@ public class ColaboradorService {
 		}
 		return list;
 	}
+	public Page<Colaborador> findAllEnable(Pageable paginacion) {
+		return reporsitory.findAllEnable(paginacion);
+	}
 }
