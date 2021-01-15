@@ -19,26 +19,28 @@ import org.springframework.stereotype.Repository;
 import com.inmobiliaria.services.model.Venta;
 @Repository
 public interface VentaRepository extends JpaRepository<Venta, Integer> {
-
+	@Query("select v from Venta v where v.idProyecto = ?1 and v.enable = 1")
 	Page<Venta> findByIdProyecto(Integer idProyecto, Pageable pageable);
+	
+	@Query("select v from Venta v where v.idProyecto = ?1 and v.enable = 1")
 	List<Venta> findByIdProyecto(Integer idProyecto);
 	
-	@Query("select v from Venta v INNER JOIN v.estadoVenta e where v.idProyecto = ?1 and e.idEstadoVenta = ?2")
+	@Query("select v from Venta v INNER JOIN v.estadoVenta e where v.idProyecto = ?1 and v.enable =1 and e.idEstadoVenta = ?2")
 	List<Venta> findByIdProyectoAndIdEstadoVenta(Integer idProyecto, Integer idEstadoVenta);
 	
-	@Query("select v from Venta v INNER JOIN v.cliente e where e.idCliente = ?1")
+	@Query("select v from Venta v INNER JOIN v.cliente e where e.idCliente = ?1 and v.enable =1")
 	Page<Venta> findByCliente(Integer idCliente, Pageable pageable);
 	
-	@Query("select v from Venta v INNER JOIN v.vendedor e where e.idVendedor = ?1")
+	@Query("select v from Venta v INNER JOIN v.vendedor e where e.idVendedor = ?1 and v.enable = 1")
 	List<Venta> findByIdVendedor(Integer idVendedor);
 
-	@Query("select v from Venta v where v.idProyecto = :idProyecto AND v.fechaRegistro BETWEEN :startDate AND :endDate")
+	@Query("select v from Venta v where v.idProyecto = :idProyecto and v.enable = 1 AND v.fechaRegistro BETWEEN :startDate AND :endDate")
 	List<Venta> findByFechaRegistroRange(@Param("idProyecto") Integer idProyecto, @Param("startDate") Date startDate, @Param("endDate") Date endDate);
 	
 	@Query("select v from Venta v "
 			+ "INNER JOIN v.cliente e "
 			+ "INNER JOIN v.estadoVenta ev "
-			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1 AND "
 			+ "e.idCliente = :idCliente AND "
 			+ "ev.idEstadoVenta = :idEstadoVenta AND "
 			+ "v.fechaRegistro BETWEEN :startDate AND :endDate")
@@ -49,12 +51,12 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 			@Param("startDate") Date startDate, 
 			@Param("endDate") Date endDate);
 	
-	@Query("select v from Venta v INNER JOIN v.cliente e where e.idCliente = ?1")
+	@Query("select v from Venta v INNER JOIN v.cliente e where e.idCliente = ?1 and v.enable = 1")
 	Collection<Venta> findByCliente(Integer idCiente);
 	
 	@Query("select v from Venta v "
 			+ "INNER JOIN v.cliente e "
-			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1 AND "
 			+ "e.idCliente = :idCliente AND "
 			+ "v.fechaRegistro BETWEEN :startDate AND :endDate")
 	List<Venta> findByProyectoAndClienteAndRangeFechas(
@@ -65,7 +67,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	
 	@Query("select v from Venta v "
 			+ "INNER JOIN v.cliente e "
-			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1  AND "
 			+ "e.idCliente = :idCliente ")
 	List<Venta> findByProyectoAndCliente(
 			@Param("idProyecto") Integer idProyecto, 
@@ -74,7 +76,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	@Query("select v from Venta v "
 			+ "INNER JOIN v.cliente e "
 			+ "INNER JOIN v.estadoVenta ev "
-			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1 AND "
 			+ "ev.idEstadoVenta = :idEstadoVenta AND "
 			+ "e.idCliente = :idCliente ")
 	List<Venta> findByProyectoAndClienteAndEstado(
@@ -84,7 +86,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	
 	@Query("select v from Venta v "
 			+ "INNER JOIN v.estadoVenta ev "
-			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1 AND "
 			+ "ev.idEstadoVenta = :idEstadoVenta AND "
 			+ "v.fechaRegistro BETWEEN :startDate AND :endDate")
 	List<Venta> findByProyectoAndEstadoAndFechas(
@@ -95,7 +97,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	
 	@Query("select v from Venta v "
 			+ "INNER JOIN v.estadoVenta ev "
-			+ "WHERE v.idProyecto = :idProyecto AND "
+			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1 AND "
 			+ "ev.idEstadoVenta = :idEstadoVenta ")
 	List<Venta> findByProyectoAndEstado(
 			@Param("idProyecto") Integer idProyecto, 

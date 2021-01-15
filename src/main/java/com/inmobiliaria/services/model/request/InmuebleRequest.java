@@ -2,7 +2,6 @@ package com.inmobiliaria.services.model.request;
 
 import java.math.BigDecimal;
 
-import javax.persistence.Column;
 
 public class InmuebleRequest {
 	private int idInmueble;

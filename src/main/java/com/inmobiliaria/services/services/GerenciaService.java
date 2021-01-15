@@ -80,6 +80,9 @@ public class GerenciaService {
 		List<Gerencia> listGerencia = reporsitory.findByIdColaborador(idColaborador);
 		return this.findGerencia(listGerencia.get(0).getIdGerencia());
 	}
+	public Page<Gerencia> findAllEnable(Pageable paginacion) {
+		return reporsitory.findAllEnable(paginacion);
+	}
 
 
 }
