@@ -27,7 +27,8 @@ public class EstadoFinanciamientoService {
 	}
 	@Transactional
 	public void delete(EstadoFinanciamiento reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public EstadoFinanciamiento update(EstadoFinanciamiento reg) {

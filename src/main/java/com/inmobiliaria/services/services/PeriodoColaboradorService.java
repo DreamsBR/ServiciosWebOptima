@@ -27,7 +27,8 @@ public class PeriodoColaboradorService {
 	}
 	@Transactional
 	public void delete(PeriodoColaborador reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public PeriodoColaborador update(PeriodoColaboradorRequest reg) {

@@ -27,7 +27,8 @@ public class EstadoVentaService {
 	}
 	@Transactional
 	public void delete(EstadoVenta reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public EstadoVenta update(EstadoVenta reg) {

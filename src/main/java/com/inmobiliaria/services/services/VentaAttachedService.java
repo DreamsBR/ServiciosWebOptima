@@ -1,7 +1,3 @@
-/**
- * @author Walter Canchan
- * @email wcanchan@gmail.com
- */
 package com.inmobiliaria.services.services;
 
 import java.util.List;
@@ -12,35 +8,36 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.inmobiliaria.services.model.TipoInmueble;
-import com.inmobiliaria.services.repository.TipoInmuebleRepository;
+import com.inmobiliaria.services.model.VentaAttached;
+import com.inmobiliaria.services.repository.VentaAttachedRepository;
 
 @Service
 @Transactional(readOnly=true)
-public class TipoInmuebleService {
+public class VentaAttachedService {
 	@Autowired
-	private TipoInmuebleRepository reporsitory;
+	private VentaAttachedRepository reporsitory;
 	@Transactional
-	public TipoInmueble registrar(TipoInmueble reg) {
-		reg.setEnable((byte) 1);
+	public VentaAttached registrar(VentaAttached reg) {
 		return reporsitory.save(reg);
 	}
 	@Transactional
-	public void delete(TipoInmueble reg) {
-		reg.setEnable((byte) 0);
-		reporsitory.save(reg);
+	public void delete(VentaAttached reg) {
+		reporsitory.delete(reg);
 	}
 	@Transactional
-	public TipoInmueble update(TipoInmueble reg) {
+	public VentaAttached update(VentaAttached reg) {
 		return reporsitory.save(reg);
 	}
-	public TipoInmueble findById(Integer id) {
+	public VentaAttached findById(Integer id) {
 		return reporsitory.findById(id).get();
 	}
-	public List<TipoInmueble> findAll() {
+	public List<VentaAttached> findAll() {
 		return reporsitory.findAll();
 	}
-	public Page<TipoInmueble> findAll(Pageable pageable) {
+	public Page<VentaAttached> findAll(Pageable pageable) {
 		return reporsitory.findAll(pageable);
+	}
+	public List<VentaAttached> findByIdVenta(Integer idVenta) {
+		return reporsitory.findByIdVenta(idVenta);
 	}
 }

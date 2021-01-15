@@ -27,7 +27,8 @@ public class TipoVistaService {
 	}
 	@Transactional
 	public void delete(TipoVista reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public TipoVista update(TipoVista reg) {

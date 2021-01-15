@@ -27,7 +27,8 @@ public class BancoService {
 	}
 	@Transactional
 	public void delete(Banco reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Banco update(Banco entity) {

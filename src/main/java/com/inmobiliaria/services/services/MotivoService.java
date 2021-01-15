@@ -27,7 +27,8 @@ public class MotivoService {
 	}
 	@Transactional
 	public void delete(Motivo reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Motivo update(Motivo reg) {

@@ -33,7 +33,8 @@ public class VentaInmuebleService {
 	}
 	@Transactional
 	public void delete(VentaInmueble reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public VentaInmueble update(VentaInmuebleRequest reg) {

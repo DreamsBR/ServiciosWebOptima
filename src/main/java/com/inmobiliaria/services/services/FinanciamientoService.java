@@ -38,7 +38,8 @@ public class FinanciamientoService {
 	}
 	@Transactional
 	public void delete(Financiamiento reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Financiamiento update(FinanciamientoRequest reg) {

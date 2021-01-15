@@ -32,7 +32,8 @@ public class JefaturaService {
 	}
 	@Transactional
 	public void delete(Jefatura reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Jefatura update(JefaturaRequest reg) {

@@ -27,7 +27,8 @@ public class PaisService {
 	}
 	@Transactional
 	public void delete(Pais reg) {
-		reporsitory.delete(reg);
+		reg.setEnable(false);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Pais update(Pais reg) {

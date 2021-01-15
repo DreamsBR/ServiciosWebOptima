@@ -70,7 +70,8 @@ public class VentaService {
 	}
 	@Transactional
 	public void delete(Venta reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Venta update(VentaRequest reg) {

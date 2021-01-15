@@ -27,7 +27,8 @@ public class PeriodoGerenciaService {
 	}
 	@Transactional
 	public void delete(PeriodoGerencia reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public PeriodoGerencia update(PeriodoGerenciaRequest reg) {

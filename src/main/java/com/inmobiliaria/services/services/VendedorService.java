@@ -27,7 +27,8 @@ public class VendedorService {
 	}
 	@Transactional
 	public void delete(Vendedor reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Vendedor update(Vendedor reg) {

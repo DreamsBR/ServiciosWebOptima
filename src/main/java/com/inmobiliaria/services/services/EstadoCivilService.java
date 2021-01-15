@@ -27,7 +27,8 @@ public class EstadoCivilService {
 	}
 	@Transactional
 	public void delete(EstadoCivil reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public EstadoCivil update(EstadoCivil reg) {
