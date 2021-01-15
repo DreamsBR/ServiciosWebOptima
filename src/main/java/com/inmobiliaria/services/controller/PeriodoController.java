@@ -102,7 +102,7 @@ public class PeriodoController {
 	})
 	public Page<Periodo> findAll(@PathVariable Integer page, @PathVariable Integer count) {
 		Pageable paginacion = PageRequest.of(page, count);
-		return this.service.findAll(paginacion);
+		return this.service.findAllEnable(paginacion);
 	}
 	@GetMapping("/bytipoperiodo/{idTipoPeriodo}")
 	@ApiOperation(value = "Listar registros", tags = { "Controlador Periodo" })

@@ -67,7 +67,7 @@ public interface VentaRepository extends JpaRepository<Venta, Integer> {
 	
 	@Query("select v from Venta v "
 			+ "INNER JOIN v.cliente e "
-			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1  AND"
+			+ "WHERE v.idProyecto = :idProyecto and v.enable = 1  AND "
 			+ "e.idCliente = :idCliente ")
 	List<Venta> findByProyectoAndCliente(
 			@Param("idProyecto") Integer idProyecto, 
