@@ -62,4 +62,7 @@ public class ProyectoService {
 		}
 		return response;
 	}
+	public Page<Proyecto> findAllEnagle(Pageable paginacion) {
+		return reporsitory.findAllEnagle(paginacion);
+	}
 }

@@ -4,7 +4,7 @@ spring:
   main:
     banner-mode: "off"
   datasource:
-    url: jdbc:mysql://mysql-inmo:3306/inmobiliaria?useSSL=false
+    url: jdbc:mysql://104.248.230.75:6943/inmobiliaria?useSSL=false
     username: testuser
     password: M!bN2d#S#!w3qCGbxEdSYyY&
     driver-class-name: com.mysql.cj.jdbc.Driver

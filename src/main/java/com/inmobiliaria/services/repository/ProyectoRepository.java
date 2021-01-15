@@ -6,6 +6,8 @@ package com.inmobiliaria.services.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -30,5 +32,8 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 			  		+ "WHERE jp.id_gerencia = ?1", 
 			  nativeQuery = true)
 	List<Proyecto> findByIdGerencia(Integer idGerencia);
+
+	@Query("select a from Proyecto a where a.enable = 1")
+	Page<Proyecto> findAllEnagle(Pageable paginacion);
 
 }
