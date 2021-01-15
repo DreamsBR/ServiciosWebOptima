@@ -27,7 +27,8 @@ public class TipoCreditoService {
 	}
 	@Transactional
 	public void delete(TipoCredito reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public TipoCredito update(TipoCredito reg) {

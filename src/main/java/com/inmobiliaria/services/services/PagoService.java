@@ -32,7 +32,8 @@ public class PagoService {
 	}
 	@Transactional
 	public void delete(Pago reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Pago update(PagoRequest reg) {

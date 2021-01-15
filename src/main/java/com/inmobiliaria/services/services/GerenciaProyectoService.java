@@ -30,7 +30,8 @@ public class GerenciaProyectoService {
 	}
 	@Transactional
 	public void delete(GerenciaProyecto reg) {
-		repository.delete(reg);
+		reg.setEnable((byte) 0);
+		repository.save(reg);
 	}
 	@Transactional
 	public GerenciaProyecto update(GerenciaProyectoRequest reg) {

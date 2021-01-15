@@ -35,7 +35,8 @@ public class JefaturaProyectoService {
 	}
 	@Transactional
 	public void delete(JefaturaProyecto reg) {
-		repository.delete(reg);
+		reg.setEnable((byte) 0);
+		repository.save(reg);
 	}
 	@Transactional
 	public JefaturaProyecto update(JefaturaProyectoRequest reg) {

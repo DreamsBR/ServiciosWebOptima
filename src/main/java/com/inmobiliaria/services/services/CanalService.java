@@ -27,7 +27,8 @@ public class CanalService {
 	}
 	@Transactional
 	public void delete(Canal reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Canal update(Canal reg) {

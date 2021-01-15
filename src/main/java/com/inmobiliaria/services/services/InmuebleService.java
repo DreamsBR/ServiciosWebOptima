@@ -47,7 +47,8 @@ public class InmuebleService {
 	}
 	@Transactional
 	public void delete(Inmueble reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Inmueble update(InmuebleRequest reg) {

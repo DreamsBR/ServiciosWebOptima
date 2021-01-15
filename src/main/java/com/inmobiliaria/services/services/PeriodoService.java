@@ -24,7 +24,8 @@ public class PeriodoService {
 	}
 	@Transactional
 	public void delete(Periodo reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Periodo update(Periodo reg) {

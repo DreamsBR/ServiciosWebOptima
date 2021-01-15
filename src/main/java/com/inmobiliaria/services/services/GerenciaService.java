@@ -41,7 +41,8 @@ public class GerenciaService {
 	}
 	@Transactional
 	public void delete(Gerencia reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Gerencia update(GerenciaRequest reg) {

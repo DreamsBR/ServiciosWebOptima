@@ -27,7 +27,8 @@ public class CategoriaService {
 	}
 	@Transactional
 	public void delete(Categoria reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Categoria update(Categoria reg) {

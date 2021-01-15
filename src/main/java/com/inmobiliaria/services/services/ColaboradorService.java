@@ -36,7 +36,8 @@ public class ColaboradorService {
 	}
 	@Transactional
 	public void delete(Colaborador reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public Colaborador update(ColaboradorRequest reg) {

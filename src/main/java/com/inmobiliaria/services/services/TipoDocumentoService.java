@@ -27,7 +27,8 @@ public class TipoDocumentoService {
 	}
 	@Transactional
 	public void delete(TipoDocumento reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public TipoDocumento update(TipoDocumento reg) {

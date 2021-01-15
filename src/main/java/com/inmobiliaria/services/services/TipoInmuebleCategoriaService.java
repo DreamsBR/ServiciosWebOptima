@@ -22,7 +22,8 @@ public class TipoInmuebleCategoriaService {
 	}
 	@Transactional
 	public void delete(TipoInmuebleCategoria reg) {
-		reporsitory.delete(reg);
+		reg.setEnable((byte) 0);
+		reporsitory.save(reg);
 	}
 	@Transactional
 	public TipoInmuebleCategoria update(TipoInmuebleCategoria reg) {
