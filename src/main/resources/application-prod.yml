@@ -1,8 +1,4 @@
 spring:
-  application:
-    name: services
-  main:
-    banner-mode: "off"
   datasource:
     url: jdbc:mysql://mysql-inmo:3306/inmobiliaria?useSSL=false
     username: testuser
@@ -15,10 +11,21 @@ spring:
     generate-ddl: false
     hibernate:
       ddl-auto: none
-server:
-  port: 8080
-  servlet:
-    context-path: /services
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: intranetoptimasys@gmail.com
+    password: LfQgEbU2k6tJ9q
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000 
 app:
   jwtSecret: jwtSecretKey
   jwtExpiration: 86400  

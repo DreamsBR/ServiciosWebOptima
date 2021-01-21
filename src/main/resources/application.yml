@@ -1,7 +1,39 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /services
 spring:
-  jmx:
-    enabled: false
-  main:
-    banner-mode: "off"
-  profiles:  - dev
-  - prod
+  application:
+    name: services
+  datasource:
+    url: jdbc:mysql://mysql-inmo:3306/inmobiliaria?useSSL=false
+    username: testuser
+    password: M!bN2d#S#!w3qCGbxEdSYyY&
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: false
+    hibernate:
+      ddl-auto: none
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: intranetoptimasys@gmail.com
+    password: LfQgEbU2k6tJ9q
+    properties:
+      mail:
+        smtp:
+          starttls:
+            enable: true
+            required: true
+          auth: true
+          connectiontimeout: 5000
+          timeout: 5000
+          writetimeout: 5000 
+app:
+  jwtSecret: jwtSecretKey
+  jwtExpiration: 86400  
+  urlChangePassword: http://admin.yoreparocpu.xyz/recordar-contrasenia-cambio
+  files: /serverfile
