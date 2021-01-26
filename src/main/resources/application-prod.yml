@@ -1,10 +1,4 @@
-server:
-  port: 8080
-  servlet:
-    context-path: /services
 spring:
-  application:
-    name: services
   datasource:
     url: jdbc:mysql://mysql-inmo:3306/inmobiliaria?useSSL=false
     username: testuser

@@ -33,8 +33,18 @@ public class VentaAttached implements Serializable {
 
 	@Column(name="id_venta")
 	private int idVenta;
+	
+	private String nombre;
 
 	public VentaAttached() {
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public int getIdVentaAttached() {
