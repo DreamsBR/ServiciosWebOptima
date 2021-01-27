@@ -105,6 +105,9 @@ public class InmuebleService {
 					if (venta.getEstadoVenta().getIdEstadoVenta() != 14) {
 						permitir = false;
 					}
+					if ( venta.getEnable() == 1 ) {
+						permitir = false;
+					}
 				}
 				if ( permitir ) {
 					listNew.add(inmueble);
