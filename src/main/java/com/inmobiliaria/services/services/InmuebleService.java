@@ -102,11 +102,11 @@ public class InmuebleService {
 				permitir = true;
 				for (VentaInmueble ventaInmueble : ventas) {
 					Venta venta = ventaRepository.findById(ventaInmueble.getIdVenta()).get();
-					if (venta.getEstadoVenta().getIdEstadoVenta() != 14) {
-						permitir = false;
-					}
+
 					if ( venta.getEnable() == 1 ) {
-						permitir = false;
+						if (venta.getEstadoVenta().getIdEstadoVenta() != 14) {
+							permitir = false;
+						}
 					}
 				}
 				if ( permitir ) {
