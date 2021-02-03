@@ -396,15 +396,20 @@ public class ReporteService {
 					.collect(Collectors.toList());
 			List<Venta> listVentasGerencia = new ArrayList<>();
 			for (GerenciaProyecto gerenciaProyecto : listGerenciaProyecto) {
-				List<Venta> listVentas = ventaRepository.findByFechaRegistroRange(gerenciaProyecto.getProyecto().getIdProyecto(), periodoGerencia.getPeriodo().getFechaInicio(), periodoGerencia.getPeriodo().getFechaFin())
+				List<Venta> listVentas = ventaRepository.findByIdProyecto(gerenciaProyecto.getProyecto().getIdProyecto())
 						.stream()
 						.filter(x -> x.getEnable() == 1 )
 						.collect(Collectors.toList());
 				listVentasGerencia.addAll(listVentas);
 			}
 			
-			List<Venta> listVentasResultPago = listVentasGerencia.stream().filter(v ->
+			List<Venta> listVentas = listVentasGerencia.stream().filter(v ->
 			v.getFechaMinuta() != null && v.getEstadoVenta().getIdEstadoVenta() != 14
+					).collect(Collectors.toList());
+			
+			List<Venta> listVentasResultPago = listVentas.stream().filter(v ->
+			v.getFechaMinuta().getTime() >= periodoGerencia.getPeriodo().getFechaInicio().getTime() &&
+			v.getFechaMinuta().getTime() <= periodoGerencia.getPeriodo().getFechaFin().getTime()
 					).collect(Collectors.toList());
 			
 			
@@ -416,7 +421,7 @@ public class ReporteService {
 			List<Venta> spVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 1).collect(Collectors.toList());
 			item.setSp(spVenta.size());
 
-			List<Venta> minutaVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
+			List<Venta> minutaVenta = listVentasResultPago.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
 			item.setMinuta(minutaVenta.size());
 			
 			List<Venta> ciVenta = listVentasGerencia.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 4).collect(Collectors.toList());
