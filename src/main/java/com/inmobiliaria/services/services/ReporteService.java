@@ -73,30 +73,30 @@ public class ReporteService {
 			res.setProyecto(periodoProyecto.getProyecto());
 			res.setMeta(periodoProyecto.getMeta());
 			
-			List<Venta> listVentas = ventaRepository.findByIdProyecto(periodoProyecto.getProyecto().getIdProyecto())
+			List<Venta> listVentasResult = ventaRepository.findByIdProyecto(periodoProyecto.getProyecto().getIdProyecto())
 					.stream()
 					.filter(x -> x.getEnable() == 1 )
 					.collect(Collectors.toList());
-			List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
-			
-			List<Venta> listVentasResultpago = listVentasResult
+
+			List<Venta> listVentas = listVentasResult
 					.stream()
 					.filter(v -> 
 						v.getEstadoVenta().getIdEstadoVenta() != 14 &&
 						v.getFechaMinuta() != null )
 					.collect(Collectors.toList());
-					
+
+			List<Venta> listVentasResultpago = listVentas.stream().filter(v -> v.getFechaMinuta().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaMinuta().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
+			
 			double suma = listVentasResultpago.stream()
 		      .mapToDouble(o -> 
 		      		o.getTotal().doubleValue()
-		    	  //pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
 		    ).sum();
 			res.setAvance(suma);
 			
 			List<Venta> spVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 1).collect(Collectors.toList());
 			res.setSp(spVenta.size());
 
-			List<Venta> minutaVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
+			List<Venta> minutaVenta = listVentasResultpago.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
 			res.setMinuta(minutaVenta.size());
 			
 			List<Venta> ciVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 4).collect(Collectors.toList());
@@ -261,26 +261,26 @@ public class ReporteService {
 			res.setProyecto(periodoProyecto.getProyecto());
 			res.setMeta(periodoProyecto.getMeta());
 			
-			List<Venta> listVentas = ventaRepository.findByIdProyecto(periodoProyecto.getProyecto().getIdProyecto())
+			List<Venta> listVentasResult = ventaRepository.findByIdProyecto(periodoProyecto.getProyecto().getIdProyecto())
 					.stream()
 					.filter(x -> x.getEnable() == 1 )
 					.collect(Collectors.toList());
-			List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() && v.getVendedor().getIdColaborador() == idColaborador ).collect(Collectors.toList());
-			
-			List<Venta> listVentasResultPago = listVentas.stream().filter(v ->
+
+			List<Venta> listVentas = listVentasResult.stream().filter(v ->
 				v.getFechaMinuta() != null && v.getEstadoVenta().getIdEstadoVenta() != 14
 			).collect(Collectors.toList());
 			
+			List<Venta> listVentasResultPago = listVentas.stream().filter(v -> v.getFechaMinuta().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaMinuta().getTime() <= periodo.getFechaFin().getTime() && v.getVendedor().getIdColaborador() == idColaborador ).collect(Collectors.toList());
+			
 			double suma = listVentasResultPago.stream()
 		      .mapToDouble(o -> o.getTotal().doubleValue()
-		    	  //pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
 		    ).sum();
 			res.setAvance(suma);
 			
 			List<Venta> spVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 1).collect(Collectors.toList());
 			res.setSp(spVenta.size());
 
-			List<Venta> minutaVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
+			List<Venta> minutaVenta = listVentasResultPago.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
 			res.setMinuta(minutaVenta.size());
 			
 			List<Venta> ciVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 4).collect(Collectors.toList());
@@ -337,27 +337,26 @@ public class ReporteService {
 					res.setMeta(listPeriodoColaborador1.get(0).getMeta());
 				}
 				
-				List<Venta> listVentas = ventaRepository.findByIdVendedor(vendedor.getIdVendedor())
+				List<Venta> listVentasResult = ventaRepository.findByIdVendedor(vendedor.getIdVendedor())
 						.stream()
 						.filter(x -> x.getEnable() == 1 )
 						.collect(Collectors.toList());
 				
-				List<Venta> listVentasResult = listVentas.stream().filter(v -> v.getFechaRegistro().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaRegistro().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
-				
-				List<Venta> listVentasResultPago = listVentas.stream().filter(v ->
+				List<Venta> listVentas = listVentasResult.stream().filter(v ->
 				v.getFechaMinuta() != null && v.getEstadoVenta().getIdEstadoVenta() != 14
 						).collect(Collectors.toList());
 				
+				List<Venta> listVentasResultPago = listVentas.stream().filter(v -> v.getFechaMinuta().getTime() >= periodo.getFechaInicio().getTime() && v.getFechaMinuta().getTime() <= periodo.getFechaFin().getTime() ).collect(Collectors.toList());
+				
 				double suma = listVentasResultPago.stream()
 			      .mapToDouble(o -> o.getTotal().doubleValue()
-			    	  //pagoRepository.findByIdVenta(o.getIdVenta()).stream().mapToDouble(p -> p.getMonto().doubleValue()).sum()
 			    ).sum();
 				res.setAvance(suma);
 				
 				List<Venta> spVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 1).collect(Collectors.toList());
 				res.setSp(spVenta.size());
 
-				List<Venta> minutaVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
+				List<Venta> minutaVenta = listVentasResultPago.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 5).collect(Collectors.toList());
 				res.setMinuta(minutaVenta.size());
 				
 				List<Venta> ciVenta = listVentasResult.stream().filter(v -> v.getEstadoVenta().getIdEstadoVenta() == 4).collect(Collectors.toList());
