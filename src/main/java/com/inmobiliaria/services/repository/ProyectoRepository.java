@@ -20,7 +20,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 			  		+ "FROM proyecto p "
 			  		+ "INNER JOIN jefatura_proyecto jp "
 			  		+ "ON jp.id_proyecto = p.id_proyecto "
-			  		+ "WHERE jp.id_jefatura = ?1", 
+			  		+ "WHERE jp.id_jefatura = ?1 and jp.enable = 1", 
 			  nativeQuery = true)
 	List<Proyecto> findByJefatura(Integer idJefatura);
 
@@ -29,7 +29,7 @@ public interface ProyectoRepository extends JpaRepository<Proyecto, Integer> {
 			  		+ "FROM proyecto p "
 			  		+ "INNER JOIN gerencia_proyecto jp "
 			  		+ "ON jp.id_proyecto = p.id_proyecto "
-			  		+ "WHERE jp.id_gerencia = ?1", 
+			  		+ "WHERE jp.id_gerencia = ?1 and jp.enable = 1", 
 			  nativeQuery = true)
 	List<Proyecto> findByIdGerencia(Integer idGerencia);
 
