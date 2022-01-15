@@ -6,7 +6,7 @@ spring:
   application:
     name: services
   datasource:
-    url: jdbc:mysql://localhost:3306/inmobiliaria?useSSL=false
+    url: jdbc:mysql://localhost:3306/inmobiliaria?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC&useSSL=false
     username: root
     password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
