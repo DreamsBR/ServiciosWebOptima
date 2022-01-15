@@ -1,20 +1,20 @@
 server:
-  port: 8080
+  port: 8090
   servlet:
     context-path: /services
 spring:
   application:
     name: services
   datasource:
-    url: jdbc:mysql://mysql-inmo:3306/inmobiliaria?useSSL=false
-    username: testuser
-    password: M!bN2d#S#!w3qCGbxEdSYyY&
+    url: jdbc:mysql://localhost:3306/inmobiliaria?useSSL=false
+    username: root
+    password: mysql
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQL8Dialect
-    generate-ddl: false
+    generate-ddl: true
     hibernate:
       ddl-auto: none
   mail:
@@ -35,5 +35,5 @@ spring:
 app:
   jwtSecret: jwtSecretKey
   jwtExpiration: 86400  
-  urlChangePassword: http://admin.yoreparocpu.xyz/recordar-contrasenia-cambio
+  urlChangePassword: https://admin.yoreparocpu.xyz/recordar-contrasenia-cambio
   files: /serverfile
